@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,18 +16,100 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TCaPP"
         tools:targetApi="31">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
-            android:name=".MainActivity2"
+            android:name=".ui.home.TestActivity"
+            android:exported="true">
+            <!--			<intent-filter>-->
+            <!--				<action android:name="android.intent.action.MAIN" />-->
+            <!--				-->
+            <!--				<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--			</intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".view.account.LoginAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
+            android:name=".view.account.ChangePasswordAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.account.SettingAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.account.RegisterAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.account.ForgetPasswordAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.home.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.user_profile.MyUserProfileEditInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.user_profile.MyUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.user_profile.GuestUserProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.user_profile.MyUserProfileCVActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.user_profile.MyUserProfileEditSkillsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.team_profile.MyTeamsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.team_profile.TeamProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.team_profile.TeamProfileEditInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.team_profile.TeamProfileViewMembersListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.request.RequestsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.request.CreateRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.request.ViewRequestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.post.CreatePostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.post.PostsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.post.UserPostsActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
