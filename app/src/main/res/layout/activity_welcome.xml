@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_screen"
+	tools:context=".view.welcome.WelcomeActivity">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="2dp"
+		android:gravity="center|center_horizontal"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<ImageView
+			android:id="@+id/imageView3"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:adjustViewBounds="true"
+			android:scaleType="centerInside"
+			app:srcCompat="@drawable/welcome_bg" />
+		
+		<TextView
+			android:id="@+id/textView9"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="20dp"
+			android:fontFamily="?attr/fontArt"
+			android:includeFontPadding="false"
+			android:text="Welcome to StartupMap"
+			android:textColor="@color/logo_color_1"
+			android:textSize="24sp" />
+		
+		<TextView
+			android:id="@+id/textView10"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="20dp"
+			android:fontFamily="?attr/fontArt"
+			android:includeFontPadding="false"
+			android:text="là một diễn đàn kết nối bạn và đội tiềm năng"
+			android:textColor="@color/theme_color_1"
+			android:textSize="16sp" />
+		
+		<Button
+			android:id="@+id/button"
+			style="@style/ActionBtn"
+			android:layout_marginTop="40dp"
+			android:onClick="start"
+			android:text="Let start!"
+			android:textAllCaps="false"
+			android:textStyle="bold" />
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

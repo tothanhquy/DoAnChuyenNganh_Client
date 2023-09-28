@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Button" >
+		<item name="android:textSize">16sp</item>
+		<item name="android:fontFamily">?attr/fontButton</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingTop">3dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:paddingBottom">8dp</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">5dp</item>
+		<item name="android:layout_marginBottom">5dp</item>
+<!--		<item name="android:layout_marginLeft">15dp</item>-->
+<!--		<item name="android:layout_marginRight">15dp</item>-->
+	</style>
+	<style name="ActionBtn" parent="Button">
+<!--		<item name="android:background">@drawable/action_btn_bg</item>-->
+<!--		<item name="android:backgroundTint">@drawable/action_btn_bg2</item>-->
+		<item name="android:textColor">?attr/colorActionBtn</item>
+		<item name="android:background">@drawable/action_btn_selector</item>
+	</style>
+	<style name="ActionBtn2" parent="Button">
+<!--		<item name="android:background">@drawable/action_btn2_bg</item>-->
+<!--		<item name="android:backgroundTint">@drawable/action_btn2_bg2</item>-->
+		<item name="android:textColor">?attr/backgroundActionBtn</item>
+		<item name="android:background">@drawable/action_btn2_selector</item>
+	</style>
+	<style name="CloseBtn" parent="Button">
+<!--		<item name="android:background">@drawable/close_btn_bg</item>-->
+<!--		<item name="android:backgroundTint">@drawable/close_btn_bg2</item>-->
+		<item name="android:textColor">?attr/colorCloseBtn</item>
+		<item name="android:background">@drawable/close_btn_selector</item>
+	</style>
+	<style name="WarningBtn" parent="Button">
+<!--		<item name="android:background">@drawable/warning_btn_bg</item>-->
+<!--		<item name="android:backgroundTint">@drawable/warning_btn_bg2</item>-->
+		<item name="android:textColor">?attr/colorWarningBtn</item>
+		<item name="android:background">@drawable/warning_btn_selector</item>
+	</style>
+	<style name="IconBtn">
+		<item name="android:layout_width">60dp</item>
+		<item name="android:layout_height">60dp</item>
+		<item name="android:adjustViewBounds">true</item>
+		<item name="android:layout_margin">5dp</item>
+		<item name="android:padding">15dp</item>
+		<item name="android:scaleType">centerInside</item>
+<!--		<item name="android:background">@color/transparent</item>-->
+<!--		<item name="android:background">@drawable/icon_btn_bg</item>-->
+<!--		<item name="android:backgroundTint">@drawable/icon_btn_bg2</item>-->
+		<item name="android:background">@drawable/icon_btn_selector</item>
+	</style>
+</resources>

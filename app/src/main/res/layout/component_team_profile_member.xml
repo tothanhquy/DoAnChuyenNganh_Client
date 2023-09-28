@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:padding="5dp">
+	
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/componentTeamProfileMemberAvatar"
+		style="@style/TeamProfileMemberAvatar"
+		tools:srcCompat="@tools:sample/avatars" />
+	
+	<TextView
+		android:id="@+id/componentTeamProfileNumberOtherMembers"
+		style="@style/IconText"
+		android:text="+5545"
+		android:textColor="@color/theme_color_1" />
+</LinearLayout>

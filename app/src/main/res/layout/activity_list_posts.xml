@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/postsListActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.post.PostsListActivity"
+	tools:viewBindingIgnore="true">
+	
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/postsListActivityScrollViewContainer"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/postsListActivityContainer"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+			
+			</androidx.recyclerview.widget.RecyclerView>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:id="@+id/postsListActivityLoadingContainer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center_horizontal"
+					android:orientation="horizontal"
+					android:visibility="gone"
+					tools:visibility="visible" />
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</androidx.core.widget.NestedScrollView>
+	
+	<ScrollView
+		android:id="@+id/postsListActivityViewImages"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="3dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<Button
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeSlideImages"
+					android:text="Đóng" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/postsListActivityViewImagesContainer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+				
+				</androidx.recyclerview.widget.RecyclerView>
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/postsListActivityOptionsContainer"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="4dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="closeOptions"
+			app:layout_constraintBottom_toTopOf="@+id/postsListActivityOptionsContainerList"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<LinearLayout
+			android:id="@+id/postsListActivityOptionsContainerList"
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent">
+			
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tùy chọn"
+					android:textAlignment="center" />
+				
+				<Button
+					android:id="@+id/postsListActivityOptionSetActive"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="toggleIsActive"
+					android:text="Kích hoạt lại bài viết(bỏ ẩn)" />
+				
+				<Button
+					android:id="@+id/postsListActivityOptionSetInactive"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="toggleIsActive"
+					android:text="Ẩn bài viết" />
+				
+				<Button
+					android:id="@+id/postsListActivityOptionSetSave"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="toggleWasSaved"
+					android:text="Lưu bài viết" />
+				
+				<Button
+					android:id="@+id/postsListActivityOptionSetUnsave"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="toggleWasSaved"
+					android:text="Bỏ lưu bài viết" />
+				
+				<Button
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeOptions"
+					android:text="Đóng" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

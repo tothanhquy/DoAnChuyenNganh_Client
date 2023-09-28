@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/registerAccountActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".view.account.LoginAccountActivity">
+	
+	<LinearLayout
+		style="@style/MainLinearLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<TextView
+			style="@style/Label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Email" />
+		
+		<EditText
+			android:id="@+id/registerAccountEmail"
+			style="@style/Input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ems="10"
+			android:hint="email"
+			android:inputType="textEmailAddress" />
+		
+		<TextView
+			style="@style/Label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Mật Khẩu" />
+		
+		<EditText
+			android:id="@+id/registerAccountPassword"
+			style="@style/Input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ems="8"
+			android:hint="mật khẩu"
+			android:inputType="textPassword" />
+		
+		<TextView
+			style="@style/Label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Xác nhận mật khẩu" />
+		
+		<EditText
+			android:id="@+id/registerAccountConfirmPassword"
+			style="@style/Input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ems="8"
+			android:hint="xác nhận mật khẩu"
+			android:inputType="textPassword" />
+		
+		<TextView
+			style="@style/Label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Tên của bạn" />
+		
+		<EditText
+			android:id="@+id/registerAccountName"
+			style="@style/Input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="tên, [Nguyễn Văn A]" />
+		
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="30dp" />
+		
+		<Button
+			android:id="@+id/button3"
+			style="@style/ActionBtn"
+			android:onClick="register"
+			android:text="Tạo tài khoản" />
+	
+	</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

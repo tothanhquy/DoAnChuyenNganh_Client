@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/homeActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background_screen"
+	android:padding="0dp"
+	android:theme="@style/AppTheme"
+	tools:context=".view.home.HomeActivity"
+	tools:viewBindingIgnore="true">
+	
+	<LinearLayout
+		style="@style/MainLinearLayout"
+		android:background="@color/transparent"
+		android:elevation="2dp"
+		android:orientation="vertical"
+		android:padding="0dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+			
+			<Button
+				style="@style/ActionBtn"
+				android:layout_width="wrap_content"
+				android:layout_gravity="center"
+				android:background="@drawable/home_activity_action_btn_bg"
+				android:onClick="viewPostsNavigation"
+				android:padding="20dp"
+				android:text="Khám phá các bài viết" />
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/homeScreenNotAuthenticate"
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginTop="0dp"
+			android:layout_marginEnd="10dp"
+			android:background="@drawable/main_options_container_bg"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			tools:visibility="gone">
+			
+			<Button
+				style="@style/ActionBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="loginNavigation"
+				android:text="Đăng nhập ngay" />
+			
+			<TextView
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="30dp"
+				android:layout_marginBottom="30dp"
+				android:text="Nếu bạn chưa có tài khoản, thì hãy tạo ngay 1 tại khoản để có thể khám khá tất cả các tính năng của Startup Map"
+				android:textAlignment="center" />
+			
+			<Button
+				style="@style/ActionBtn2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="registerNavigation"
+				android:text="Tạo 1 tài khoản" />
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/homeScreenAuthenticate"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="10dp"
+			android:layout_marginEnd="10dp"
+			android:gravity="center_horizontal"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp"
+			tools:visibility="visible">
+			
+			<Button
+				android:id="@+id/homeScreAuthenVerifyEmail"
+				style="@style/ActionBtn2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="requestVerifyEmail"
+				android:text="Xác minh Email ngay" />
+			
+			<TableLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@drawable/main_options_container_bg">
+				
+				<TableRow
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+					
+					
+					<TextView
+						android:id="@+id/homeScreAuthenUserName"
+						style="@style/Title"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="xin chao"
+						android:textAlignment="center" />
+				</TableRow>
+				
+				<TableRow
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+					
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical"
+						android:padding="10dp">
+						
+						<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="20dp"
+							android:layout_marginRight="20dp"
+							android:adjustViewBounds="true"
+							android:onClick="myUserProfileNavigation"
+							app:srcCompat="@drawable/default_user_avatar" />
+						
+						<TextView
+							style="@style/Title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Tôi"
+							android:textAlignment="center"
+							android:textSize="18sp" />
+					</LinearLayout>
+					
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical"
+						android:padding="10dp">
+						
+						<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="20dp"
+							android:layout_marginRight="20dp"
+							android:adjustViewBounds="true"
+							android:onClick="myTeamsNavigation"
+							app:srcCompat="@drawable/default_team_avatar" />
+						
+						<TextView
+							style="@style/Title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Đội Tôi"
+							android:textAlignment="center"
+							android:textSize="18sp" />
+					</LinearLayout>
+					
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical"
+						android:padding="10dp">
+						
+						<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="20dp"
+							android:layout_marginRight="20dp"
+							android:adjustViewBounds="true"
+							android:onClick="viewRequestsNavigation"
+							app:srcCompat="@drawable/request_icon" />
+						
+						<TextView
+							style="@style/Title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Request"
+							android:textAlignment="center"
+							android:textSize="18sp" />
+					</LinearLayout>
+				</TableRow>
+				
+				<TableRow
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+					
+					
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical"
+						android:padding="10dp">
+						
+						<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="20dp"
+							android:layout_marginRight="20dp"
+							android:adjustViewBounds="true"
+							android:onClick="viewMyPostsNavigation"
+							app:srcCompat="@drawable/post_icon" />
+						
+						<TextView
+							style="@style/Title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Bài viết của tôi"
+							android:textAlignment="center"
+							android:textSize="18sp" />
+					</LinearLayout>
+					
+					<LinearLayout
+						android:layout_width="0dp"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:orientation="vertical"
+						android:padding="10dp">
+						
+						<ImageView
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="20dp"
+							android:layout_marginRight="20dp"
+							android:adjustViewBounds="true"
+							android:onClick="viewSettingAccountNavigation"
+							app:srcCompat="@drawable/account_setting_icon" />
+						
+						<TextView
+							style="@style/Title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="Tài Khoản"
+							android:textAlignment="center"
+							android:textSize="18sp" />
+					</LinearLayout>
+					
+					<Space
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1" />
+				</TableRow>
+			
+			</TableLayout>
+		
+		</LinearLayout>
+	</LinearLayout>
+	
+	<ImageView
+		android:id="@+id/mainActivityImageViewBackground"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:adjustViewBounds="true"
+		android:contentDescription="background image"
+		android:elevation="1dp"
+		android:scaleType="centerCrop"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/home_activity_bg"
+		tools:visibility="visible" />
+	
+	<!--	<ScrollView-->
+	<!--		style="@style/MainScrollView"-->
+	<!--		android:contentDescription="main menu content"-->
+	<!--		android:elevation="1dp"-->
+	<!--		android:visibility="gone"-->
+	<!--		app:layout_constraintBottom_toBottomOf="parent"-->
+	<!--		app:layout_constraintEnd_toEndOf="parent"-->
+	<!--		app:layout_constraintStart_toStartOf="parent"-->
+	<!--		app:layout_constraintTop_toTopOf="parent">-->
+	<!--		-->
+	<!--		<LinearLayout-->
+	<!--			style="@style/MainScrollViewChildContainer"-->
+	<!--			android:layout_width="match_parent"-->
+	<!--			android:layout_height="wrap_content"-->
+	<!--			android:orientation="vertical"-->
+	<!--			tools:layout_editor_absoluteX="15dp"-->
+	<!--			tools:layout_editor_absoluteY="15dp">-->
+	<!--			-->
+	<!--			<LinearLayout-->
+	<!--				android:layout_width="match_parent"-->
+	<!--				android:layout_height="match_parent"-->
+	<!--				android:layout_weight="1"-->
+	<!--				android:orientation="vertical">-->
+	<!--				-->
+	<!--				<Button-->
+	<!--					style="@style/ActionBtn"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_gravity="center"-->
+	<!--					android:onClick="viewPostsNavigation"-->
+	<!--					android:text="Khám phá các bài viết" />-->
+	<!--			</LinearLayout>-->
+	<!--			-->
+	<!--			<LinearLayout-->
+	<!--				android:id="@+id/homeScreenNotAuthenticate"-->
+	<!--				style="@style/Container"-->
+	<!--				android:layout_width="match_parent"-->
+	<!--				android:layout_height="wrap_content"-->
+	<!--				android:gravity="center_horizontal"-->
+	<!--				android:orientation="vertical"-->
+	<!--				tools:visibility="visible">-->
+	<!--				-->
+	<!--				<Button-->
+	<!--					style="@style/ActionBtn"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_height="wrap_content"-->
+	<!--					android:onClick="loginNavigation"-->
+	<!--					android:text="Đăng nhập ngay" />-->
+	<!--				-->
+	<!--				<TextView-->
+	<!--					style="@style/Title"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_height="wrap_content"-->
+	<!--					android:layout_marginTop="30dp"-->
+	<!--					android:layout_marginBottom="30dp"-->
+	<!--					android:text="Nếu bạn chưa có tài khoản, thì hãy tạo ngay 1 tại khoản để có thể khám khá tất cả các tính năng của Startup Map"-->
+	<!--					android:textAlignment="center" />-->
+	<!--				-->
+	<!--				<Button-->
+	<!--					style="@style/ActionBtn2"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_height="wrap_content"-->
+	<!--					android:onClick="registerNavigation"-->
+	<!--					android:text="Tạo 1 tài khoản" />-->
+	<!--			</LinearLayout>-->
+	<!--			-->
+	<!--			<LinearLayout-->
+	<!--				android:id="@+id/homeScreenAuthenticate"-->
+	<!--				android:layout_width="match_parent"-->
+	<!--				android:layout_height="match_parent"-->
+	<!--				android:gravity="center_horizontal"-->
+	<!--				android:orientation="vertical"-->
+	<!--				tools:layout_editor_absoluteX="15dp"-->
+	<!--				tools:layout_editor_absoluteY="15dp">-->
+	<!--				-->
+	<!--				<TextView-->
+	<!--					android:id="@+id/homeScreAuthenUserName"-->
+	<!--					style="@style/Title"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_height="wrap_content"-->
+	<!--					android:text="xin chao" />-->
+	<!--				-->
+	<!--				<Button-->
+	<!--					android:id="@+id/homeScreAuthenVerifyEmail"-->
+	<!--					style="@style/ActionBtn2"-->
+	<!--					android:layout_width="wrap_content"-->
+	<!--					android:layout_height="wrap_content"-->
+	<!--					android:onClick="requestVerifyEmail"-->
+	<!--					android:text="Xác minh Email ngay" />-->
+	<!--				-->
+	<!--				<TableLayout-->
+	<!--					style="@style/Container"-->
+	<!--					android:layout_width="match_parent"-->
+	<!--					android:layout_height="match_parent">-->
+	<!--					-->
+	<!--					<TableRow-->
+	<!--						android:layout_width="match_parent"-->
+	<!--						android:layout_height="match_parent">-->
+	<!--						-->
+	<!--						<LinearLayout-->
+	<!--							android:layout_width="0dp"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1"-->
+	<!--							android:gravity="center"-->
+	<!--							android:orientation="vertical"-->
+	<!--							android:padding="10dp">-->
+	<!--							-->
+	<!--							<ImageView-->
+	<!--								android:layout_width="match_parent"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:layout_marginLeft="20dp"-->
+	<!--								android:layout_marginRight="20dp"-->
+	<!--								android:adjustViewBounds="true"-->
+	<!--								android:onClick="myUserProfileNavigation"-->
+	<!--								app:srcCompat="@drawable/default_user_avatar" />-->
+	<!--							-->
+	<!--							<TextView-->
+	<!--								style="@style/Title"-->
+	<!--								android:layout_width="wrap_content"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:text="Tôi"-->
+	<!--								android:textAlignment="center"-->
+	<!--								android:textSize="18sp" />-->
+	<!--						</LinearLayout>-->
+	<!--						-->
+	<!--						<LinearLayout-->
+	<!--							android:layout_width="0dp"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1"-->
+	<!--							android:gravity="center"-->
+	<!--							android:orientation="vertical"-->
+	<!--							android:padding="10dp">-->
+	<!--							-->
+	<!--							<ImageView-->
+	<!--								android:layout_width="match_parent"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:layout_marginLeft="20dp"-->
+	<!--								android:layout_marginRight="20dp"-->
+	<!--								android:adjustViewBounds="true"-->
+	<!--								android:onClick="myTeamsNavigation"-->
+	<!--								app:srcCompat="@drawable/default_team_avatar" />-->
+	<!--							-->
+	<!--							<TextView-->
+	<!--								style="@style/Title"-->
+	<!--								android:layout_width="wrap_content"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:text="Đội Tôi"-->
+	<!--								android:textAlignment="center"-->
+	<!--								android:textSize="18sp" />-->
+	<!--						</LinearLayout>-->
+	<!--						-->
+	<!--						<LinearLayout-->
+	<!--							android:layout_width="0dp"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1"-->
+	<!--							android:gravity="center"-->
+	<!--							android:orientation="vertical"-->
+	<!--							android:padding="10dp">-->
+	<!--							-->
+	<!--							<ImageView-->
+	<!--								android:layout_width="match_parent"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:layout_marginLeft="20dp"-->
+	<!--								android:layout_marginRight="20dp"-->
+	<!--								android:adjustViewBounds="true"-->
+	<!--								android:onClick="viewRequestsNavigation"-->
+	<!--								app:srcCompat="@drawable/request_icon" />-->
+	<!--							-->
+	<!--							<TextView-->
+	<!--								style="@style/Title"-->
+	<!--								android:layout_width="wrap_content"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:text="Request"-->
+	<!--								android:textAlignment="center"-->
+	<!--								android:textSize="18sp" />-->
+	<!--						</LinearLayout>-->
+	<!--					</TableRow>-->
+	<!--					-->
+	<!--					<TableRow-->
+	<!--						android:layout_width="match_parent"-->
+	<!--						android:layout_height="match_parent">-->
+	<!--						-->
+	<!--						-->
+	<!--						<LinearLayout-->
+	<!--							android:layout_width="0dp"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1"-->
+	<!--							android:gravity="center"-->
+	<!--							android:orientation="vertical"-->
+	<!--							android:padding="10dp">-->
+	<!--							-->
+	<!--							<ImageView-->
+	<!--								android:layout_width="match_parent"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:layout_marginLeft="20dp"-->
+	<!--								android:layout_marginRight="20dp"-->
+	<!--								android:adjustViewBounds="true"-->
+	<!--								android:onClick="viewMyPostsNavigation"-->
+	<!--								app:srcCompat="@drawable/post_icon" />-->
+	<!--							-->
+	<!--							<TextView-->
+	<!--								style="@style/Title"-->
+	<!--								android:layout_width="wrap_content"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:text="Bài viết của tôi"-->
+	<!--								android:textAlignment="center"-->
+	<!--								android:textSize="18sp" />-->
+	<!--						</LinearLayout>-->
+	<!--						-->
+	<!--						<LinearLayout-->
+	<!--							android:layout_width="0dp"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1"-->
+	<!--							android:gravity="center"-->
+	<!--							android:orientation="vertical"-->
+	<!--							android:padding="10dp">-->
+	<!--							-->
+	<!--							<ImageView-->
+	<!--								android:layout_width="match_parent"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:layout_marginLeft="20dp"-->
+	<!--								android:layout_marginRight="20dp"-->
+	<!--								android:adjustViewBounds="true"-->
+	<!--								android:onClick="viewSettingAccountNavigation"-->
+	<!--								app:srcCompat="@drawable/account_setting_icon" />-->
+	<!--							-->
+	<!--							<TextView-->
+	<!--								style="@style/Title"-->
+	<!--								android:layout_width="wrap_content"-->
+	<!--								android:layout_height="wrap_content"-->
+	<!--								android:text="Tài Khoản"-->
+	<!--								android:textAlignment="center"-->
+	<!--								android:textSize="18sp" />-->
+	<!--						</LinearLayout>-->
+	<!--						-->
+	<!--						<Space-->
+	<!--							android:layout_width="wrap_content"-->
+	<!--							android:layout_height="wrap_content"-->
+	<!--							android:layout_weight="1" />-->
+	<!--					</TableRow>-->
+	<!--					-->
+	<!--					<TableRow-->
+	<!--						android:layout_width="match_parent"-->
+	<!--						android:layout_height="match_parent">-->
+	<!--					-->
+	<!--					-->
+	<!--					</TableRow>-->
+	<!--				-->
+	<!--				</TableLayout>-->
+	<!--			-->
+	<!--			</LinearLayout>-->
+	<!--		</LinearLayout>-->
+	<!--	-->
+	<!--	</ScrollView>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

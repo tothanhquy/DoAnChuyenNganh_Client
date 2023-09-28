@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Title">
+		<item name="android:color">?attr/colorTitle</item>
+		<item name="android:fontFamily">?attr/fontTitle</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+	</style>
+	<style name="Content">
+		<item name="android:color">?attr/colorContent</item>
+		<item name="android:fontFamily">?attr/fontContent</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:paddingTop">3dp</item>
+		<item name="android:paddingBottom">3dp</item>
+		<item name="android:paddingLeft">6dp</item>
+		<item name="android:paddingRight">6dp</item>
+	</style>
+	<style name="ArtText">
+		<item name="android:color">?attr/colorTitle</item>
+		<item name="android:fontFamily">?attr/fontArt</item>
+		<item name="android:textSize">24sp</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:paddingLeft">10dp</item>
+		<item name="android:paddingRight">10dp</item>
+	</style>
+	<style name="IconText">
+		<item name="android:color">?attr/colorTitle</item>
+		<item name="android:fontFamily">?attr/fontTitle</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_margin">5dp</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:paddingStart">15dp</item>
+		<item name="android:paddingEnd">15dp</item>
+		<item name="android:textAlignment">center</item>
+		<item name="android:background">@drawable/icon_btn_bg</item>
+	</style>
+</resources>

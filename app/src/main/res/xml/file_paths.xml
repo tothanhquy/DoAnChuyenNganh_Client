@@ -1,0 +1,6 @@
+
+<paths>
+	<external-files-path
+		name="demo_images"
+		path="." />
+</paths>

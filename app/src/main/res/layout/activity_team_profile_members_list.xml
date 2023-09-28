@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/teamProfileMembersListActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.team_profile.TeamProfileViewMembersListActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/teamProfileMembersListActivityRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+	
+	<LinearLayout
+		android:id="@+id/teamProfileMembersListActivityOptions"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="3dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+		
+		<View
+			android:id="@+id/view2"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:onClick="closeOptions" />
+		
+		<LinearLayout
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tùy chọn"
+					android:textAlignment="center" />
+				
+				<Button
+					android:id="@+id/teamProfileMembersListActivityOptionDeleteMember"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="deleteMember"
+					android:text="Xóa thành viên"
+					android:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileMembersListActivityOptionClose"
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeOptions"
+					android:text="Đóng" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

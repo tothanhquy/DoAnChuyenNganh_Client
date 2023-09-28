@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/myUserProfileCVActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/light_blue_900"
+	tools:context=".view.user_profile.MyUserProfileCVActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:contentDescription="main menu content"
+		android:elevation="1dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:orientation="vertical">
+				
+				<TextView
+					android:id="@+id/textView"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tên CV" />
+				
+				<EditText
+					android:id="@+id/myUserProfileCVActivityName"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:ems="10"
+					android:hint="tên cv"
+					android:inputType="textPersonName" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:orientation="vertical">
+				
+				<Switch
+					android:id="@+id/myUserProfileCVActivityIsActive"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Kích hoạt" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:orientation="vertical">
+				
+				<TextView
+					android:id="@+id/myUserProfileCVActivityFileName"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="" />
+				
+				<Button
+					android:id="@+id/button5"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="getFile"
+					android:text="Chọn file pdf từ thiết bị" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:orientation="vertical">
+				
+				<Button
+					android:id="@+id/myUserProfileCVActivityViewPDF"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewPDFCV"
+					android:text="Xem CV dạng pdf" />
+				
+				<Space
+					android:layout_width="match_parent"
+					android:layout_height="200dp" />
+				
+				<Button
+					android:id="@+id/myUserProfileCVActivityDeleteCV"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="deleteThisCV"
+					android:text="Xóa CV này" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

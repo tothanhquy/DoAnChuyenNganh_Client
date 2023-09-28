@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/myUserProfileEditSkillsActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.user_profile.MyUserProfileEditSkillsActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:contentDescription="main menu content"
+		android:elevation="1dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			android:id="@+id/myUserProfileEditSkillsMainContainer"
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingBottom="1000dp"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Danh sách kỹ năng đã chọn"
+					android:textAlignment="center" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/myUserProfileEditSkillsActivitySkillsSelected"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:overScrollMode="never">
+				
+				</androidx.recyclerview.widget.RecyclerView>
+				
+				<Button
+					style="@style/ActionBtn2"
+					android:onClick="toggleShowSelectedSkillsContainer"
+					android:text="Ẩn/Hiện danh sách" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center"
+					android:orientation="horizontal">
+					
+					<EditText
+						android:id="@+id/myUserProfileEditSkillsActivitySearchInput"
+						style="@style/Input"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:ems="10"
+						android:hint="c, java, kotlin, ..."
+						android:inputType="textPersonName" />
+					
+					<Button
+						android:id="@+id/button6"
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="5dp"
+						android:onClick="search"
+						android:text="Tìm" />
+				</LinearLayout>
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Danh sách tất cả kỹ năng"
+					android:textAlignment="center" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/myUserProfileEditSkillsActivityAllSkills"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:overScrollMode="never" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

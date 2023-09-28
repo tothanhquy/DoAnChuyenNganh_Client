@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="MainScrollView">
+		<item name="android:background">@color/background_screen</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="layout_constraintLeft_toLeftOf">parent</item>
+		<item name="layout_constraintRight_toRightOf">parent</item>
+		<item name="layout_constraintTop_toTopOf">parent</item>
+		<item name="layout_constraintBottom_toBottomOf">parent</item>
+		<item name="android:focusableInTouchMode">true</item>
+		<item name="android:focusable">true</item>
+	</style>
+	<style name="MainScrollViewChildContainer">
+<!--		<item name="android:paddingTop">@dimen/main_screen_space_size</item>-->
+<!--		<item name="android:paddingBottom">@dimen/main_screen_space_size</item>-->
+<!--		<item name="android:paddingLeft">@dimen/main_screen_space_size</item>-->
+<!--		<item name="android:paddingRight">@dimen/main_screen_space_size</item>-->
+		<item name="android:background">@color/transparent</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="Container">
+		<item name="android:background">@color/background_container</item>
+		<item name="android:layout_marginTop">15dp</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:padding">10dp</item>
+<!--		<item name="android:paddingBottom">@dimen/main_screen_space_size</item>-->
+<!--		<item name="android:paddingLeft">@dimen/main_screen_space_size</item>-->
+<!--		<item name="android:paddingRight">@dimen/main_screen_space_size</item>-->
+	</style>
+	<style name="ContainerTitle">
+		<item name="android:layout_marginTop">5dp</item>
+		<item name="android:layout_marginBottom">15dp</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:orientation">horizontal</item>
+		<item name="android:gravity">center</item>
+	</style>
+	<style name="MainLinearLayout">
+		<item name="android:background">@color/background_container</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:padding">10dp</item>
+		<item name="layout_constraintLeft_toLeftOf">parent</item>
+		<item name="layout_constraintRight_toRightOf">parent</item>
+		<item name="layout_constraintTop_toTopOf">parent</item>
+		<item name="layout_constraintBottom_toBottomOf">parent</item>
+		<item name="android:focusableInTouchMode">true</item>
+		<item name="android:focusable">true</item>
+	</style>
+	<style name="MainOptionsLayout">
+		<item name="android:background">@color/background_screen_opacity</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="layout_constraintLeft_toLeftOf">parent</item>
+		<item name="layout_constraintRight_toRightOf">parent</item>
+		<item name="layout_constraintTop_toTopOf">parent</item>
+		<item name="layout_constraintBottom_toBottomOf">parent</item>
+		<item name="android:focusableInTouchMode">true</item>
+		<item name="android:focusable">true</item>
+	</style>
+	<style name="MainOptionsContainer">
+		<item name="android:background">@drawable/main_options_container_bg</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+<!--		<item name="android:paddingTop">30dp</item>-->
+<!--		<item name="android:padding">10dp</item>-->
+	</style>
+</resources>

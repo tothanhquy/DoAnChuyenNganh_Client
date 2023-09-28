@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+	<item>
+		<shape android:shape="rectangle">
+			<solid android:color="?attr/colorActionBtn"/>
+			<stroke android:color="?attr/backgroundActionBtn" android:width="2dp"></stroke>
+			<corners android:radius="@dimen/btn_radius" />
+		</shape>
+	</item>
+</layer-list>

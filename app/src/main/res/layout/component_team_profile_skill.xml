@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:gravity="center"
+	android:paddingStart="10dp">
+	
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/componentTeamProfileSkillImage"
+		style="@style/SkillImage"
+		tools:srcCompat="@tools:sample/avatars" />
+	
+	<TextView
+		android:id="@+id/componentTeamProfileSkillNumber"
+		style="@style/Label"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="2"
+		tools:text="20" />
+</LinearLayout>

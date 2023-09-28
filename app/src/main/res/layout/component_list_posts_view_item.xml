@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	style="@style/Container"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="10dp"
+	android:gravity="center_vertical"
+	android:orientation="vertical">
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+		
+		<TextView
+			android:id="@+id/componentListPostsItemPostTime"
+			style="@style/Label"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="date time" />
+		
+		<ImageView
+			android:id="@+id/componentListPostsItemInactive"
+			style="@style/IconImage"
+			app:srcCompat="@drawable/hidden_icon" />
+		
+		<ImageView
+			android:id="@+id/componentListPostsItemSave"
+			style="@style/IconImage"
+			app:srcCompat="@drawable/save_icon" />
+	</LinearLayout>
+	
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+		
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/componentListPostsItemAvatar"
+			style="@style/MediumSmallAvatar"
+			tools:srcCompat="@tools:sample/avatars" />
+		
+		<TextView
+			android:id="@+id/componentListPostsItemName"
+			style="@style/Title"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:text="name" />
+		
+		<ImageView
+			android:id="@+id/componentListPostsItemOption"
+			style="@style/IconImage"
+			app:srcCompat="@drawable/dots_icon" />
+	
+	</LinearLayout>
+	
+	<TextView
+		android:id="@+id/componentListPostsItemContent"
+		style="@style/Content"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="content" />
+	
+	<LinearLayout
+		android:id="@+id/componentListPostsItemImagesContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		
+		<ImageView
+			android:id="@+id/componentListPostsItemImage1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:adjustViewBounds="true"
+			tools:srcCompat="@tools:sample/avatars" />
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+			
+			<ImageView
+				android:id="@+id/componentListPostsItemImage2"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:adjustViewBounds="true"
+				tools:srcCompat="@tools:sample/avatars" />
+			
+			<ImageView
+				android:id="@+id/componentListPostsItemImage3"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:adjustViewBounds="true"
+				tools:srcCompat="@tools:sample/avatars" />
+			
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:id="@+id/componentListPostsItemImage4Block"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:visibility="visible">
+				
+				<ImageView
+					android:id="@+id/componentListPostsItemImage4"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:adjustViewBounds="true"
+					android:elevation="2dp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<TextView
+					android:id="@+id/componentListPostsItemImage4Text"
+					style="@style/Title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:elevation="3dp"
+					android:text="+7"
+					android:textColor="@color/white"
+					android:textSize="48sp"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+			</androidx.constraintlayout.widget.ConstraintLayout>
+		
+		</LinearLayout>
+	
+	</LinearLayout>
+</LinearLayout>

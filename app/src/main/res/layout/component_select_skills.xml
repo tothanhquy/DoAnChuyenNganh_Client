@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:gravity="center_vertical">
+	
+	<ImageView
+		android:id="@+id/componentSelectSkillsNotCheck"
+		style="@style/IconImage"
+		app:srcCompat="@drawable/record_icon" />
+	
+	<ImageView
+		android:id="@+id/componentSelectSkillsChecked"
+		style="@style/IconImage"
+		app:srcCompat="@drawable/tick_icon" />
+	
+	<ImageView
+		android:id="@+id/componentSelectSkillsImage"
+		style="@style/SkillImage"
+		tools:srcCompat="@tools:sample/avatars" />
+	
+	<TextView
+		android:id="@+id/componentSelectSkillsName"
+		style="@style/Label"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:text="TextView" />
+
+</LinearLayout>

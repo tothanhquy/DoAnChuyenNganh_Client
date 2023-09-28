@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/myUserProfileActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppThemeFullscreen"
+	tools:context=".view.user_profile.MyUserProfileActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:contentDescription="main menu content"
+		android:elevation="1dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="bottom|center"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:layout_marginBottom="20dp"
+					android:gravity="bottom|center_horizontal"
+					android:orientation="horizontal">
+					
+					<Space style="@style/IconBtn" />
+					
+					<com.google.android.material.imageview.ShapeableImageView
+						android:id="@+id/myUserProfileActivityAvatar"
+						style="@style/UserAvatarProfile"
+						android:layout_width="200dp"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="30dp"
+						tools:srcCompat="@drawable/logo_icon" />
+					
+					<ImageButton
+						style="@style/IconBtn"
+						android:layout_width="60dp"
+						android:layout_marginBottom="30dp"
+						android:onClick="changeAvatar"
+						android:translationX="-50dp"
+						android:translationY="-10dp"
+						app:srcCompat="@drawable/edit_icon" />
+				
+				</LinearLayout>
+				
+				<Button
+					style="@style/ActionBtn2"
+					android:layout_margin="10dp"
+					android:onClick="viewAsGuestNavigation"
+					android:text="Xem như khách" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:gravity="center_horizontal"
+				android:orientation="vertical"
+				tools:visibility="gone">
+				
+				<LinearLayout style="@style/ContainerTitle">
+					
+					<TextView
+						style="@style/Title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="Thông tin cơ bản" />
+					
+					<Button
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:onClick="editInfoNavigation"
+						android:text="Chỉnh sửa" />
+				</LinearLayout>
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tên" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoName"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="name" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Năm sinh" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoBirthYear"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="birth year" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Châm ngôn" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoMaxim"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="maxim" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Liên lạc" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoContact"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="contact" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Mục tiêu nghề nghiệp" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoCareerTarget"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="career target" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Học vấn" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoEducation"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="education" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Kinh nghiệm làm việc" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoWorkExperience"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="work experience" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Mô tả" />
+				
+				<TextView
+					android:id="@+id/myUserProfileActivityInfoDescription"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="description" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:orientation="vertical"
+				tools:visibility="gone">
+				
+				<LinearLayout style="@style/ContainerTitle">
+					
+					<TextView
+						style="@style/Title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="Kỹ năng" />
+					
+					<Button
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:onClick="editSkillsNavigation"
+						android:text="Chỉnh sửa" />
+				</LinearLayout>
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/myUserProfileActivitySkillsContainer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:scrollbars="none" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginBottom="100dp"
+				android:orientation="vertical">
+				
+				<LinearLayout style="@style/ContainerTitle">
+					
+					<TextView
+						style="@style/Title"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="CV" />
+					
+					<Button
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:onClick="createCVNavigation"
+						android:text="Tạo CV" />
+				</LinearLayout>
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/myUserProfileActivityCVsContainer"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:scrollbars="none" />
+			
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

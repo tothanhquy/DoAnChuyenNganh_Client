@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="Theme">
+		<attr  name="fontArt" format="reference" />
+		<attr  name="fontTitle" format="reference" />
+		<attr  name="fontLabel" format="reference" />
+		<attr  name="fontInput" format="reference" />
+		<attr  name="fontButton" format="reference" />
+		<attr  name="fontContent" format="reference" />
+		<attr  name="fontContentItalic" format="reference" />
+		
+		<attr  name="colorBarTitle" format="reference" />
+		<attr  name="backgroundBarTitle" format="reference" />
+		<attr  name="colorTitle" format="reference" />
+		<attr  name="colorContent" format="reference" />
+		<attr  name="colorLabel" format="reference" />
+		<attr  name="colorInput" format="reference" />
+		<attr  name="backgroundActionBtn" format="reference" />
+		<attr  name="background2ActionBtn" format="reference" />
+		<attr  name="colorActionBtn" format="reference" />
+		<attr  name="color2ActionBtn" format="reference" />
+		<attr  name="backgroundWarningBtn" format="reference" />
+		<attr  name="background2WarningBtn" format="reference" />
+		<attr  name="colorWarningBtn" format="reference" />
+		<attr  name="backgroundCloseBtn" format="reference" />
+		<attr  name="background2CloseBtn" format="reference" />
+		<attr  name="colorCloseBtn" format="reference" />
+		
+		<attr  name="backgroundScreen" format="reference" />
+		<attr  name="backgroundScreenDark" format="reference" />
+		<attr  name="backgroundContainer" format="reference" />
+		
+		<attr  name="borderColorUserAvatar" format="reference" />
+		<attr  name="borderColorTeamAvatar" format="reference" />
+	</declare-styleable>
+	
+	
+	
+	
+</resources>

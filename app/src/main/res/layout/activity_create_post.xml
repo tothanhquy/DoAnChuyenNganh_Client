@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/createPostActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.post.CreatePostActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:paddingBottom="500dp"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/transparent"
+				android:gravity="center"
+				android:orientation="horizontal"
+				tools:visibility="visible">
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/createPostActivityAvatar"
+					style="@style/MediumSmallAvatar"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<TextView
+					android:id="@+id/createPostActivityName"
+					style="@style/Title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="name" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nội dung" />
+				
+				<EditText
+					android:id="@+id/createPostActivityContent"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:ems="10"
+					android:inputType="textMultiLine"
+					android:textAlignment="viewStart"
+					tools:text="da nsd as da sdansjda nad " />
+				
+				<!--				<com.google.android.material.textfield.TextInputLayout-->
+				<!--					style="@style/Input"-->
+				<!--					android:layout_width="match_parent"-->
+				<!--					android:layout_height="wrap_content"-->
+				<!--					android:textAlignment="textStart">-->
+				<!--					-->
+				<!--					<com.google.android.material.textfield.TextInputEditText-->
+				<!--						android:id="@+id/createPostActivityContent"-->
+				<!--						android:layout_width="match_parent"-->
+				<!--						android:layout_height="300dp"-->
+				<!--						android:hint="Nội dung"-->
+				<!--						android:inputType="textMultiLine"-->
+				<!--						android:textAlignment="viewStart"-->
+				<!--						tools:text="dajn kdnasnd kanskd a" />-->
+				<!--					-->
+				<!--					<EditText-->
+				<!--						android:id="@+id/editTextTextPersonName"-->
+				<!--						android:layout_width="wrap_content"-->
+				<!--						android:layout_height="wrap_content"-->
+				<!--						android:layout_weight="1"-->
+				<!--						android:ems="10"-->
+				<!--						android:inputType="textPersonName"-->
+				<!--						android:text="Name" />-->
+				<!--				</com.google.android.material.textfield.TextInputLayout>-->
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/createPostActivityUploadImages"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent">
+				
+				</androidx.recyclerview.widget.RecyclerView>
+				
+				<Button
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="uploadImage"
+					android:text="Chọn ảnh"
+					android:visibility="visible" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<Button
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="createPost"
+					android:text="Tạo bài đăng" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

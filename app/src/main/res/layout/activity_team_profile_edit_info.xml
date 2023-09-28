@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/teamProfileEditInfoActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.team_profile.TeamProfileEditInfoActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="500dp"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tên đội" />
+				
+				<EditText
+					android:id="@+id/teamProfileEditInfoActivityName"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:ems="10"
+					android:hint="tên đội"
+					android:inputType="text" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Châm ngôn" />
+				
+				<EditText
+					android:id="@+id/teamProfileEditInfoActivityMaxim"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:ems="10"
+					android:gravity="start|top"
+					android:hint="châm ngôn"
+					android:inputType="textMultiLine" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Mô tả" />
+				
+				<EditText
+					android:id="@+id/teamProfileEditInfoActivityDescription"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:ems="10"
+					android:gravity="start|top"
+					android:hint="mô tả"
+					android:inputType="textMultiLine" />
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Thông tin nội bộ" />
+				
+				<EditText
+					android:id="@+id/teamProfileEditInfoActivityInternalInfo"
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:ems="10"
+					android:gravity="start|top"
+					android:hint="thông tin nội bộ"
+					android:inputType="textMultiLine" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

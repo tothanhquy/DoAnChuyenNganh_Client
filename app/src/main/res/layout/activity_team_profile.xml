@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/teamProfileActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.team_profile.TeamProfileActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="bottom|center_horizontal"
+				android:orientation="horizontal">
+				
+				<ImageView
+					style="@style/IconBtn"
+					android:visibility="invisible"
+					app:srcCompat="@drawable/dots_icon" />
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/teamProfileActivityLeaderAvatar"
+					style="@style/MediumAvatar"
+					android:layout_gravity="center"
+					android:clickable="true"
+					android:contentDescription="leader avatar"
+					android:onClick="openLeaderProfileNavigation"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/teamProfileActivityTeamAvatar"
+					style="@style/TeamAvatarProfile"
+					android:layout_marginTop="10dp"
+					android:layout_marginBottom="30dp"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<ImageView
+					style="@style/IconBtn"
+					android:onClick="openOptions"
+					android:translationX="-40dp"
+					app:srcCompat="@drawable/dots_icon" />
+				
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:orientation="vertical" />
+			
+			</LinearLayout>
+			
+			<TextView
+				android:id="@+id/teamProfileActivityTeamName"
+				style="@style/Title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="name"
+				android:textAlignment="center" />
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/teamProfileActivityMembers"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				tools:visibility="visible">
+			
+			</androidx.recyclerview.widget.RecyclerView>
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/teamProfileActivitySkills"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal"
+				tools:visibility="visible">
+			
+			</androidx.recyclerview.widget.RecyclerView>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Châm ngôn" />
+				
+				<TextView
+					android:id="@+id/teamProfileActivityTeamMaxim"
+					style="@style/Content"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="maxim" />
+				
+				<TextView
+					style="@style/Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Mô tả" />
+				
+				<TextView
+					android:id="@+id/teamProfileActivityTeamDescription"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="description" />
+				
+				<TextView
+					android:id="@+id/teamProfileActivityTeamInternalInfo"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="internal info" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+	
+	<ScrollView
+		android:id="@+id/teamProfileActivityOptions"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="3dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionViewRequestOfTeam"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewRequestsOfTeamNavigation"
+					android:text="Xem các Request của đội"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionViewMember"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewMembersNavigation"
+					android:text="Xem các thành viên"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewPostsNavigation"
+					android:text="Xem các bài đăng của đội"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionCreateJoinRequest"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="createJoinRequestNavigation"
+					android:text="Tạo Request gia nhập"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionCreatePost"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="createPostNavigation"
+					android:text="Tạo bài đăng"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionEditAvatar"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="changeAvatar"
+					android:text="Đổi ảnh Avatar"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionEditInfo"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="openEditInfoNavigation"
+					android:text="Đổi thông tin đội"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionClose"
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeOptions"
+					android:text="Đóng"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/teamProfileActivityOptionExitTeam"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="200dp"
+					android:onClick="exitTeamNavigation"
+					android:text="Thoát đội"
+					android:visibility="gone"
+					tools:visibility="visible" />
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	</ScrollView>
+	
+	<ScrollView
+		android:id="@+id/teamProfileActivityChooseNewLeader"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="team Profile Activity Choose New Leader"
+		android:elevation="4dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Danh sách chọn leader thay thế"
+					android:textAlignment="center" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/teamProfileActivityChooseNewLeaderRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<Button
+					style="@style/CloseBtn"
+					android:onClick="closeNewLeaderSelect"
+					android:text="Đóng" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
