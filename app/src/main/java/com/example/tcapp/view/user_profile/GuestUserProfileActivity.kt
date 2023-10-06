@@ -19,6 +19,7 @@ import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.user_profile.UserProfileModels
 import com.example.tcapp.view.adapter_view.*
+import com.example.tcapp.view.friend.CreateFriendRequestActivity
 import com.example.tcapp.view.request.CreateRequestActivity
 import com.example.tcapp.view.team_profile.TeamProfileEditInfoActivity
 import com.example.tcapp.viewmodel.user_profile.GuestUserProfileViewModel
@@ -101,7 +102,7 @@ class GuestUserProfileActivity : CoreActivity() {
 		viewModelObject.notification.observe(this, Observer {
 			runOnUiThread {
 				if(it!=null){
-					super.showNotificationDialog(it.title,it.contents,null)
+					super.showNotificationDialog(it.title,it.contents,it.listener)
 				}
 			}
 		})
@@ -207,10 +208,17 @@ class GuestUserProfileActivity : CoreActivity() {
 		startActivity(intent)
 	}
 	fun optionAddFriend(view:View){
-	
+		val intent = Intent(applicationContext , CreateFriendRequestActivity::class.java)
+		intent.putExtra("userId", idAccount);
+		intent.putExtra("userName", nameOfAccount);
+		intent.putExtra("userAvatar", avatarOfAccount);
+		startActivity(intent)
 	}
 	fun optionCancelFriend(view:View){
-	
+		viewModelObject.cancelFriend(idAccount,::cancelFriendOkCallback);
+	}
+	fun cancelFriendOkCallback(){
+		loadData()
 	}
 	fun optionChat(view:View){
 	

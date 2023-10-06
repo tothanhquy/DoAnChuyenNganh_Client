@@ -25,7 +25,7 @@
 			android:adjustViewBounds="true"
 			android:scaleType="centerInside"
 			app:srcCompat="@drawable/welcome_bg" />
-		
+
 		<TextView
 			android:id="@+id/textView9"
 			android:layout_width="wrap_content"
@@ -33,10 +33,10 @@
 			android:layout_margin="20dp"
 			android:fontFamily="?attr/fontArt"
 			android:includeFontPadding="false"
-			android:text="Welcome to StartupMap"
+			android:text="Welcome to TCaPP"
 			android:textColor="@color/logo_color_1"
 			android:textSize="24sp" />
-		
+
 		<TextView
 			android:id="@+id/textView10"
 			android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
 			android:layout_margin="20dp"
 			android:fontFamily="?attr/fontArt"
 			android:includeFontPadding="false"
-			android:text="là một diễn đàn kết nối bạn và đội tiềm năng"
+			android:text="là một diễn đàn kết nối đội nhóm và quảng bá dự án"
 			android:textColor="@color/theme_color_1"
 			android:textSize="16sp" />
 		

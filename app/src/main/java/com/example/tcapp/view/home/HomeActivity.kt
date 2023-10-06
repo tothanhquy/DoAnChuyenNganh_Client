@@ -14,12 +14,14 @@ import com.example.tcapp.core.LocalData
 import com.example.tcapp.view.account.LoginAccountActivity
 import com.example.tcapp.view.account.RegisterAccountActivity
 import com.example.tcapp.view.account.SettingAccountActivity
+import com.example.tcapp.view.friend.MyFriendAndRequestsListActivity
 import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.post.UserPostsActivity
 import com.example.tcapp.view.request.RequestsListActivity
 import com.example.tcapp.view.team_profile.MyTeamsActivity
 import com.example.tcapp.view.user_profile.MyUserProfileActivity
 import com.example.tcapp.view.welcome.WelcomeActivity
+import com.example.tcapp.viewmodel.friend.MyFriendAndRequestsListViewModel
 import com.example.tcapp.viewmodel.home.HomeViewModel
 
 
@@ -163,6 +165,10 @@ class HomeActivity : CoreActivity() {
 	}
 	fun viewSettingAccountNavigation(view: View){
 		val intent = Intent(applicationContext , SettingAccountActivity::class.java)
+		startActivity(intent)
+	}
+	fun viewMyFriendAndRequestsListNavigation(view: View){
+		val intent = Intent(applicationContext , MyFriendAndRequestsListActivity::class.java)
 		startActivity(intent)
 	}
 	fun requestVerifyEmail(view: View){

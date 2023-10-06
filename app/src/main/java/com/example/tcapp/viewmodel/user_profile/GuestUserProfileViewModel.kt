@@ -1,5 +1,6 @@
 package com.example.tcapp.viewmodel.user_profile
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -142,5 +143,44 @@ class GuestUserProfileViewModel (private val context : Context){
 			_guestProfile.postValue(profile)
 		}
 	}
-	
+
+	public fun cancelFriend(friendId:String?,callback:()->Unit){
+		if(friendId==null){
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+			return;
+		}
+		_isLoading.postValue(true)
+		Thread {
+			cancelFriendPost(friendId!!,callback)
+		}.start()
+	}
+	private fun cancelFriendPost(friendId:String,callback:()->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.post(
+					url = API.getBaseUrl() + "/Friend/CancelFriend",
+					cookies = mapOf("auth" to API.getAuth(context)),
+					data = mapOf("friend_id" to friendId)
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					_notification.postValue(AlertDialog.Notification("Success!","Cancel friend complete.",fun(dia: DialogInterface, i:Int){callback();}))
+				}else{
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+	}
 }

@@ -241,13 +241,13 @@ class RequestsListActivity : CoreActivity() {
 		methodStatus = method;
 		if(method==RequestModels.RequestMethod.SEND){
 			navSendView!!.paintFlags = navSendView!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG;
-			navReceiveView!!.paintFlags =  navSendView!!.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv();
+			navReceiveView!!.paintFlags =  navReceiveView!!.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv();
 			requestsListSendContainerAdapter!!.setFilter(filterIsImportant,filterNotImportant,filterWasReaded,filterNotRead);
 			findViewById<ViewGroup>(R.id.requestsListActivitySendContainer).visibility = View.VISIBLE;
 			findViewById<ViewGroup>(R.id.requestsListActivityReceiveContainer).visibility = View.GONE;
 		}else{
 			navSendView!!.paintFlags = navSendView!!.paintFlags and Paint.UNDERLINE_TEXT_FLAG.inv();
-			navReceiveView!!.paintFlags =  navSendView!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG;
+			navReceiveView!!.paintFlags =  navReceiveView!!.paintFlags or Paint.UNDERLINE_TEXT_FLAG;
 			requestsListReceiveContainerAdapter!!.setFilter(filterIsImportant,filterNotImportant,filterWasReaded,filterNotRead);
 			findViewById<ViewGroup>(R.id.requestsListActivityReceiveContainer).visibility = View.VISIBLE;
 			findViewById<ViewGroup>(R.id.requestsListActivitySendContainer).visibility = View.GONE;

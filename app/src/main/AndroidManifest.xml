@@ -10,11 +10,10 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TCaPP"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -109,6 +108,16 @@
             android:exported="false" />
         <activity
             android:name=".view.post.UserPostsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.friend.MyFriendAndRequestsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.friend.ViewFriendRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.friend.CreateFriendRequestActivity"
             android:exported="false" />
     </application>
 

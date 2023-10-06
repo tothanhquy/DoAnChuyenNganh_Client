@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/viewFriendRequestActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.friend.ViewFriendRequestActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				tools:visibility="visible">
+
+				<TextView
+					android:id="@+id/viewFriendRequestActivityRequestTime"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="request time" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/transparent"
+				android:gravity="center"
+				android:onClick="openUser"
+				android:orientation="horizontal"
+				tools:visibility="visible">
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/viewFriendRequestActivityUserAvatar"
+					style="@style/MediumSmallAvatar"
+					android:layout_height="wrap_content"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<TextView
+					android:id="@+id/viewFriendRequestActivityUserName"
+					style="@style/Title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="user name" />
+			
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nội dung" />
+				
+				<TextView
+					android:id="@+id/viewFriendRequestActivityContent"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="content" />
+			</LinearLayout>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				
+				<Button
+					android:id="@+id/viewFriendRequestActivityOptionAgree"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="agreeRequest"
+					android:text="Đồng ý kết bạn"
+					android:visibility="gone"
+					tools:visibility="visible" />
+				
+				<Button
+					android:id="@+id/viewFriendRequestActivityOptionDisagree"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="disagreeRequest"
+					android:text="Từ chối kết bạn"
+					android:visibility="gone"
+					tools:visibility="visible" />
+
+				<Button
+					android:id="@+id/viewFriendRequestActivityOptionCancel"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="cancelRequest"
+					android:text="Hủy bỏ yêu cầu"
+					android:visibility="gone"
+					tools:visibility="visible" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

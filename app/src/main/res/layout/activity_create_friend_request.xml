@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/createFriendRequestActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.friend.CreateFriendRequestActivity"
+	tools:viewBindingIgnore="true">
+
+	<LinearLayout
+		style="@style/MainLinearLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<LinearLayout
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/createFriendRequestActivityAvatar"
+					style="@style/MediumSmallAvatar"
+					tools:srcCompat="@tools:sample/avatars" />
+
+				<TextView
+					android:id="@+id/createFriendRequestActivityName"
+					style="@style/Title"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="user name" />
+
+			</LinearLayout>
+
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Input"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/createFriendRequestActivityContent"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:hint="Nội dung" />
+				</com.google.android.material.textfield.TextInputLayout>
+
+				<Button
+					android:id="@+id/createFriendRequestActivityCreate"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="askCreateRequest"
+					android:text="Tạo yêu cầu kết bạn"
+					android:visibility="visible" />
+			</LinearLayout>
+
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

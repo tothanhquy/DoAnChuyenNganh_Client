@@ -26,7 +26,7 @@ class API {
 		}
 	}
 	companion object{
-		fun getBaseUrl():String { return "http://192.168.1.13:3000"}
+		fun getBaseUrl():String { return "http://192.168.1.14:3000"}
 		
 		fun getAuth(context : Context):String {
 			val localData = LocalData(context);
