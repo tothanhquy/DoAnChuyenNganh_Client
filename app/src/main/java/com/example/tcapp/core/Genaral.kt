@@ -95,6 +95,13 @@ class Genaral {
 					.error(R.drawable.default_team_avatar)
 					.into(imageView)
 		}
+		fun setGroupChatAvatarImage(context : Context,path:String?,imageView : ImageView){
+			if(path!=null&&path!="")
+				Glide.with(context)
+					.load(API.getBaseUrl()+"/static/images/group_chat_avatar/"+path)
+					.error(R.drawable.default_team_avatar)
+					.into(imageView)
+		}
 		fun setSkillImage(context : Context,path:String?,imageView : ImageView){
 			if(path!=null&&path!="")
 				Glide.with(context)
@@ -106,6 +113,28 @@ class Genaral {
 			val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 			dateFormat.timeZone = TimeZone.getDefault()
 			return dateFormat.format(Date(utcTimeMiliSec))
+		}
+		fun getMinimizeDateTimeByUTC(utcTimeMiliSec:Long):String{
+			val now = getMillisecondNow()
+			val yearFormat = SimpleDateFormat("yyyy")
+			yearFormat.timeZone = TimeZone.getDefault()
+			val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+			dateFormat.timeZone = TimeZone.getDefault()
+			val monthDayFormat = SimpleDateFormat("MM-dd")
+			monthDayFormat.timeZone = TimeZone.getDefault()
+			val timeFormat = SimpleDateFormat("HH:mm a")
+			timeFormat.timeZone = TimeZone.getDefault()
+
+			if(yearFormat.format(Date(utcTimeMiliSec)).equals(yearFormat.format(Date(now)))){
+				//out year
+				dateFormat.format(Date(utcTimeMiliSec))
+			}
+			if(dateFormat.format(Date(utcTimeMiliSec)).equals(dateFormat.format(Date(now)))){
+				//out date
+				monthDayFormat.format(Date(utcTimeMiliSec))
+			}
+			//in date
+			return timeFormat.format(Date(utcTimeMiliSec))
 		}
 		fun setupActivityTitleBar(activity: AppCompatActivity){
 		

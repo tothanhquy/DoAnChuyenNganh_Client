@@ -178,4 +178,6 @@
 	
 	<string name="setting_account">Thiết lập tài khoản</string>
 	<string name="change_password">Đổi mật khẩu</string>
+
+	<string name="my_chanel_chats">Kênh chat</string>
 </resources>
