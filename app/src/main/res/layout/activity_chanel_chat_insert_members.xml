@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/chanelChatInsertMembersActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.chanel_chat.ChanelChatInsertMembersActivity"
+	tools:viewBindingIgnore="true">
+
+	<LinearLayout
+		style="@style/MainLinearLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:contentDescription="main menu content">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/chanelChatInsertMembersActivityRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+			</LinearLayout>
+		</ScrollView>
+
+		<Button
+			android:id="@+id/chanelChatInsertMembersActivityInsertBtn"
+			android:onClick="insertMembersClick"
+			style="@style/ActionBtn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Button" />
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

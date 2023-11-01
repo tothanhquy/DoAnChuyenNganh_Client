@@ -92,6 +92,10 @@ const val REQUEST_READ_FILE_PERMISSION_CODE = 1
 //		          set window navigation bar color
 		window.navigationBarColor = backgroundScreenColor
 	}
+	 protected fun setDynamicTitleBar( titleString:String?){
+//		set title bar
+	 		supportActionBar?.title=titleString
+	 }
 	 override fun  onOptionsItemSelected(item: MenuItem):Boolean {
 		val id:Int = item.getItemId();
 

@@ -48,6 +48,7 @@ class ChanelChatModels {
 		public var isGroupOwner:Boolean=false;
 		public var teamId:String?=null;
 		public var friendId:String?=null;
+		public var accountId:String?=null;
 		public var members:ArrayList<Member>? = ArrayList();
 		public var lastTimeMemberSeen:ArrayList<LastTimeMemberSeen>? = ArrayList();
 		constructor(
@@ -58,6 +59,7 @@ class ChanelChatModels {
 			isGroupOwner:Boolean=false,
 			teamId:String?=null,
 			friendId:String?=null,
+			accountId:String?=null,
 			members:ArrayList<Member>? = ArrayList(),
 			lastTimeMemberSeen:ArrayList<LastTimeMemberSeen>? = ArrayList()
 		){
@@ -68,6 +70,7 @@ class ChanelChatModels {
 			this.isGroupOwner=isGroupOwner;
 			this.teamId=teamId;
 			this.friendId=friendId;
+			this.accountId=accountId;
 			this.members=members;
 			this.lastTimeMemberSeen=lastTimeMemberSeen;
 		}
@@ -86,6 +89,25 @@ class ChanelChatModels {
 			this.avatar = avatar;
 		}
 	}
+	class InsertMemberAdapterItem{
+		public var id:String?=null;
+		public var name:String?=null;
+		public var avatar:String?=null;
+		public var wasExist:Boolean = false;
+		public var isCheck:Boolean = false;
+		public var isLoadImage:Boolean = false;
+		constructor(
+			id:String?,
+			name:String?,
+			avatar:String?,
+			wasExist:Boolean=false
+		){
+			this.id = id;
+			this.name = name;
+			this.avatar = avatar;
+			this.wasExist = wasExist;
+		}
+	}
 	class LastTimeMemberSeen{
 		public var userId:String?=null;
 		public var messageId:String?=null;
@@ -95,6 +117,23 @@ class ChanelChatModels {
 		){
 			this.userId = userId;
 			this.messageId = messageId;
+		}
+	}
+	class ChanelChatMembersList{
+		public lateinit var type:Type;
+		public var isGroupOwner:Boolean=false;
+		public var accountId:String?=null;
+		public var members:ArrayList<Member>? = ArrayList();
+		constructor(
+			type:Type,
+			isGroupOwner:Boolean=false,
+			accountId:String?=null,
+			members:ArrayList<Member>? = ArrayList(),
+		){
+			this.type = type;
+			this.isGroupOwner=isGroupOwner;
+			this.accountId=accountId;
+			this.members=members;
 		}
 	}
 }

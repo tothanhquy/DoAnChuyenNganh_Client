@@ -27,6 +27,8 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		get() = _chanelChat
 	public val chanelChatAvatar:LiveData<String?>
 		get() = _chanelChatAvatar
+	public var chanelChatType:ChanelChatModels.Type? = null
+
 //	public val fullMembers: LiveData<ArrayList<TeamProfileModels.Member>?>
 //		get() = _fullMembers
 //	public var members: ArrayList<ChanelChatModels.Member>? = null;
@@ -88,10 +90,12 @@ class ChanelChatDetailsViewModel (private val context : Context){
 			chanelChat.id = if(!oj.isNull("id"))oj.getString("id") else null;
 			chanelChat.name = if(!oj.isNull("name"))oj.getString("name") else null;
 			chanelChat.avatar = if(!oj.isNull("avatar"))oj.getString("avatar") else null;
+			chanelChatType = type
 			_chanelChatAvatar.postValue(chanelChat.avatar)
 			chanelChat.isGroupOwner = if(!oj.isNull("isGroupOwner"))oj.getBoolean("isGroupOwner") else false;
 			chanelChat.friendId = if(!oj.isNull("friendId"))oj.getString("friendId") else null;
 			chanelChat.teamId = if(!oj.isNull("teamId"))oj.getString("teamId") else null;
+			chanelChat.accountId = if(!oj.isNull("accountId"))oj.getString("accountId") else null;
 
 			if(!oj.isNull("members")){
 				val membersOj = oj.getJSONArray("members")
@@ -170,14 +174,14 @@ class ChanelChatDetailsViewModel (private val context : Context){
 
 	}
 
-	public fun changeNewGroupChat(chanelChatId:String?,newGroupChatName:String?,okCallback:(String?)->Unit){
+	public fun changeNewNameGroupChat(chanelChatId:String?,newGroupChatName:String?,okCallback:(String?)->Unit){
 		_isLoading.postValue(true)
 		Thread {
-			changeNewGroupChatAPI(chanelChatId,newGroupChatName,okCallback)
+			changeNewNameGroupChatAPI(chanelChatId,newGroupChatName,okCallback)
 		}.start()
 	}
 
-	private fun changeNewGroupChatAPI(chanelChatId:String?,newGroupChatName:String?,okCallback:(String?)->Unit){
+	private fun changeNewNameGroupChatAPI(chanelChatId:String?,newGroupChatName:String?,okCallback:(String?)->Unit){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(

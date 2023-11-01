@@ -1,12 +1,11 @@
-package com.example.tcapp.viewmodel.team_profile
+package com.example.tcapp.viewmodel.chanel_chat
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tcapp.api.API
 import com.example.tcapp.model.AlertDialog
-import com.example.tcapp.model.team_profile.TeamProfileModels
-import com.example.tcapp.model.user_profile.UserProfileModels
+import com.example.tcapp.model.chanel_chat.ChanelChatModels
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -14,15 +13,15 @@ import org.json.JSONObject
 import java.io.File
 
 
-class TeamProfileViewMembersListViewModel (private val context : Context){
+class ChanelChatViewMembersListViewModel (private val context : Context){
 	private var _isLoading:MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 	private var _error:MutableLiveData<AlertDialog.Error?> = MutableLiveData<AlertDialog.Error?>(null)
 	private var _notification:MutableLiveData<AlertDialog.Notification?> = MutableLiveData<AlertDialog.Notification?>(null)
 	
-	private var _membersView:MutableLiveData<TeamProfileModels.TeamProfileMembersList> = MutableLiveData<TeamProfileModels.TeamProfileMembersList>(null)
+	private var _membersView:MutableLiveData<ChanelChatModels.ChanelChatMembersList> = MutableLiveData<ChanelChatModels.ChanelChatMembersList>(null)
 	private var _memberDeletedId:MutableLiveData<String?> = MutableLiveData<String?>(null)
 	
-	public val membersView: LiveData<TeamProfileModels.TeamProfileMembersList?>
+	public val membersView: LiveData<ChanelChatModels.ChanelChatMembersList?>
 		get() = _membersView
 	public val memberDeletedId: LiveData<String?>
 		get() = _memberDeletedId
@@ -33,24 +32,21 @@ class TeamProfileViewMembersListViewModel (private val context : Context){
 		get() = _error
 	public val notification:LiveData<AlertDialog.Notification?>
 		get() = _notification
-	
-//	public val userProfileAvatarsPath:String = API.getBaseUrl()+"/static/images/users_avatar/"
-	
-	
-	public fun loadData(teamId:String?){
+
+	public fun loadData(chanelChatId:String?){
 		_isLoading.postValue(true)
 		Thread {
-			loadMembersProfile(teamId)
+			loadMembers(chanelChatId)
 		}.start()
 	}
-	private fun loadMembersProfile(teamId:String?){
+	private fun loadMembers(chanelChatId:String?){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.get(
-					url = API.getBaseUrl() + "/TeamProfile/GetMembers",
+					url = API.getBaseUrl() + "/ChanelChat/GetMembers",
 					cookies = mapOf("auth" to API.getAuth(context)),
 					params = mapOf(
-						"id" to (teamId?:"")
+						"id_chanel_chat" to (chanelChatId?:"")
 					)
 				)
 			)
@@ -76,21 +72,27 @@ class TeamProfileViewMembersListViewModel (private val context : Context){
 	}
 	private fun  handleResMembers(oj: JSONObject?){
 		if(oj!=null){
-			val memberView = TeamProfileModels.TeamProfileMembersList();
-			memberView.isLeader=
-				!oj.isNull("isLeader")&&oj.getBoolean("isLeader")
-			
-			val members = ArrayList<TeamProfileModels.Member>();
+			val typeString = if(!oj.isNull("type"))oj.getString("type") else null
+			val type = if(typeString.equals("team")) ChanelChatModels.Type.Team else
+				if(typeString.equals("user")) ChanelChatModels.Type.User else
+					ChanelChatModels.Type.Group;
+
+			val memberView = ChanelChatModels.ChanelChatMembersList(type);
+			memberView.isGroupOwner=
+				if(!oj.isNull("isGroupOwner"))oj.getBoolean("isGroupOwner") else false;
+			memberView.accountId=
+				if(!oj.isNull("accountId"))oj.getString("accountId") else null;
+
+			val members = ArrayList<ChanelChatModels.Member>();
 			if(!oj.isNull("members")){
 				val membersObject = oj.getJSONArray("members")
 				for (i in 0 until membersObject.length()) {
 					val member = membersObject.getJSONObject(i);
 					members!!.add(
-						TeamProfileModels.Member(
-							member.getString("id"),
-							member.getString("name"),
+						ChanelChatModels.Member(
+							if(!member.isNull("id"))member.getString("id") else null,
+							if(!member.isNull("name"))member.getString("name") else null,
 							if(!member.isNull("avatar"))member.getString("avatar") else null,
-							member.getBoolean("isLeader")
 						)
 					);
 				}
@@ -100,22 +102,22 @@ class TeamProfileViewMembersListViewModel (private val context : Context){
 		}
 	}
 	
-	public fun deleteMember(memberId:String?,teamId:String?){
+	public fun deleteMember(memberId:String?,chanelChatId:String?){
 		_isLoading.postValue(true)
 		Thread {
-			createNewTeamAPI(memberId,teamId)
+			deleteMemberAPI(memberId,chanelChatId)
 		}.start()
 	}
 	
-	private fun createNewTeamAPI(memberId:String?,teamId:String?){
+	private fun deleteMemberAPI(memberId:String?,chanelChatId:String?){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(
-					url = API.getBaseUrl() + "/TeamProfile/DeleteMember",
+					url = API.getBaseUrl() + "/ChanelChat/DeleteMemberOfGroup",
 					cookies = mapOf("auth" to API.getAuth(context)) ,
 					data = mapOf(
 						"id_member" to memberId,
-						"id_team" to teamId,
+						"id_chanel_chat" to chanelChatId,
 					)
 				)
 			)

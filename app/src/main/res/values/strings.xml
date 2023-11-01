@@ -180,4 +180,6 @@
 	<string name="change_password">Đổi mật khẩu</string>
 
 	<string name="my_chanel_chats">Kênh chat</string>
+	<string name="chanel_chat_details">Kênh chat</string>
+	<string name="insert_members">Thêm thành viên</string>
 </resources>
