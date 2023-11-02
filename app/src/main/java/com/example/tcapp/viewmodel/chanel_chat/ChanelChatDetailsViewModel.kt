@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.tcapp.api.API
 import com.example.tcapp.model.AlertDialog
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.model.chanel_chat.MessageModels
+import com.google.gson.Gson
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -274,5 +276,155 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		}
 		_isLoading.postValue(false)
 		
+	}
+
+	//message
+	public fun getMessagesHistory(chanelChatId:String?,lastTime:Long,okCallback:(messages:MessageModels.Messages?)->Unit){
+		_isLoading.postValue(true)
+		Thread {
+			getMessagesHistoryAPI(chanelChatId,lastTime,okCallback)
+		}.start()
+	}
+
+	private fun getMessagesHistoryAPI(chanelChatId:String?,lastTime:Long,okCallback:(messages:MessageModels.Messages?)->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.get(
+					url = API.getBaseUrl() + "/Message/GetMessagesOfChanelChat",
+					cookies = mapOf("auth" to API.getAuth(context)) ,
+					params = mapOf(
+						"id_chanel_chat" to (chanelChatId?:""),
+						"last_time" to (""+lastTime)
+					)
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					okCallback(getMessagesFromOj(response.data))
+				}else{
+					reShowChangeName()
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+	}
+	private fun  getMessagesFromOj(oj: JSONObject?): MessageModels.Messages {
+		var messages = MessageModels.Messages();
+		if(oj!=null){
+			messages.isFinish = if(!oj.isNull("isFinish"))oj.getBoolean("isFinish") else false;
+
+			if(!oj.isNull("messages")){
+				val messagesOj = oj.getJSONArray("messages")
+				val length = messagesOj.length();
+				for (i in 0 until length) {
+					val message = messagesOj.getJSONObject(i);
+					messages.messages!!.add(MessageModels.Message(
+						if(!message.isNull("id"))message.getString("id") else null,
+						if(!message.isNull("content"))message.getString("content") else null,
+						if(!message.isNull("userId"))message.getString("userId") else null,
+						if(!message.isNull("time"))message.getLong("time") else 0L,
+						if(!message.isNull("replyContent"))message.getString("replyContent") else null,
+						if(!message.isNull("replyTime"))message.getLong("replyTime") else 0L,
+						if(!message.isNull("replyId"))message.getString("replyId") else null,
+					))
+				}
+			}
+		}
+		return messages;
+	}
+
+	public fun getMessagesBetweenTime(chanelChatId:String?,startTime:Long,lastTime:Long,okCallback:(messages:MessageModels.Messages?)->Unit){
+		_isLoading.postValue(true)
+		Thread {
+			getMessagesBetweenTimeAPI(chanelChatId,startTime,lastTime,okCallback)
+		}.start()
+	}
+
+	private fun getMessagesBetweenTimeAPI(chanelChatId:String?,startTime:Long,lastTime:Long,okCallback:(messages:MessageModels.Messages?)->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.get(
+					url = API.getBaseUrl() + "/Message/GetMessagesOfChanelChatBetweenTime",
+					cookies = mapOf("auth" to API.getAuth(context)) ,
+					params = mapOf(
+						"id_chanel_chat" to (chanelChatId?:""),
+						"last_time" to (""+lastTime),
+						"start_time" to (""+startTime),
+					)
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					okCallback(getMessagesFromOj(response.data))
+				}else{
+					reShowChangeName()
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+	}
+
+	public fun insert(chanelChatId:String?,idReply:String?,message:String,insertOkCallback:()->Unit){
+		_isLoading.postValue(true)
+		Thread {
+			insertAPI(chanelChatId,idReply,message,insertOkCallback)
+		}.start()
+	}
+
+	private fun insertAPI(chanelChatId:String?,idReply:String?,message:String,insertOkCallback:()->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.post(
+					url =  API.getBaseUrl() + "/ChanelChat/InsertMembers",
+					cookies = mapOf("auth" to API.getAuth(context)) ,
+					data = mapOf(
+						"id_chanel_chat" to (chanelChatId?:""),
+						"content" to message,
+						"id_reply" to idReply,
+					),
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					insertOkCallback()
+				}else{
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+
 	}
 }

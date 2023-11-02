@@ -32,6 +32,14 @@
 		
 		<attr  name="borderColorUserAvatar" format="reference" />
 		<attr  name="borderColorTeamAvatar" format="reference" />
+
+		<attr name="messageChatTimeBg" format="reference" />
+		<attr name="messageChatTimeColor" format="reference" />
+		<attr name="messageChatFriendBg" format="reference" />
+		<attr name="messageChatFriendColor" format="reference" />
+		<attr name="messageChatFriendNameColor" format="reference" />
+		<attr name="messageChatMeBg" format="reference" />
+		<attr name="messageChatMeColor" format="reference" />
 	</declare-styleable>
 	
 	

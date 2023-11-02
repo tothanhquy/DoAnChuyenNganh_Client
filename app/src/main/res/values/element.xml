@@ -70,4 +70,5 @@
 		<item name="android:layout_margin">5dp</item>
 		<item name="shapeAppearanceOverlay">@style/SkillImageSquare</item>
 	</style>
+
 </resources>

@@ -43,10 +43,9 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private var backgroundColor:Int =0
 	private var  loadingLayout:View? = null;
 	
-//	private var skillsContainer:RecyclerView?= null;
-//	private var membersContainer:RecyclerView?= null;
+	private var messagesRecyclerView:RecyclerView?= null;
 	private var newGroupOwnerSelectContainer:RecyclerView?= null;
-//
+
 	
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -56,9 +55,9 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		setContentView(R.layout.activity_chanel_chat_details)
 		
 //		skillsContainer =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivitySkills);
-//		membersContainer =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivityMembers);
+		messagesRecyclerView =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivityMessagesRecyclerView);
 		newGroupOwnerSelectContainer =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivityChooseNewGroupOwnerRecyclerView);
-//
+
 		initViews()
 		setRender()
 		loadData()

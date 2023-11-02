@@ -47,4 +47,19 @@
 		<item name="android:textAlignment">center</item>
 		<item name="android:background">@drawable/icon_btn_bg</item>
 	</style>
+	<style name="MessageChatTime">
+		<item name="android:textColor">?attr/messageChatTimeColor</item>
+		<item name="android:fontFamily">?attr/fontTitle</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">15dp</item>
+		<item name="android:layout_marginBottom">15dp</item>
+		<item name="android:textSize">15sp</item>
+		<item name="android:paddingTop">3dp</item>
+		<item name="android:paddingBottom">3dp</item>
+		<item name="android:paddingStart">20dp</item>
+		<item name="android:paddingEnd">20dp</item>
+		<item name="android:textAlignment">center</item>
+		<item name="android:background">@drawable/message_chat_time_bg</item>
+	</style>
 </resources>

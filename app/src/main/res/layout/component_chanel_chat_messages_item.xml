@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:gravity="center|center_vertical"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:id="@+id/componentChanelChatMessagesItemLoadMoreContainer"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@drawable/message_chat_me_bg"
+		android:gravity="center"
+		android:orientation="horizontal"
+		android:padding="10dp"
+		android:visibility="gone">
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			app:srcCompat="@drawable/upward_arrow_icon" />
+
+		<TextView
+			style="@style/Title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Xem thêm"
+			android:textColor="@color/theme_color_3"
+			android:textStyle="bold|italic" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/componentChanelChatMessagesItemTimeContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center|center_vertical"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/componentChanelChatMessagesItemTime"
+			style="@style/MessageChatTime"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="TextView"
+			tools:text="2022/14/8 10:30" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/componentChanelChatMessagesItemFriendContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		android:gravity="left"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/componentChanelChatMessagesItemFriendAvatar"
+			style="@style/SmallAvatar" />
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="30dp"
+			android:background="@drawable/message_chat_friend_bg"
+			android:gravity="left"
+			android:orientation="vertical"
+			android:padding="10dp">
+
+			<TextView
+				android:id="@+id/componentChanelChatMessagesItemFriendName"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="?attr/messageChatFriendNameColor"
+				android:textStyle="bold"
+				android:visibility="gone"
+				tools:text="Lê Ngọ" />
+
+			<LinearLayout
+				android:id="@+id/componentChanelChatMessagesItemFriendReplyContainer"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:orientation="horizontal"
+				android:visibility="gone">
+
+				<View
+					android:layout_width="5dp"
+					android:layout_height="match_parent"
+					android:background="@color/theme_color_3" />
+
+				<TextView
+					android:id="@+id/componentChanelChatMessagesItemFriendReplyContent"
+					style="@style/Title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="TextView"
+					android:textColor="?attr/messageChatFriendColor"
+					android:textSize="16sp"
+					tools:text="nfdk nskdfnk skdfnksd fk nkdsknlg ndkfgn fdgd gd " />
+			</LinearLayout>
+
+			<TextView
+				android:id="@+id/componentChanelChatMessagesItemFriendContent"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="?attr/messageChatFriendColor"
+				tools:text="asd asdk aksnd askd ads" />
+
+			<TextView
+				android:id="@+id/componentChanelChatMessagesItemFriendTime"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="@color/theme_color_2_contrast_dark"
+				android:visibility="gone"
+				tools:text="11:53" />
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/componentChanelChatMessagesItemMeContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:layout_marginBottom="10dp"
+		android:gravity="right"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="30dp"
+			android:layout_marginRight="5dp"
+			android:background="@drawable/message_chat_me_bg"
+			android:gravity="left"
+			android:orientation="vertical"
+			android:padding="10dp">
+
+			<LinearLayout
+				android:id="@+id/componentChanelChatMessagesItemMeReplyContainer"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:orientation="horizontal"
+				android:visibility="gone">
+
+				<View
+					android:layout_width="5dp"
+					android:layout_height="match_parent"
+					android:background="@color/theme_color_3" />
+
+				<TextView
+					android:id="@+id/componentChanelChatMessagesItemMeReplyContent"
+					style="@style/Title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="TextView"
+					android:textColor="?attr/messageChatMeColor"
+					android:textSize="16sp"
+					tools:text="nfdk nskdfnk skdfnksd fk nkdsknlg ndkfgn fdgd gd " />
+			</LinearLayout>
+
+			<TextView
+				android:id="@+id/componentChanelChatMessagesItemMeContent"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="?attr/messageChatMeColor"
+				tools:text="my messages" />
+
+			<TextView
+				android:id="@+id/componentChanelChatMessagesItemMeTime"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="@color/theme_color_2_contrast"
+				android:visibility="gone"
+				tools:text="11:53" />
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/componentChanelChatMessagesItemUsersSeenContainer"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="right"
+		android:orientation="horizontal"
+		android:visibility="gone">
+
+		<TextView
+			android:id="@+id/componentChanelChatMessagesItemUsersSeenNotification"
+			style="@style/Title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="teo, adias da xem" />
+	</LinearLayout>
+
+
+</LinearLayout>

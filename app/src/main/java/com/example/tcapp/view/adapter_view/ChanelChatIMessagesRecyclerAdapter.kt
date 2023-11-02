@@ -1,0 +1,248 @@
+package com.example.tcapp.view.adapter_view
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnLongClickListener
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.example.tcapp.R
+import com.example.tcapp.core.Genaral
+import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.model.chanel_chat.MessageModels
+
+
+class ChanelChatIMessagesRecyclerAdapter(
+	var context: Context ,
+	private var itemList: ArrayList<MessageModels.Message> ,
+	) : RecyclerView.Adapter<ChanelChatIMessagesRecyclerAdapter.ViewHolder>() {
+
+	private var isFinish:Boolean = false;
+	private var startTime:Long = -1;
+	private var lastTime:Long = -1;
+	private var accountId:String?=null;
+
+	private var members:ArrayList<ChanelChatModels.Member> = ArrayList()
+	private var usersSeen:ArrayList<ChanelChatModels.LastTimeMemberSeen> = ArrayList()
+	//private var astUsersSeenPosition:ArrayList<LastUserSeenPosition> = ArrayList()
+
+	fun setInitList(list:ArrayList<MessageModels.Message>){
+		itemList = list
+		updateStartLastTime()
+	}
+	fun setAccountId(accountId:String?){
+		this.accountId = accountId
+	}
+	fun setMembers(members:ArrayList<ChanelChatModels.Member>){
+		this.members = members
+	}
+	fun setUsersSeen(usersSeen:ArrayList<ChanelChatModels.LastTimeMemberSeen>){
+		this.usersSeen = usersSeen
+	}
+
+//	class LastUserSeenPosition{
+//		public var idUser:String="";
+//		public var position:Int=0;
+//	}
+
+	fun updateUserSeen(idUser:String,idLastMessage:String){
+		var beforeId:String? = "";
+		usersSeen.forEach {
+			if(it.userId==idUser){
+				beforeId = it.messageId
+				it.messageId = idLastMessage;
+			}
+		}
+		for(i in 0 until getItemCount()){
+			if(itemList[i].id==beforeId){
+				this.notifyItemChanged(i)
+			}else if(itemList[i].id==idLastMessage){
+				this.notifyItemChanged(i)
+			}
+		}
+	}
+
+	private fun updateStartLastTime(){
+		itemList.forEach {
+			if(this.startTime==-1L||this.startTime>it.time){
+				this.startTime = it.time
+			}
+			if(this.lastTime==-1L||this.lastTime<it.time){
+				this.lastTime = it.time
+			}
+		}
+	}
+
+	private lateinit var callbackOfViewUser:(String)->Unit
+	public fun setCallbackOfViewUser(a:(String)->Unit){
+		callbackOfViewUser = a
+	}
+	private lateinit var callbackLongTouchMessage:(String?,String?)->Unit
+	public fun setCallbackLongTouchMessage(a:(String?,String?)->Unit){
+		callbackLongTouchMessage = a
+	}
+	private lateinit var callbackLoadHistoryMessages:(lastTime:Long)->Unit
+	public fun setCallbackLoadHistoryMessages(a:(lastTime:Long)->Unit){
+		callbackLoadHistoryMessages = a
+	}
+	private lateinit var callbackLoadMessagesBetweenTime:(startTime:Long,lastTime:Long)->Unit
+	public fun setCallbackLoadMessagesBetweenTime(a:(startTime:Long,lastTime:Long)->Unit){
+		callbackLoadMessagesBetweenTime = a
+	}
+
+	fun insertMessagesBefore(list:ArrayList<MessageModels.Message>,isFinish:Boolean=false){
+		this.isFinish = isFinish
+
+		updateStartLastTime()
+	}
+	fun insertMessagesAfter(list:ArrayList<MessageModels.Message>){
+
+		updateStartLastTime()
+	}
+
+	private fun gotoReplyMessage(replyId:String?,replyTime:Long){
+
+	}
+
+	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+		val loadMore: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemLoadMoreContainer)
+		val timeContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemTimeContainer)
+		val time: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemTime)
+		val friendContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendContainer)
+		val friendAvatar: ImageView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendAvatar)
+		val friendName: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendName)
+		val friendReplyContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendReplyContainer)
+		val friendReplyContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendReplyContent)
+		val friendContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendContent)
+		val friendTime: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendTime)
+		val meContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemMeContainer)
+		val meReplyContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemMeReplyContainer)
+		val meReplyContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemMeReplyContent)
+		val meContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemMeContent)
+		val meTime: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemMeTime)
+		val usersSeenContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemUsersSeenContainer)
+		val usersSeenNotifi: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemUsersSeenNotification)
+		val item:View = itemView
+	}
+	
+	override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): ViewHolder {
+		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.component_chanel_chat_messages_item, parent, false)
+		return ViewHolder(itemView)
+	}
+	
+	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+		val message = itemList[position];
+		val beforeMessage = if(position==0)null else itemList[position-1];
+		val afterMessage = if(position== getItemCount() -1)null else itemList[position+1];
+
+		if(!message.isLoaded){
+			//load static data
+			if(position==0&&!this.isFinish){
+				holder.loadMore.visibility = View.VISIBLE
+				holder.loadMore.setOnClickListener {
+					callbackLoadHistoryMessages(startTime)
+				}
+			}
+			val isOverTimeBefore = beforeMessage==null||isDifferentTime(beforeMessage.time,message.time)
+			val isOverTimeAfter = afterMessage==null||isDifferentTime(afterMessage.time,message.time)
+			val isFarMessageBefore = isOverTimeBefore||beforeMessage!!.userId!=message.userId
+			val isFarMessageAfter = isOverTimeAfter||afterMessage!!.userId!=message.userId
+
+			if(isOverTimeBefore){
+				holder.timeContainer.visibility = View.VISIBLE;
+				holder.time.text = Genaral.getDateTimeByUTC(message.time)
+			}
+			if(message.userId==accountId){
+				//me
+				holder.meContainer.visibility = View.VISIBLE;
+				if(message.replyId!=null&&message.replyId!=""){
+					holder.meReplyContainer.visibility=View.VISIBLE
+					holder.meReplyContent.text = message.replyContent
+					holder.meReplyContainer.setOnClickListener {
+						gotoReplyMessage(message.replyId,message.replyTime)
+					}
+				}
+				holder.meContent.text=message.content
+				if(isFarMessageAfter){
+					holder.meTime.text = Genaral.getMinimizeDateTimeByUTC(message.time)
+				}
+				holder.meContainer.setOnLongClickListener(OnLongClickListener {
+					callbackLongTouchMessage(message.id,message.content)
+					true
+				})
+			}else{
+				//friend
+				holder.friendContainer.visibility = View.VISIBLE;
+				if(isFarMessageBefore){
+					Genaral.setUserAvatarImage(context,getAvatarBaseId(message.userId),holder.friendAvatar)
+					holder.friendName.visibility=View.VISIBLE
+					holder.friendName.text = getNameBaseId(message.userId)
+					holder.friendName.setOnClickListener {
+						callbackOfViewUser(message.userId!!)
+					}
+				}
+				if(message.replyId!=null&&message.replyId!=""){
+					holder.friendReplyContainer.visibility=View.VISIBLE
+					holder.friendReplyContent.text = message.replyContent
+					holder.friendReplyContainer.setOnClickListener {
+						gotoReplyMessage(message.replyId,message.replyTime)
+					}
+				}
+				holder.friendContent.text=message.content
+				if(isFarMessageAfter){
+					holder.friendTime.text = Genaral.getMinimizeDateTimeByUTC(message.time)
+				}
+				holder.friendContainer.setOnLongClickListener(OnLongClickListener {
+					callbackLongTouchMessage(message.id,message.content)
+					true
+				})
+			}
+			itemList[position].isLoaded=true
+		}
+		//users seen
+		val usersSeenNotifi = getNotificationUsersSeenBaseIdMessage(message.id)
+		if(usersSeenNotifi.isNotEmpty()){
+			holder.usersSeenContainer.visibility=View.VISIBLE
+			holder.usersSeenNotifi.text=usersSeenNotifi
+		}
+	}
+
+	//true if over 1 hour
+	private fun isDifferentTime(time1:Long, time2:Long):Boolean{
+		val overTime = 1000*60*60;//1 hour
+		return time1-time2>overTime || time1-time2<-overTime;
+	}
+	private fun getAvatarBaseId(id:String?):String?{
+		members.forEach { if(it.id==id)return it.avatar }
+		return ""
+	}
+	private fun getNameBaseId(id:String?):String?{
+		members.forEach { if(it.id==id)return it.name }
+		return ""
+	}
+	private fun getNotificationUsersSeenBaseIdMessage(idMessage:String?):String{
+		var name = "";
+		var numberOfUsers=0;
+		usersSeen.forEach {
+			if(it.messageId==idMessage){
+				numberOfUsers++;
+				if(numberOfUsers<=3){
+					name+=getNameBaseId(it.userId)+","
+				}
+			}
+		}
+		if(name.isEmpty())return "";
+		if(numberOfUsers<=3){
+			return name.removeRange(name.length-1,name.length-1) + " đã xem."
+		}else{
+			return name.removeRange(name.length-1,name.length-1) + " + "+ (numberOfUsers-3) + " người khác đã xem."
+		}
+	}
+
+	override fun getItemCount() = itemList.size
+
+}

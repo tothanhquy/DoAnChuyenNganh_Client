@@ -134,6 +134,11 @@
 		interfere "
 		"when a user tries to pick up one of cards.\n\n"
 	</string>
+	<string name="long_message">
+		"Material is the metaphor.\n\n""A material metaphor is the unifying theory of a rationalized space and a system
+		of motion.""The material is ground544564654465ed in tactile reality, inspired by the study of paper and
+		ink, yet ""technologically advanced and open to imagination and magic.\n"
+	</string>
 	<string name="action_settings">Settings</string>
 	<string name="ghi_am_tool">Voice Record</string>
 	<string name="title_activity_voice_record">Voice Record</string>
