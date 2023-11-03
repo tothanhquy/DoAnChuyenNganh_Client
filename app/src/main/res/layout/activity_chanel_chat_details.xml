@@ -10,10 +10,103 @@
 	tools:viewBindingIgnore="true">
 
 	<LinearLayout
+		android:id="@+id/chanelChatDetailsActivityMessageOptions"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="2dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:onClick="closeMessageOptionContainer" />
+
+		<LinearLayout
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tùy chọn"
+					android:textAlignment="center" />
+
+				<TableLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<TableRow
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
+
+						<LinearLayout
+							android:layout_width="0dp"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:gravity="center"
+							android:orientation="horizontal">
+
+							<LinearLayout
+								style="@style/CloseBtn"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:gravity="center"
+								android:onClick="messageReplyOptionChoose"
+								android:orientation="horizontal">
+
+								<ImageView
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									app:srcCompat="@drawable/upward_arrow_icon" />
+
+								<TextView
+									style="@style/Title"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:text="Reply" />
+							</LinearLayout>
+						</LinearLayout>
+
+						<Space
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_weight="1" />
+
+					</TableRow>
+
+				</TableLayout>
+
+			</LinearLayout>
+
+
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout
 		style="@style/MainLinearLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:elevation="2dp"
+		android:elevation="1dp"
 		android:orientation="vertical"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -38,49 +131,20 @@
 			android:orientation="vertical">
 
 			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:background="@drawable/main_options_container_bg"
-				android:gravity="center"
-				android:orientation="horizontal">
-
-				<LinearLayout
-					style="@style/CloseBtn"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:gravity="center"
-					android:orientation="horizontal">
-
-					<ImageView
-						android:id="@+id/imageView2"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						app:srcCompat="@drawable/upward_arrow_icon" />
-
-					<TextView
-						android:id="@+id/textView4"
-						style="@style/Title"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="Reply" />
-				</LinearLayout>
-
-			</LinearLayout>
-
-			<LinearLayout
+				android:id="@+id/chanelChatDetailsActivityMessageChatReplyContainer"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
 				android:orientation="horizontal">
 
 				<LinearLayout
+					android:onClick="closeMessageReplyContainer"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center_horizontal"
 					android:orientation="vertical">
 
 					<TextView
-						android:id="@+id/textView3"
 						style="@style/Title"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
@@ -88,26 +152,24 @@
 						android:textStyle="bold" />
 
 					<ImageView
-						android:id="@+id/imageView"
 						style="@style/IconImage"
 						android:layout_marginRight="0dp"
 						app:srcCompat="@drawable/x_button_icon" />
 				</LinearLayout>
 
 				<View
-					android:id="@+id/view3"
 					android:layout_width="5dp"
 					android:layout_height="match_parent"
 					android:background="@color/theme_color_3" />
 
 				<TextView
-					android:id="@+id/textView2"
+					android:id="@+id/chanelChatDetailsActivityMessageChatReplyContent"
 					style="@style/Title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:maxHeight="100dp"
+					android:maxHeight="60dp"
 					android:text="TextView"
-					tools:text="asdmk askd naksnd kansdkn akdkas nkas nfkdakfnka n qenawinawa" />
+					tools:text="asdmk askd naksnd kansdkn akdkas nkas nfkdakfnka n qenaw gggggg gggg  ggg  gg g ggg ggg   g  gginawa" />
 			</LinearLayout>
 
 			<LinearLayout
@@ -117,7 +179,7 @@
 				android:orientation="horizontal">
 
 				<EditText
-					android:id="@+id/editTextText"
+					android:id="@+id/chanelChatDetailsActivityMessageChatBoxInput"
 					style="@style/Input"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -133,11 +195,12 @@
 					tools:text=" g g g g g g g g nfsjdf kjnskdf nksdf ksdkf nsdfhusih re sfs jh bdfsbfshdbf sdjmfopko9rwj fsjefsfnskjbfdsjbfsh fas dknasdak j" />
 
 				<Button
-					android:id="@+id/button2"
+					android:id="@+id/chanelChatDetailsActivityMessageChatBoxChatBtn"
 					style="@style/ActionBtn"
 					android:layout_width="wrap_content"
 					android:layout_height="match_parent"
 					android:layout_marginLeft="5dp"
+					android:onClick="chat"
 					android:text="Chat" />
 			</LinearLayout>
 		</LinearLayout>

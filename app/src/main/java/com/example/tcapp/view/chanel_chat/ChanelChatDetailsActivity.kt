@@ -4,30 +4,30 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
-import com.example.tcapp.model.user_profile.UserProfileModels
+import com.example.tcapp.model.chanel_chat.MessageModels
 import com.example.tcapp.view.adapter_view.*
-import com.example.tcapp.view.post.CreatePostActivity
-import com.example.tcapp.view.post.PostsListActivity
-import com.example.tcapp.view.request.CreateRequestActivity
-import com.example.tcapp.view.request.RequestsListActivity
 import com.example.tcapp.view.team_profile.TeamProfileActivity
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 import com.example.tcapp.viewmodel.chanel_chat.ChanelChatDetailsViewModel
+
 
 const val CHOOSE_AVATAR_REQUEST_CODE = 110
 class ChanelChatDetailsActivity : CoreActivity() {
@@ -45,8 +45,17 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	
 	private var messagesRecyclerView:RecyclerView?= null;
 	private var newGroupOwnerSelectContainer:RecyclerView?= null;
+	private var messagesAdapter:ChanelChatIMessagesRecyclerAdapter?= null;
 
-	
+	private var messageOptionContainer:LinearLayout?= null;
+
+	private var messageReplyIdOpenOption:String?=null;
+	private var messageReplyContentOpenOption:String?=null;
+	private var messageReplyIdReal:String?=null;
+	private var messageReplyContainer:LinearLayout?=null;
+	private var chatBtn:Button?=null;
+	private var isChatBtnEnable:Boolean=false;
+	private var chatBoxInput:EditText?=null;
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
 		objectViewModel = ChanelChatDetailsViewModel(applicationContext)
@@ -54,11 +63,29 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		super.setTitleBarAndNavigationBar(backgroundColor,R.string.chanel_chat_details)
 		setContentView(R.layout.activity_chanel_chat_details)
 		
-//		skillsContainer =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivitySkills);
+		messageOptionContainer =  findViewById<LinearLayout>(R.id.chanelChatDetailsActivityMessageOptions);
+		messageReplyContainer =  findViewById<LinearLayout>(R.id.chanelChatDetailsActivityMessageChatReplyContainer);
 		messagesRecyclerView =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivityMessagesRecyclerView);
 		newGroupOwnerSelectContainer =  findViewById<RecyclerView>(R.id.chanelChatDetailsActivityChooseNewGroupOwnerRecyclerView);
+		chatBtn =  findViewById<Button>(R.id.chanelChatDetailsActivityMessageChatBoxChatBtn);
+		chatBoxInput =  findViewById<EditText>(R.id.chanelChatDetailsActivityMessageChatBoxInput);
+
+		messagesAdapter = ChanelChatIMessagesRecyclerAdapter(applicationContext, ArrayList())
+		messagesRecyclerView !!.setHasFixedSize(true)
+		messagesRecyclerView !!.layoutManager =
+			LinearLayoutManager(this)
+		messagesRecyclerView!!.adapter =
+			messagesAdapter
+		messagesAdapter!!.setCallbackLoadHistoryMessages(::loadHistoryMessages)
+		messagesAdapter!!.setCallbackLoadMessagesBetweenTime(::loadMessagesBetweenTime)
+		messagesAdapter!!.setCallbackOfViewUser(::openMemberProfile)
+		messagesAdapter!!.setCallbackLongTouchMessage(::longTouchMessage)
+		messagesAdapter!!.setCallbackScrollRecyclerView(::messagesRecyclerViewScrollToPosition)
+
+
 
 		initViews()
+		initEvents()
 		setRender()
 		loadData()
 	}
@@ -96,7 +123,33 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		println(chanelChatId)
 		objectViewModel.loadData(chanelChatId)
 	}
-	
+	private fun initEvents(){
+		chatBoxInput!!.addTextChangedListener(object : TextWatcher {
+			override fun afterTextChanged(s: Editable) {}
+			override fun beforeTextChanged(
+				s: CharSequence, start: Int,
+				count: Int, after: Int
+			) {
+			}
+
+			override fun onTextChanged(
+				s: CharSequence, start: Int,
+				before: Int, count: Int
+			) {
+				if (s.isNotEmpty()){
+					if(!isChatBtnEnable){
+						chatBtn!!.setBackgroundResource(R.drawable.action_btn_bg)
+						isChatBtnEnable = true;
+					}
+				}else{
+					if(isChatBtnEnable){
+						chatBtn!!.setBackgroundResource(R.drawable.close_btn_bg)
+						isChatBtnEnable = false;
+					}
+				}
+			}
+		})
+	}
 	private fun initViews(){
 		var viewActivity = findViewById<ViewGroup>(R.id.chanelChatDetailsActivity)
 		loadingLayout = Genaral.getLoadingScreen(this,viewActivity,backgroundColor)
@@ -171,6 +224,11 @@ class ChanelChatDetailsActivity : CoreActivity() {
 			chanelChatName = chanelChat.name;
 			super.setDynamicTitleBar(chanelChat.name)
 			setOptions(chanelChat);
+			setSelectNewGroupOwnerContainer(chanelChat.members,chanelChat.accountId)
+			messagesAdapter!!.setAccountId(chanelChat.accountId)
+			messagesAdapter!!.setMembers(chanelChat.members!!)
+			messagesAdapter!!.setUsersSeen(chanelChat.lastTimeMemberSeen!!)
+			loadDefaultMessages()
 		}
 	}
 	private fun setOptions(chanelChat: ChanelChatModels.ChanelChatDetails?){
@@ -305,5 +363,61 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		findViewById<ViewGroup>(R.id.chanelChatDetailsActivityChooseNewGroupOwner).visibility = View.GONE
 	}
 	
-	
+	fun loadDefaultMessages(){
+		objectViewModel!!.getMessagesHistory(chanelChatId,0,::loadDefaultMessagesOkCallback)
+	}
+	private fun loadDefaultMessagesOkCallback(messages:MessageModels.Messages?){
+		messagesAdapter!!.setInitList(messages)
+	}
+	fun loadHistoryMessages(time:Long){
+		objectViewModel!!.getMessagesHistory(chanelChatId,time,::loadHistoryMessagesOkCallback)
+	}
+	private fun loadHistoryMessagesOkCallback(messages:MessageModels.Messages?){
+		messagesAdapter!!.insertMessagesBefore(messages)
+	}
+	fun loadMessagesBetweenTime(startTime:Long, lastTime:Long){
+		objectViewModel!!.getMessagesBetweenTime(chanelChatId,startTime,lastTime,::loadMessagesBetweenTimeOkCallback)
+	}
+	private fun loadMessagesBetweenTimeOkCallback(messages:MessageModels.Messages?){
+		if(messages!=null){
+			messagesAdapter!!.insertMessages(messages.messages)
+		}
+	}
+	private fun openMemberProfile(idUser:String){
+		val intent = Intent(applicationContext ,GuestUserProfileActivity::class.java)
+		intent.putExtra("idUser", idUser)
+		startActivity(intent)
+	}
+
+	fun longTouchMessage(messageId:String?,messageContent:String?){
+		messageReplyIdOpenOption = messageId;
+		messageReplyContentOpenOption = messageContent;
+		messageOptionContainer!!.visibility = View.VISIBLE
+	}
+	fun closeMessageOptionContainer(view:View){
+		messageOptionContainer!!.visibility = View.GONE
+	}
+	fun messageReplyOptionChoose(view:View){
+		messageReplyIdReal = messageReplyIdOpenOption
+		findViewById<TextView>(R.id.chanelChatDetailsActivityMessageChatReplyContent).text=messageReplyContentOpenOption
+		messageReplyContainer!!.visibility = View.VISIBLE
+	}
+	fun closeMessageReplyContainer(view:View){
+		messageReplyContainer!!.visibility = View.GONE
+		messageReplyIdReal=null
+	}
+
+	fun messagesRecyclerViewScrollToPosition(position:Int){
+		messagesRecyclerView!!.layoutManager!!.scrollToPosition(position)
+	}
+	fun chat(view:View){
+		if(chatBoxInput!!.text.isNotEmpty()){
+			objectViewModel.insert(chanelChatId,messageReplyIdReal,chatBoxInput!!.text.toString(),::chatOkCallback)
+		}
+	}
+	fun chatOkCallback(){
+		closeMessageReplyContainer(View(applicationContext))
+		chatBoxInput!!.setText("")
+	}
+
 }

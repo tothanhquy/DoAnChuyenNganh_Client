@@ -8,15 +8,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
 import com.example.tcapp.R
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.model.chanel_chat.MessageModels
 
 
 class MyChanelChatsRecyclerAdapter(
 	private var context: Context ,
-	private var itemList: ArrayList<ChanelChatModels.ChanelChat>
+	private var itemList: SortedList<ChanelChatModels.ChanelChat>
 	) : RecyclerView.Adapter<MyChanelChatsRecyclerAdapter.ViewHolder>() {
 	
 	private lateinit var callback:(String)->Unit
@@ -25,14 +27,55 @@ class MyChanelChatsRecyclerAdapter(
 	}
 	
 	fun setInitList(list:ArrayList<ChanelChatModels.ChanelChat>){
-		itemList = list
-		this.notifyDataSetChanged()
+		//init list
+		itemList = SortedList<ChanelChatModels.ChanelChat>(ChanelChatModels.ChanelChat::class.java, object : SortedList.Callback<ChanelChatModels.ChanelChat>() {
+			override fun compare(o1: ChanelChatModels.ChanelChat, o2: ChanelChatModels.ChanelChat): Int {
+				return o1.lastTimeAction.compareTo(o2.lastTimeAction)
+			}
+
+			override fun onChanged(position: Int, count: Int) {
+				notifyItemRangeChanged(position, count)
+			}
+
+			override fun areContentsTheSame(oldItem: ChanelChatModels.ChanelChat, newItem: ChanelChatModels.ChanelChat): Boolean {
+				return oldItem.lastTimeAction.equals(newItem.lastTimeAction)
+			}
+
+			override fun areItemsTheSame(item1: ChanelChatModels.ChanelChat, item2: ChanelChatModels.ChanelChat): Boolean {
+				return item1.lastTimeAction.equals(item2.lastTimeAction)
+			}
+
+			override fun onInserted(position: Int, count: Int) {
+				notifyItemRangeInserted(position, count)
+			}
+
+			override fun onRemoved(position: Int, count: Int) {
+				notifyItemRangeRemoved(position, count)
+			}
+
+			override fun onMoved(fromPosition: Int, toPosition: Int) {
+				notifyItemMoved(fromPosition, toPosition)
+			}
+		})
+		if(list != null){
+			list!!.forEach {
+				this.itemList.add(it)
+			}
+		}
 	}
 	fun add(chanelChat:ChanelChatModels.ChanelChat){
 		itemList.add(chanelChat)
 		this.notifyDataSetChanged()
 	}
-	
+	fun changeOrAdd(chanelChat:ChanelChatModels.ChanelChat){
+		for(i in 0 until itemCount){
+			if(itemList[i].id==chanelChat.id){
+				itemList.updateItemAt(i,chanelChat)
+				return;
+			}
+		}
+		itemList.add(chanelChat)
+	}
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val avatar: ImageView = itemView.findViewById(R.id.componentMyChanelChatsItemAvatar)
 		val name: TextView = itemView.findViewById(R.id.componentMyChanelChatsItemName)
@@ -81,5 +124,5 @@ class MyChanelChatsRecyclerAdapter(
 		}
 	}
 	
-	override fun getItemCount() = itemList.size
+	override fun getItemCount() = itemList.size()
 }

@@ -1,5 +1,6 @@
 package com.example.tcapp.view.adapter_view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import com.example.tcapp.R
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
@@ -17,9 +18,10 @@ import com.example.tcapp.model.chanel_chat.MessageModels
 
 
 class ChanelChatIMessagesRecyclerAdapter(
-	var context: Context ,
-	private var itemList: ArrayList<MessageModels.Message> ,
+	var context: Context,
+	private var itemList: SortedList<MessageModels.Message>
 	) : RecyclerView.Adapter<ChanelChatIMessagesRecyclerAdapter.ViewHolder>() {
+
 
 	private var isFinish:Boolean = false;
 	private var startTime:Long = -1;
@@ -30,9 +32,45 @@ class ChanelChatIMessagesRecyclerAdapter(
 	private var usersSeen:ArrayList<ChanelChatModels.LastTimeMemberSeen> = ArrayList()
 	//private var astUsersSeenPosition:ArrayList<LastUserSeenPosition> = ArrayList()
 
-	fun setInitList(list:ArrayList<MessageModels.Message>){
-		itemList = list
-		updateStartLastTime()
+	private var replyIdNeedToScrollTo:String?=null;
+	fun setInitList(messages:MessageModels.Messages?){
+		//init list
+		itemList = SortedList<MessageModels.Message>(MessageModels.Message::class.java, object : SortedList.Callback<MessageModels.Message>() {
+			override fun compare(o1: MessageModels.Message, o2: MessageModels.Message): Int {
+				return (o1.time-o2.time).toInt()
+			}
+
+			override fun onChanged(position: Int, count: Int) {
+				notifyItemRangeChanged(position, count)
+			}
+
+			override fun areContentsTheSame(oldItem: MessageModels.Message, newItem: MessageModels.Message): Boolean {
+				return oldItem.time.equals(newItem.time)
+			}
+
+			override fun areItemsTheSame(item1: MessageModels.Message, item2: MessageModels.Message): Boolean {
+				return item1.time.equals(item2.time)
+			}
+
+			override fun onInserted(position: Int, count: Int) {
+				notifyItemRangeInserted(position, count)
+			}
+
+			override fun onRemoved(position: Int, count: Int) {
+				notifyItemRangeRemoved(position, count)
+			}
+
+			override fun onMoved(fromPosition: Int, toPosition: Int) {
+				notifyItemMoved(fromPosition, toPosition)
+			}
+		})
+		if(messages != null){
+			messages.messages!!.forEach {
+				this.itemList.add(it)
+			}
+			isFinish = messages.isFinish
+			updateStartLastTime()
+		}
 	}
 	fun setAccountId(accountId:String?){
 		this.accountId = accountId
@@ -67,12 +105,12 @@ class ChanelChatIMessagesRecyclerAdapter(
 	}
 
 	private fun updateStartLastTime(){
-		itemList.forEach {
-			if(this.startTime==-1L||this.startTime>it.time){
-				this.startTime = it.time
+		for (i in 0 until itemCount){
+			if(this.startTime==-1L||this.startTime>itemList[i].time){
+				this.startTime = itemList[i].time
 			}
-			if(this.lastTime==-1L||this.lastTime<it.time){
-				this.lastTime = it.time
+			if(this.lastTime==-1L||this.lastTime<itemList[i].time){
+				this.lastTime = itemList[i].time
 			}
 		}
 	}
@@ -93,19 +131,48 @@ class ChanelChatIMessagesRecyclerAdapter(
 	public fun setCallbackLoadMessagesBetweenTime(a:(startTime:Long,lastTime:Long)->Unit){
 		callbackLoadMessagesBetweenTime = a
 	}
-
-	fun insertMessagesBefore(list:ArrayList<MessageModels.Message>,isFinish:Boolean=false){
-		this.isFinish = isFinish
-
-		updateStartLastTime()
-	}
-	fun insertMessagesAfter(list:ArrayList<MessageModels.Message>){
-
-		updateStartLastTime()
+	private lateinit var callbackScrollRecyclerView:(position:Int)->Unit
+	public fun setCallbackScrollRecyclerView(a:(position:Int)->Unit){
+		callbackScrollRecyclerView = a
 	}
 
-	private fun gotoReplyMessage(replyId:String?,replyTime:Long){
+	fun insertMessagesBefore(messages:MessageModels.Messages?){
+		if(messages!=null){
+			this.isFinish = messages.isFinish
+			insertMessages(messages.messages)
+		}
+	}
+	fun insertMessages(messages:ArrayList<MessageModels.Message>?){
+		if(messages != null){
+			messages!!.forEach {
+				this.itemList.add(it)
+			}
+			updateStartLastTime()
+		}
 
+		updateStartLastTime()
+		if(replyIdNeedToScrollTo!=null){
+			gotoReplyMessage(replyIdNeedToScrollTo)
+		}
+		//change update
+
+	}
+
+	private fun gotoReplyMessage(replyId:String?,replyTime:Long=0){
+		var isExist:Boolean=false;
+		for (i in 0 until itemCount){
+			if(itemList[i].id==replyId){
+				callbackScrollRecyclerView(i)
+				replyIdNeedToScrollTo=null
+				isExist=true;
+				return;
+			}
+		}
+		if(!isExist){
+			//load more
+			replyIdNeedToScrollTo=replyId
+			callbackLoadMessagesBetweenTime(replyTime,this.startTime)
+		}
 	}
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -243,6 +310,6 @@ class ChanelChatIMessagesRecyclerAdapter(
 		}
 	}
 
-	override fun getItemCount() = itemList.size
+	override fun getItemCount() = itemList.size()
 
 }
