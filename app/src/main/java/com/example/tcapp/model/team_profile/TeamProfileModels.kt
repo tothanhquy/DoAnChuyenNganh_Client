@@ -104,6 +104,7 @@ class TeamProfileModels {
 		var relationship:String? = null;
 		var members:ArrayList<TeamProfileMembers> = arrayListOf();
 		var skills:ArrayList<TeamProfileSkills> = arrayListOf();
+		public var teamChanelChatId:String? = null;
 		constructor(){}
 	}
 	class TeamProfileMembersList{

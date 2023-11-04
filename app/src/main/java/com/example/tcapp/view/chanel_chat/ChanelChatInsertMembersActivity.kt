@@ -146,8 +146,10 @@ class ChanelChatInsertMembersActivity : CoreActivity() {
 		objectViewModel.insert(chanelChatId,selectedUserId,::insertOkCallback)
 	}
 	private fun insertOkCallback(membersId:ArrayList<String>?){
-		membersContainerAdapter?.updateInsertedMembers(membersId)
-		selectedUserId= ArrayList();
-		updateSelectedGroup()
+		runOnUiThread {
+			membersContainerAdapter?.updateInsertedMembers(membersId)
+			selectedUserId = ArrayList();
+			updateSelectedGroup()
+		}
 	}
 }

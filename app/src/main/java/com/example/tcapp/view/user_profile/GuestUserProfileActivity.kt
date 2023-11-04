@@ -17,8 +17,10 @@ import com.example.tcapp.R
 import com.example.tcapp.api.API
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
+import com.example.tcapp.model.chanel_chat.ChanelChatModels
 import com.example.tcapp.model.user_profile.UserProfileModels
 import com.example.tcapp.view.adapter_view.*
+import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
 import com.example.tcapp.view.friend.CreateFriendRequestActivity
 import com.example.tcapp.view.request.CreateRequestActivity
 import com.example.tcapp.view.team_profile.TeamProfileEditInfoActivity
@@ -29,6 +31,7 @@ class GuestUserProfileActivity : CoreActivity() {
 	private var idAccount:String?=null
 	private var nameOfAccount:String?=null
 	private var avatarOfAccount:String?=null
+	private var friendChanelChatId:String?=null
 //	private var infoProfile:UserProfileModels.Info?=null
 //	private var skillsIdProfile:ArrayList<String>?=null
 	
@@ -121,6 +124,7 @@ class GuestUserProfileActivity : CoreActivity() {
 		//set user data
 		viewModelObject.guestProfile.observe(this, Observer {
 			runOnUiThread {
+				friendChanelChatId=it.friendChanelChatId
 				setInfoContainer(it.info)
 				setSkillsContainer(it.skills)
 				setCVsContainer(it.cvs)
@@ -157,7 +161,7 @@ class GuestUserProfileActivity : CoreActivity() {
 				//do nothing
 				optionCancelFriend!!.visibility = View.VISIBLE
 				optionChat!!.visibility = View.VISIBLE
-				optionLetter!!.visibility = View.VISIBLE
+//				optionLetter!!.visibility = View.VISIBLE
 			}else{
 				optionAddFriend!!.visibility = View.VISIBLE
 			}
@@ -221,7 +225,9 @@ class GuestUserProfileActivity : CoreActivity() {
 		loadData()
 	}
 	fun optionChat(view:View){
-	
+		val intent = Intent(applicationContext , ChanelChatDetailsActivity::class.java)
+		intent.putExtra("chanelChatId", friendChanelChatId);
+		startActivity(intent)
 	}
 	fun optionLetter(view:View){
 	

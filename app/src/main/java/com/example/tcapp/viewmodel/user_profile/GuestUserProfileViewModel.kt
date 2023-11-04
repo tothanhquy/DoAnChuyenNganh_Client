@@ -115,7 +115,10 @@ class GuestUserProfileViewModel (private val context : Context){
 					profile.info?.description = infoOj.getString("description");
 				};
 			}
-			
+			if(!oj.isNull("chanelChat")){
+				profile.friendChanelChatId = oj.getString("chanelChat");
+			};
+
 			profile.skills = ArrayList<UserProfileModels.Skill>();
 			if(!oj.isNull("skills")){
 				val skillsOj = oj.getJSONArray("skills")

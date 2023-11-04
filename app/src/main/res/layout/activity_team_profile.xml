@@ -138,7 +138,7 @@
 		</LinearLayout>
 	
 	</ScrollView>
-	
+
 	<ScrollView
 		android:id="@+id/teamProfileActivityOptions"
 		style="@style/MainScrollView"
@@ -151,20 +151,30 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="gone">
-		
+		tools:visibility="visible">
+
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
-				
+
+				<Button
+					android:id="@+id/teamProfileActivityOptionViewChanelChatTeam"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewTeamChanelChatNavigation"
+					android:text="Xem Team Chat"
+					android:visibility="gone"
+					tools:visibility="visible" />
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionViewRequestOfTeam"
 					style="@style/ActionBtn2"
@@ -174,7 +184,7 @@
 					android:text="Xem các Request của đội"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionViewMember"
 					style="@style/ActionBtn2"
@@ -184,7 +194,7 @@
 					android:text="Xem các thành viên"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					style="@style/ActionBtn2"
 					android:layout_width="match_parent"
@@ -192,7 +202,7 @@
 					android:onClick="viewPostsNavigation"
 					android:text="Xem các bài đăng của đội"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionCreateJoinRequest"
 					style="@style/ActionBtn"
@@ -202,7 +212,7 @@
 					android:text="Tạo Request gia nhập"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionCreatePost"
 					style="@style/ActionBtn"
@@ -212,7 +222,7 @@
 					android:text="Tạo bài đăng"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionEditAvatar"
 					style="@style/ActionBtn2"
@@ -222,7 +232,7 @@
 					android:text="Đổi ảnh Avatar"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionEditInfo"
 					style="@style/ActionBtn2"
@@ -232,7 +242,7 @@
 					android:text="Đổi thông tin đội"
 					android:visibility="gone"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionClose"
 					style="@style/CloseBtn"
@@ -241,7 +251,7 @@
 					android:onClick="closeOptions"
 					android:text="Đóng"
 					tools:visibility="visible" />
-				
+
 				<Button
 					android:id="@+id/teamProfileActivityOptionExitTeam"
 					style="@style/WarningBtn"
@@ -252,12 +262,12 @@
 					android:text="Thoát đội"
 					android:visibility="gone"
 					tools:visibility="visible" />
-			
+
 			</LinearLayout>
-		
+
 		</LinearLayout>
 	</ScrollView>
-	
+
 	<ScrollView
 		android:id="@+id/teamProfileActivityChooseNewLeader"
 		style="@style/MainScrollView"
@@ -270,45 +280,45 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="visible">
-		
+		tools:visibility="gone">
+
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical">
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical">
-				
+
 				<TextView
 					style="@style/Label"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="Danh sách chọn leader thay thế"
 					android:textAlignment="center" />
-				
+
 				<androidx.recyclerview.widget.RecyclerView
 					android:id="@+id/teamProfileActivityChooseNewLeaderRecyclerView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content" />
 			</LinearLayout>
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical">
-				
+
 				<Button
 					style="@style/CloseBtn"
 					android:onClick="closeNewLeaderSelect"
 					android:text="Đóng" />
 			</LinearLayout>
-		
+
 		</LinearLayout>
 	</ScrollView>
 

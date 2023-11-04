@@ -3,6 +3,7 @@ package com.example.tcapp.view.chanel_chat
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.ServiceConnection
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -21,12 +22,26 @@ import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.service.ConnectionService
+import com.example.tcapp.service.MyChanelChatsService
+import com.example.tcapp.service.SocketService
 import com.example.tcapp.view.adapter_view.MyChanelChatsRecyclerAdapter
 import com.example.tcapp.viewmodel.chanel_chat.MyChanelChatsViewModel
 
 class MyChanelChatsActivity : CoreActivity() {
 	private lateinit var objectViewModel: MyChanelChatsViewModel;
-	
+
+	private var mService: MyChanelChatsService?=null
+	private var isBoundMService:Boolean=false
+	private fun setMService(service: MyChanelChatsService){
+		this.mService = service
+	}
+	private fun setIsBoundMService(isBound:Boolean){
+		this.isBoundMService=isBound
+	}
+	private var mConnectionService: ServiceConnection = ConnectionService.getMyChanelChatsServiceConnection(::setIsBoundMService,::setMService)
+
+
 	private var backgroundColor:Int =0;
 	private var  loadingLayout:View? = null;
 	
@@ -44,7 +59,11 @@ class MyChanelChatsActivity : CoreActivity() {
 		setContentView(R.layout.activity_my_chanel_chats)
 		
 		myChanelChatsContainer =  findViewById<RecyclerView>(R.id.myChanelChatsActivityRecyclerView);
-		
+
+		//start service
+		val intent = Intent(this, MyChanelChatsService::class.java)
+		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
+
 		initViews()
 		setRender()
 		loadData()
@@ -54,7 +73,21 @@ class MyChanelChatsActivity : CoreActivity() {
 		super.onResume()
 		loadData()
 	}
-	
+
+	override fun onDestroy() {
+		unbindService(mConnectionService);
+		setIsBoundMService(false)
+		super.onDestroy()
+	}
+
+	override fun onStart() {
+		super.onStart()
+		if(isBoundMService){
+			mService?.setChanelChatYouHasNewChanelCallback(::chanelChatYouHasNewChanelSocketCallback)
+			mService?.setChanelChatNotifiLastMessageCallback(::chanelChatNotifiLastMessageSocketCallback)
+		}
+	}
+
 	private fun loadData() {
 		objectViewModel.loadData()
 	}
@@ -123,7 +156,7 @@ class MyChanelChatsActivity : CoreActivity() {
 		}catch(e:Exception){}
 	}
 	private fun setChanelChatsContainer(chanelChats: ArrayList<ChanelChatModels.ChanelChat>){
-		myChanelChatsContainerAdapter = MyChanelChatsRecyclerAdapter(applicationContext,chanelChats)
+		myChanelChatsContainerAdapter = MyChanelChatsRecyclerAdapter(applicationContext,null)
 		myChanelChatsContainerAdapter!!.setCallback(::openChanelChat);
 		myChanelChatsContainer!!.setHasFixedSize(true)
 		myChanelChatsContainer!!.layoutManager = LinearLayoutManager(this)
@@ -147,5 +180,12 @@ class MyChanelChatsActivity : CoreActivity() {
 		newChanelChatNameBefore = name;
 		objectViewModel.createNewGroupChat(name);
 		return true;
+	}
+
+	private fun chanelChatYouHasNewChanelSocketCallback(idUser:String?){
+		loadData()
+	}
+	private fun chanelChatNotifiLastMessageSocketCallback(chanelChat:ChanelChatModels.LastNewMessageSocket?){
+		if(chanelChat!=null)myChanelChatsContainerAdapter?.updateLastMessageBySocket(chanelChat)
 	}
 }

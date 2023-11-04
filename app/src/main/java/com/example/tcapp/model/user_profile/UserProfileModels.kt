@@ -94,19 +94,22 @@ class UserProfileModels {
 		public var info:Info? = null;
 		public var skills:ArrayList<Skill>? = null;
 		public var cvs:ArrayList<GuestCV>? = null;
+		public var friendChanelChatId:String? = null;
 		constructor(){}
 		constructor(
 			relationship : String ,
 			avatar : String ,
 			info : Info? ,
 			skills : ArrayList<Skill>? ,
-			cvs : ArrayList<GuestCV>?
+			cvs : ArrayList<GuestCV>?,
+			friendChanelChatId : String
 		) {
 			this.relationship = relationship
 			this.avatar = avatar
 			this.info = info
 			this.skills = skills
 			this.cvs = cvs
+			this.friendChanelChatId = friendChanelChatId
 		}
 		
 	}

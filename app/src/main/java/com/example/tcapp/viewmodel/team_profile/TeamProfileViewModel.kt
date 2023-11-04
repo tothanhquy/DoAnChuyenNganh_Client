@@ -96,7 +96,8 @@ class TeamProfileViewModel (private val context : Context){
 			profile.description = if(!oj.isNull("description"))oj.getString("description") else null;
 			profile.internalInfo = if(!oj.isNull("internalInfo"))oj.getString("internalInfo") else null;
 			profile.relationship = if(!oj.isNull("relationship"))oj.getString("relationship") else null;
-			
+			profile.teamChanelChatId = if(!oj.isNull("chanelChatId"))oj.getString("chanelChatId") else null;
+
 			profile.skills = ArrayList<TeamProfileModels.TeamProfileSkills>();
 			if(!oj.isNull("skills")){
 				val skillsOj = oj.getJSONArray("skills")

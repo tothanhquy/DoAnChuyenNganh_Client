@@ -427,4 +427,46 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		_isLoading.postValue(false)
 
 	}
+
+	public fun userSeen(chanelChatId:String?,okCallback:()->Unit){
+		_isLoading.postValue(true)
+		Thread {
+			userSeenAPI(chanelChatId,okCallback)
+		}.start()
+	}
+
+	private fun userSeenAPI(chanelChatId:String?,okCallback:()->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.post(
+					url =  API.getBaseUrl() + "/ChanelChat/UserSeen",
+					cookies = mapOf("auth" to API.getAuth(context)) ,
+					data = mapOf(
+						"id_chanel_chat" to (chanelChatId?:""),
+					),
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					okCallback()
+				}else{
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+
+	}
+
+
 }

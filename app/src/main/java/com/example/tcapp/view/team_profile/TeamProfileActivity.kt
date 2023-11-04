@@ -21,6 +21,7 @@ import com.example.tcapp.core.Genaral.Static.setUserAvatarImage
 import com.example.tcapp.model.team_profile.TeamProfileModels
 import com.example.tcapp.model.user_profile.UserProfileModels
 import com.example.tcapp.view.adapter_view.*
+import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
 import com.example.tcapp.view.post.CreatePostActivity
 import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.request.CreateRequestActivity
@@ -40,7 +41,8 @@ class TeamProfileActivity : CoreActivity() {
 	private var teamName:String?=null;
 	private var teamAvatar:String?=null;
 	private var teamInternalInfo:String?=null;
-	
+	private var teamChanelChatId:String?=null;
+
 	private var isLoadFullMember:Boolean=false;
 	
 	
@@ -192,6 +194,7 @@ class TeamProfileActivity : CoreActivity() {
 				info.internalInfo;
 			teamInternalInfo = info.internalInfo;
 			internalInfo.visibility = if(info.relationship!=null&&info.relationship!!.contains("member"))View.VISIBLE else View.GONE;
+			teamChanelChatId=info.teamChanelChatId
 			setOptions(info.relationship?:"");
 		}
 	}
@@ -210,7 +213,8 @@ class TeamProfileActivity : CoreActivity() {
 		createPost.visibility = View.GONE;
 		val viewRequestOfTeam = findViewById<Button>(R.id.teamProfileActivityOptionViewRequestOfTeam);
 		viewRequestOfTeam.visibility = View.GONE;
-		
+		val viewChanelChatTeam = findViewById<Button>(R.id.teamProfileActivityOptionViewChanelChatTeam);
+		viewChanelChatTeam.visibility = View.GONE;
 		
 		if(relationship.contains("leader")){
 			editAvatar.visibility=View.VISIBLE;
@@ -230,6 +234,7 @@ class TeamProfileActivity : CoreActivity() {
 		}
 		if(relationship.contains("member")){
 			exitTeam.visibility=View.VISIBLE;
+			viewChanelChatTeam.visibility=View.VISIBLE
 		}
 	}
 	private fun setSkillsContainer(skills: ArrayList<TeamProfileModels.TeamProfileSkills>?){
@@ -329,6 +334,11 @@ class TeamProfileActivity : CoreActivity() {
 		closeOptions(View(applicationContext))
 		closeNewLeaderSelect(View(applicationContext))
 		objectViewModel.loadData(teamId)
+	}
+	fun viewTeamChanelChatNavigation(view:View){
+		val intent = Intent(applicationContext , ChanelChatDetailsActivity::class.java)
+		intent.putExtra("chanelChatId", teamChanelChatId);
+		startActivity(intent)
 	}
 	fun openOptions(view:View){
 		findViewById<ViewGroup>(R.id.teamProfileActivityOptions).visibility = View.VISIBLE

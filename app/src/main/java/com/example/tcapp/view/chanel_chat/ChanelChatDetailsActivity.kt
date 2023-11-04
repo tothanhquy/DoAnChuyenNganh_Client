@@ -2,6 +2,7 @@ package com.example.tcapp.view.chanel_chat
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.ServiceConnection
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -18,11 +19,15 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SortedList
 import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
 import com.example.tcapp.model.chanel_chat.MessageModels
+import com.example.tcapp.service.ChanelChatDetailsService
+import com.example.tcapp.service.ConnectionService
+import com.example.tcapp.service.MyChanelChatsService
 import com.example.tcapp.view.adapter_view.*
 import com.example.tcapp.view.team_profile.TeamProfileActivity
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
@@ -32,6 +37,17 @@ import com.example.tcapp.viewmodel.chanel_chat.ChanelChatDetailsViewModel
 const val CHOOSE_AVATAR_REQUEST_CODE = 110
 class ChanelChatDetailsActivity : CoreActivity() {
 	private lateinit var objectViewModel: ChanelChatDetailsViewModel;
+
+	private var mService: ChanelChatDetailsService?=null
+	private var isBoundMService:Boolean=false
+	private fun setMService(service: ChanelChatDetailsService){
+		this.mService = service
+	}
+	private fun setIsBoundMService(isBound:Boolean){
+		this.isBoundMService=isBound
+	}
+	private var mConnectionService: ServiceConnection = ConnectionService.getChanelChatDetailsServiceConnection(::setIsBoundMService,::setMService)
+
 
 	private var chanelChatDetails: ChanelChatModels.ChanelChatDetails?=null;
 	private var chanelChatId:String?=null;
@@ -56,6 +72,8 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private var chatBtn:Button?=null;
 	private var isChatBtnEnable:Boolean=false;
 	private var chatBoxInput:EditText?=null;
+
+	private var lastMessageIdUserSeen:String?=null;
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
 		objectViewModel = ChanelChatDetailsViewModel(applicationContext)
@@ -70,7 +88,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		chatBtn =  findViewById<Button>(R.id.chanelChatDetailsActivityMessageChatBoxChatBtn);
 		chatBoxInput =  findViewById<EditText>(R.id.chanelChatDetailsActivityMessageChatBoxInput);
 
-		messagesAdapter = ChanelChatIMessagesRecyclerAdapter(applicationContext, ArrayList())
+		messagesAdapter = ChanelChatIMessagesRecyclerAdapter(applicationContext, null)
 		messagesRecyclerView !!.setHasFixedSize(true)
 		messagesRecyclerView !!.layoutManager =
 			LinearLayoutManager(this)
@@ -82,6 +100,9 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		messagesAdapter!!.setCallbackLongTouchMessage(::longTouchMessage)
 		messagesAdapter!!.setCallbackScrollRecyclerView(::messagesRecyclerViewScrollToPosition)
 
+		//start service
+		val intent = Intent(this, MyChanelChatsService::class.java)
+		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
 
 
 		initViews()
@@ -93,6 +114,18 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	override fun onResume() {
 		super.onResume()
 		loadData()
+	}
+	override fun onDestroy() {
+		unbindService(mConnectionService);
+		setIsBoundMService(false)
+		super.onDestroy()
+	}
+	override fun onStart() {
+		super.onStart()
+		if(isBoundMService){
+			mService?.setChanelChatNewMessagesCallback(::chanelChatNewMessagesSocketCallback)
+			mService?.setChanelChatUserSeenCallback(::chanelChatUserSeenSocketCallback)
+		}
 	}
 	override fun onCreateOptionsMenu(menu : Menu?) : Boolean {
 		menuInflater.inflate(R.menu.details_menu , menu)
@@ -147,9 +180,15 @@ class ChanelChatDetailsActivity : CoreActivity() {
 						isChatBtnEnable = false;
 					}
 				}
+				//user seen
+				if(lastMessageIdUserSeen!=messagesAdapter!!.lastMessageId){
+					objectViewModel.userSeen(chanelChatId,::userSeenOkCallback)
+					lastMessageIdUserSeen=messagesAdapter!!.lastMessageId
+				}
 			}
 		})
 	}
+	private fun userSeenOkCallback(){}
 	private fun initViews(){
 		var viewActivity = findViewById<ViewGroup>(R.id.chanelChatDetailsActivity)
 		loadingLayout = Genaral.getLoadingScreen(this,viewActivity,backgroundColor)
@@ -341,10 +380,12 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		return true;
 	}
 	fun changeGroupNameOkCallback(newName:String?){
-		findViewById<TextView>(R.id.chanelChatDetailsActivityName).text =
-			newName;
-		chanelChatName = newName;
-		super.setDynamicTitleBar(newName)
+		runOnUiThread {
+			findViewById<TextView>(R.id.chanelChatDetailsActivityName).text =
+				newName;
+			chanelChatName = newName;
+			super.setDynamicTitleBar(newName)
+		}
 	}
 	
 	private fun newGroupOwnerSelectItemChoose(idMember:String? , name:String?){
@@ -367,20 +408,26 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		objectViewModel!!.getMessagesHistory(chanelChatId,0,::loadDefaultMessagesOkCallback)
 	}
 	private fun loadDefaultMessagesOkCallback(messages:MessageModels.Messages?){
-		messagesAdapter!!.setInitList(messages)
+		runOnUiThread {
+			messagesAdapter!!.setInitList(messages)
+		}
 	}
 	fun loadHistoryMessages(time:Long){
 		objectViewModel!!.getMessagesHistory(chanelChatId,time,::loadHistoryMessagesOkCallback)
 	}
 	private fun loadHistoryMessagesOkCallback(messages:MessageModels.Messages?){
-		messagesAdapter!!.insertMessagesBefore(messages)
+		runOnUiThread {
+			messagesAdapter!!.insertMessagesBefore(messages)
+		}
 	}
 	fun loadMessagesBetweenTime(startTime:Long, lastTime:Long){
 		objectViewModel!!.getMessagesBetweenTime(chanelChatId,startTime,lastTime,::loadMessagesBetweenTimeOkCallback)
 	}
 	private fun loadMessagesBetweenTimeOkCallback(messages:MessageModels.Messages?){
-		if(messages!=null){
-			messagesAdapter!!.insertMessages(messages.messages)
+		runOnUiThread {
+			if (messages != null) {
+				messagesAdapter!!.insertMessages(messages.messages)
+			}
 		}
 	}
 	private fun openMemberProfile(idUser:String){
@@ -416,8 +463,19 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		}
 	}
 	fun chatOkCallback(){
-		closeMessageReplyContainer(View(applicationContext))
-		chatBoxInput!!.setText("")
+		runOnUiThread {
+			closeMessageReplyContainer(View(applicationContext))
+			chatBoxInput!!.setText("")
+		}
 	}
 
+	private fun chanelChatNewMessagesSocketCallback(newMessages:ArrayList<MessageModels.NewMessageSocket>?){
+		if(newMessages!=null){
+			val messages:ArrayList<MessageModels.Message> = ArrayList(newMessages.map { MessageModels.Message(it.id,it.content,it.userId,it.time,it.replyContent,it.replyTime,it.replyId) })
+			messagesAdapter?.insertMessages(messages)
+		}
+	}
+	private fun chanelChatUserSeenSocketCallback(userSeen:ChanelChatModels.UserSeenSocket?){
+		if(userSeen!=null&&userSeen.idChanelChat==chanelChatId)messagesAdapter?.updateUserSeen(userSeen.idUserSeen,userSeen.idMessage)
+	}
 }

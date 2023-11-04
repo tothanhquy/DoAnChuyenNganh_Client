@@ -136,4 +136,39 @@ class ChanelChatModels {
 			this.members=members;
 		}
 	}
+	class LastNewMessageSocket{
+		public var content:String?=null;
+		public var time:Long=0L;
+		public var idChanelChat:String?=null;
+		public var idReceiveUser:String?=null;
+		public var numberOfNewMessages:Long=0;
+		constructor(
+			content: String?,
+			time:Long=0L,
+			idChanelChat: String?,
+			idReceiveUser: String?,
+			numberOfNewMessages: Long
+		) {
+			this.content = content
+			this.time = time
+			this.idChanelChat = idChanelChat
+			this.idReceiveUser = idReceiveUser
+			this.numberOfNewMessages = numberOfNewMessages
+		}
+		constructor()
+	}
+	class UserSeenSocket{
+		public var idChanelChat:String?=null;
+		public var idUserSeen:String?=null;
+		public var idMessage:String?=null;
+		constructor(idChanelChat: String?, idUserSeen: String?, idMessage: String?) {
+			this.idChanelChat = idChanelChat
+			this.idUserSeen = idUserSeen
+			this.idMessage = idMessage
+		}
+
+		constructor()
+
+
+	}
 }

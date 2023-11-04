@@ -18,7 +18,7 @@ import com.example.tcapp.model.chanel_chat.MessageModels
 
 class MyChanelChatsRecyclerAdapter(
 	private var context: Context ,
-	private var itemList: SortedList<ChanelChatModels.ChanelChat>
+	private var itemList: SortedList<ChanelChatModels.ChanelChat>?
 	) : RecyclerView.Adapter<MyChanelChatsRecyclerAdapter.ViewHolder>() {
 	
 	private lateinit var callback:(String)->Unit
@@ -30,7 +30,7 @@ class MyChanelChatsRecyclerAdapter(
 		//init list
 		itemList = SortedList<ChanelChatModels.ChanelChat>(ChanelChatModels.ChanelChat::class.java, object : SortedList.Callback<ChanelChatModels.ChanelChat>() {
 			override fun compare(o1: ChanelChatModels.ChanelChat, o2: ChanelChatModels.ChanelChat): Int {
-				return o1.lastTimeAction.compareTo(o2.lastTimeAction)
+				return (o2.lastTimeAction-o1.lastTimeAction).toInt()
 			}
 
 			override fun onChanged(position: Int, count: Int) {
@@ -59,22 +59,33 @@ class MyChanelChatsRecyclerAdapter(
 		})
 		if(list != null){
 			list!!.forEach {
-				this.itemList.add(it)
+				this.itemList!!.add(it)
 			}
 		}
 	}
 	fun add(chanelChat:ChanelChatModels.ChanelChat){
-		itemList.add(chanelChat)
+		itemList!!.add(chanelChat)
 		this.notifyDataSetChanged()
 	}
 	fun changeOrAdd(chanelChat:ChanelChatModels.ChanelChat){
 		for(i in 0 until itemCount){
-			if(itemList[i].id==chanelChat.id){
-				itemList.updateItemAt(i,chanelChat)
+			if(itemList!![i].id==chanelChat.id){
+				itemList!!.updateItemAt(i,chanelChat)
 				return;
 			}
 		}
-		itemList.add(chanelChat)
+		itemList!!.add(chanelChat)
+	}
+	fun updateLastMessageBySocket(chanelChat:ChanelChatModels.LastNewMessageSocket){
+		for(i in 0 until itemCount){
+			if(itemList!![i].id==chanelChat.idChanelChat){
+				itemList!![i].lastMessageContent=chanelChat.content
+				itemList!![i].lastMessageTime=chanelChat.time
+				itemList!![i].numberOfNewMessages=chanelChat.numberOfNewMessages
+				this.notifyItemChanged(i)
+				return;
+			}
+		}
 	}
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val avatar: ImageView = itemView.findViewById(R.id.componentMyChanelChatsItemAvatar)
@@ -91,7 +102,7 @@ class MyChanelChatsRecyclerAdapter(
 	}
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		val item = itemList[position];
+		val item = itemList!![position];
 		if(!item.isLoadAvatar){
 			when (item.type) {
 				ChanelChatModels.Type.Team -> {
@@ -124,5 +135,5 @@ class MyChanelChatsRecyclerAdapter(
 		}
 	}
 	
-	override fun getItemCount() = itemList.size()
+	override fun getItemCount() = itemList!!.size()
 }
