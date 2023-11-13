@@ -2,9 +2,10 @@
 <menu
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:title="Details"
+	<item
 		android:id="@+id/details"
+		android:icon="@drawable/menu_bar_icon"
 		android:orderInCategory="1"
-		app:showAsAction="ifRoom|withText"
-		android:icon="@drawable/dots_icon"/>
+		android:title="Details"
+		app:showAsAction="ifRoom|withText" />
 </menu>

@@ -8,6 +8,13 @@
 	android:gravity="center|center_vertical"
 	android:orientation="vertical">
 
+	<View
+		android:id="@+id/componentChanelChatMessagesItemSpace"
+		android:layout_width="match_parent"
+		android:layout_height="10dp"
+		android:visibility="gone"
+		tools:visibility="visible" />
+
 	<LinearLayout
 		android:id="@+id/componentChanelChatMessagesItemLoadMoreContainer"
 		android:layout_width="wrap_content"
@@ -16,7 +23,8 @@
 		android:gravity="center"
 		android:orientation="horizontal"
 		android:padding="10dp"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<ImageView
 			android:layout_width="wrap_content"
@@ -38,7 +46,8 @@
 		android:layout_height="match_parent"
 		android:gravity="center|center_vertical"
 		android:orientation="horizontal"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<TextView
 			android:id="@+id/componentChanelChatMessagesItemTime"
@@ -46,6 +55,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="TextView"
+			android:textSize="12sp"
 			tools:text="2022/14/8 10:30" />
 	</LinearLayout>
 
@@ -53,17 +63,19 @@
 		android:id="@+id/componentChanelChatMessagesItemFriendContainer"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_marginTop="10dp"
-		android:layout_marginBottom="10dp"
+		android:layout_marginTop="3dp"
 		android:gravity="left"
 		android:orientation="horizontal"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<com.google.android.material.imageview.ShapeableImageView
 			android:id="@+id/componentChanelChatMessagesItemFriendAvatar"
-			style="@style/SmallAvatar" />
+			style="@style/SmallAvatar"
+			app:strokeColor="@null" />
 
 		<LinearLayout
+			android:id="@+id/componentChanelChatMessagesItemFriendContainerContent"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginRight="30dp"
@@ -80,9 +92,11 @@
 				android:layout_weight="1"
 				android:text="TextView"
 				android:textColor="?attr/messageChatFriendNameColor"
+				android:textSize="12sp"
 				android:textStyle="bold"
 				android:visibility="gone"
-				tools:text="Lê Ngọ" />
+				tools:text="Lê Ngọ"
+				tools:visibility="visible" />
 
 			<LinearLayout
 				android:id="@+id/componentChanelChatMessagesItemFriendReplyContainer"
@@ -90,7 +104,8 @@
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:orientation="horizontal"
-				android:visibility="gone">
+				android:visibility="gone"
+				tools:visibility="visible">
 
 				<View
 					android:layout_width="5dp"
@@ -116,6 +131,7 @@
 				android:layout_weight="1"
 				android:text="TextView"
 				android:textColor="?attr/messageChatFriendColor"
+				android:textSize="15sp"
 				tools:text="asd asdk aksnd askd ads" />
 
 			<TextView
@@ -125,8 +141,10 @@
 				android:layout_weight="1"
 				android:text="TextView"
 				android:textColor="@color/theme_color_2_contrast_dark"
+				android:textSize="10sp"
 				android:visibility="gone"
-				tools:text="11:53" />
+				tools:text="11:53"
+				tools:visibility="visible" />
 		</LinearLayout>
 
 	</LinearLayout>
@@ -135,13 +153,14 @@
 		android:id="@+id/componentChanelChatMessagesItemMeContainer"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:layout_marginBottom="10dp"
+		android:layout_marginTop="3dp"
 		android:gravity="right"
 		android:orientation="horizontal"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<LinearLayout
+			android:id="@+id/componentChanelChatMessagesItemMeContainerContent"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginLeft="30dp"
@@ -153,11 +172,12 @@
 
 			<LinearLayout
 				android:id="@+id/componentChanelChatMessagesItemMeReplyContainer"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:orientation="horizontal"
-				android:visibility="gone">
+				android:visibility="gone"
+				tools:visibility="visible">
 
 				<View
 					android:layout_width="5dp"
@@ -183,6 +203,7 @@
 				android:layout_weight="1"
 				android:text="TextView"
 				android:textColor="?attr/messageChatMeColor"
+				android:textSize="15sp"
 				tools:text="my messages" />
 
 			<TextView
@@ -192,8 +213,10 @@
 				android:layout_weight="1"
 				android:text="TextView"
 				android:textColor="@color/theme_color_2_contrast"
+				android:textSize="10sp"
 				android:visibility="gone"
-				tools:text="11:53" />
+				tools:text="11:53"
+				tools:visibility="visible" />
 		</LinearLayout>
 
 	</LinearLayout>
@@ -204,7 +227,8 @@
 		android:layout_height="wrap_content"
 		android:gravity="right"
 		android:orientation="horizontal"
-		android:visibility="gone">
+		android:visibility="gone"
+		tools:visibility="visible">
 
 		<TextView
 			android:id="@+id/componentChanelChatMessagesItemUsersSeenNotification"

@@ -14,6 +14,7 @@ import com.example.tcapp.core.LocalData
 import com.example.tcapp.view.account.LoginAccountActivity
 import com.example.tcapp.view.account.RegisterAccountActivity
 import com.example.tcapp.view.account.SettingAccountActivity
+import com.example.tcapp.view.chanel_chat.MyChanelChatsActivity
 import com.example.tcapp.view.friend.MyFriendAndRequestsListActivity
 import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.post.UserPostsActivity
@@ -165,6 +166,10 @@ class HomeActivity : CoreActivity() {
 	}
 	fun viewSettingAccountNavigation(view: View){
 		val intent = Intent(applicationContext , SettingAccountActivity::class.java)
+		startActivity(intent)
+	}
+	fun viewMyChanelChatsNavigation(view: View){
+		val intent = Intent(applicationContext , MyChanelChatsActivity::class.java)
 		startActivity(intent)
 	}
 	fun viewMyFriendAndRequestsListNavigation(view: View){

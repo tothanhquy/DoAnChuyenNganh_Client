@@ -74,7 +74,7 @@ class ChanelChatViewMembersListViewModel (private val context : Context){
 		if(oj!=null){
 			val typeString = if(!oj.isNull("type"))oj.getString("type") else null
 			val type = if(typeString.equals("team")) ChanelChatModels.Type.Team else
-				if(typeString.equals("user")) ChanelChatModels.Type.User else
+				if(typeString.equals("friend")) ChanelChatModels.Type.Friend else
 					ChanelChatModels.Type.Group;
 
 			val memberView = ChanelChatModels.ChanelChatMembersList(type);

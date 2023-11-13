@@ -17,7 +17,11 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <service
-            android:name=".service.ChanelChatService"
+            android:name=".service.MyChanelChatsService"
+            android:enabled="true"
+            android:exported="false"></service>
+        <service
+            android:name=".service.ChanelChatDetailsService"
             android:enabled="true"
             android:exported="false"></service>
         <service

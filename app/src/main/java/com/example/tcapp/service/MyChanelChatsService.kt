@@ -11,7 +11,7 @@ import com.google.gson.Gson
 import java.net.URISyntaxException
 
 
-class MyChanelChatsService(var context: Context) : Service() {
+class MyChanelChatsService() : Service() {
     private final val SERVICE_NAME = "my-chanel-chats"
     private val mBinder: IBinder = MyChanelChatsServiceBinder()
     var mStartMode = 0

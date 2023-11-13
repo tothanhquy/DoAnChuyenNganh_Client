@@ -23,7 +23,7 @@ class ChanelChatDetailsViewModel (private val context : Context){
 	
 	private var _chanelChat:MutableLiveData<ChanelChatModels.ChanelChatDetails> = MutableLiveData<ChanelChatModels.ChanelChatDetails>()
 	private var _chanelChatAvatar:MutableLiveData<String?> = MutableLiveData<String?>(null);
-//	private var _fullMembers:MutableLiveData<ArrayList<TeamProfileModels.Member>?> = MutableLiveData<ArrayList<TeamProfileModels.Member>?>(null)
+	private var _fullMembers:MutableLiveData<MessageModels.Messages?> = MutableLiveData<MessageModels.Messages?>(null)
 	
 	public val chanelChat: LiveData<ChanelChatModels.ChanelChatDetails>
 		get() = _chanelChat
@@ -31,8 +31,8 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		get() = _chanelChatAvatar
 	public var chanelChatType:ChanelChatModels.Type? = null
 
-//	public val fullMembers: LiveData<ArrayList<TeamProfileModels.Member>?>
-//		get() = _fullMembers
+	public val fullMembers: LiveData<MessageModels.Messages?>
+		get() = _fullMembers
 //	public var members: ArrayList<ChanelChatModels.Member>? = null;
 	
 	public val isLoading:LiveData<Boolean>
@@ -81,11 +81,12 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		}
 		_isLoading.postValue(false)
 	}
-	private fun  handleDetails(oj: JSONObject?){
-		if(oj!=null){
+	private fun  handleDetails(ojRes: JSONObject?){
+		if(ojRes!=null){
+			val oj = ojRes.getJSONObject("resChanelChat")
 			val typeString = if(!oj.isNull("type"))oj.getString("type") else null
 			val type = if(typeString.equals("team")) ChanelChatModels.Type.Team else
-				if(typeString.equals("user")) ChanelChatModels.Type.User else
+				if(typeString.equals("friend")) ChanelChatModels.Type.Friend else
 					ChanelChatModels.Type.Group;
 
 			var chanelChat = ChanelChatModels.ChanelChatDetails(type);
@@ -307,6 +308,7 @@ class ChanelChatDetailsViewModel (private val context : Context){
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
+//					_fullMembers.postValue(getMessagesFromOj(response.data))
 					okCallback(getMessagesFromOj(response.data))
 				}else{
 					reShowChangeName()
@@ -319,9 +321,10 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		}
 		_isLoading.postValue(false)
 	}
-	private fun  getMessagesFromOj(oj: JSONObject?): MessageModels.Messages {
+	private fun  getMessagesFromOj(ojRes: JSONObject?): MessageModels.Messages {
 		var messages = MessageModels.Messages();
-		if(oj!=null){
+		if(ojRes!=null){
+			val oj = ojRes.getJSONObject("messages")
 			messages.isFinish = if(!oj.isNull("isFinish"))oj.getBoolean("isFinish") else false;
 
 			if(!oj.isNull("messages")){
@@ -397,12 +400,12 @@ class ChanelChatDetailsViewModel (private val context : Context){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(
-					url =  API.getBaseUrl() + "/ChanelChat/InsertMembers",
+					url =  API.getBaseUrl() + "/Message/CreateMessage",
 					cookies = mapOf("auth" to API.getAuth(context)) ,
 					data = mapOf(
 						"id_chanel_chat" to (chanelChatId?:""),
 						"content" to message,
-						"id_reply" to idReply,
+						"id_reply" to (idReply?:""),
 					),
 				)
 			)

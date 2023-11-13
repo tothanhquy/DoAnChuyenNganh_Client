@@ -122,6 +122,7 @@ class ChanelChatViewMembersListActivity : CoreActivity() {
 			runOnUiThread {
 				if(it!=null)
 					membersContainerAdapter!!.deleteMember(it)
+					closeOptions( View(applicationContext))
 			}
 		})
 		//set user data

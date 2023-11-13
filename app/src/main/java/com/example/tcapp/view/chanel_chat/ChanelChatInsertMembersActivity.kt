@@ -61,7 +61,6 @@ class ChanelChatInsertMembersActivity : CoreActivity() {
 	
 	override fun onResume() {
 		super.onResume()
-		loadData()
 	}
 	
 	private fun loadData() {
@@ -119,6 +118,7 @@ class ChanelChatInsertMembersActivity : CoreActivity() {
 			membersContainerAdapter!!.setInitList(members)
 			membersContainer!!.adapter = membersContainerAdapter;
 		}
+		updateSelectedGroup()
 	}
 	
 	private fun openMemberProfile(idUser:String){
@@ -139,7 +139,7 @@ class ChanelChatInsertMembersActivity : CoreActivity() {
 			selectedUserBtn?.visibility=View.GONE
 		}else{
 			selectedUserBtn?.visibility=View.VISIBLE
-			selectedUserBtn?.text = "Thêm " + selectedUserId.size +" Thành viên đã chọn."
+			selectedUserBtn?.text = "Thêm (" + selectedUserId.size +") Thành viên đã chọn."
 		}
 	}
 	public fun insertMembersClick(view:View){

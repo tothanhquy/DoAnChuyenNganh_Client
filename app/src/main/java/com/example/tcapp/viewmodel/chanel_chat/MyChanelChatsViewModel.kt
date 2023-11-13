@@ -149,7 +149,7 @@ class MyChanelChatsViewModel (private val context : Context){
 	}
 	private fun getTypeFromString(type:String?):ChanelChatModels.Type{
 		return if(type.equals("team")) ChanelChatModels.Type.Team else
-		if(type.equals("user")) ChanelChatModels.Type.User else
+		if(type.equals("friend")) ChanelChatModels.Type.Friend else
 			ChanelChatModels.Type.Group;
 	}
 }

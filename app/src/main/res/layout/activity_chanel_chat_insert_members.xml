@@ -40,11 +40,12 @@
 
 		<Button
 			android:id="@+id/chanelChatInsertMembersActivityInsertBtn"
-			android:onClick="insertMembersClick"
 			style="@style/ActionBtn"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Button" />
+			android:onClick="insertMembersClick"
+			android:text="Button"
+			android:visibility="gone" />
 	</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

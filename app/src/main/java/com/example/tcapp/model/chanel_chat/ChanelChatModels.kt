@@ -7,7 +7,7 @@ class ChanelChatModels {
 	
 	}
 	enum class Type{
-		User, Team, Group
+		Friend, Team, Group
 	};
 	class ChanelChat{
 		public lateinit var type:Type;

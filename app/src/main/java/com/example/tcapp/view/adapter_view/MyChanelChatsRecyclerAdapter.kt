@@ -59,22 +59,28 @@ class MyChanelChatsRecyclerAdapter(
 		})
 		if(list != null){
 			list!!.forEach {
-				this.itemList!!.add(it)
+				changeOrAdd(it)
 			}
 		}
+//		println("init")
 	}
-	fun add(chanelChat:ChanelChatModels.ChanelChat){
-		itemList!!.add(chanelChat)
-		this.notifyDataSetChanged()
-	}
+//	fun add(chanelChat:ChanelChatModels.ChanelChat){
+//		itemList!!.add(chanelChat)
+//		this.notifyDataSetChanged()
+//	}
 	fun changeOrAdd(chanelChat:ChanelChatModels.ChanelChat){
 		for(i in 0 until itemCount){
 			if(itemList!![i].id==chanelChat.id){
 				itemList!!.updateItemAt(i,chanelChat)
+				this.notifyItemChanged(i)
 				return;
 			}
 		}
+//		println("add")
 		itemList!!.add(chanelChat)
+	println("count:$itemCount")
+//		if(itemCount<=1)
+//		this.notifyDataSetChanged()
 	}
 	fun updateLastMessageBySocket(chanelChat:ChanelChatModels.LastNewMessageSocket){
 		for(i in 0 until itemCount){
@@ -103,12 +109,15 @@ class MyChanelChatsRecyclerAdapter(
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = itemList!![position];
-		if(!item.isLoadAvatar){
+		println("position"+position)
+		println(item.name)
+//		if(!item.isLoadAvatar){
+		holder.avatar.setImageResource(android.R.color.transparent)
 			when (item.type) {
 				ChanelChatModels.Type.Team -> {
 					Genaral.setTeamAvatarImage(context , item.avatar , holder.avatar)
 				}
-				ChanelChatModels.Type.User -> {
+				ChanelChatModels.Type.Friend -> {
 					Genaral.setUserAvatarImage(context , item.avatar , holder.avatar)
 				}
 				else -> {
@@ -117,7 +126,7 @@ class MyChanelChatsRecyclerAdapter(
 			}
 			holder.name.text = item.name;
 			item.isLoadAvatar = true;
-		}
+//		}
 		if(item.numberOfNewMessages==0L){
 			holder.checkSeen.visibility = View.GONE
 		}else{
@@ -135,5 +144,5 @@ class MyChanelChatsRecyclerAdapter(
 		}
 	}
 	
-	override fun getItemCount() = itemList!!.size()
+	override fun getItemCount() = if(itemList==null)0 else itemList!!.size()
 }

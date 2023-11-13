@@ -33,10 +33,9 @@ class SocketServiceCallbackMethod {
 
     class Event{
         public var name:String="";
-        public lateinit var methods:ArrayList<ServiceMethod>;
+        public var methods:ArrayList<ServiceMethod> = ArrayList();
         constructor(name:String){
             this.name = name
-            this.methods = ArrayList()
         }
         fun removeServiceMethod(serviceName:String){
             val count = countList;

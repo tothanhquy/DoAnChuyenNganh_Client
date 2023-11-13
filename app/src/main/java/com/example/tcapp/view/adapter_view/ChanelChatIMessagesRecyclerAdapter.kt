@@ -20,21 +20,11 @@ import com.example.tcapp.model.chanel_chat.MessageModels
 class ChanelChatIMessagesRecyclerAdapter(
 	var context: Context,
 	private var itemList: SortedList<MessageModels.Message>?
+//	private var itemList: ArrayList<MessageModels.Message>?
 	) : RecyclerView.Adapter<ChanelChatIMessagesRecyclerAdapter.ViewHolder>() {
 
-
-	private var isFinish:Boolean = false;
-	private var startTime:Long = -1;
-	private var lastTime:Long = -1;
-	public var lastMessageId:String? = null;
-	private var accountId:String?=null;
-
-	private var members:ArrayList<ChanelChatModels.Member> = ArrayList()
-	private var usersSeen:ArrayList<ChanelChatModels.LastTimeMemberSeen> = ArrayList()
-	//private var astUsersSeenPosition:ArrayList<LastUserSeenPosition> = ArrayList()
-
-	private var replyIdNeedToScrollTo:String?=null;
-	fun setInitList(messages:MessageModels.Messages?){
+	init {
+//		itemList=ArrayList()
 		//init list
 		itemList = SortedList<MessageModels.Message>(MessageModels.Message::class.java, object : SortedList.Callback<MessageModels.Message>() {
 			override fun compare(o1: MessageModels.Message, o2: MessageModels.Message): Int {
@@ -46,11 +36,11 @@ class ChanelChatIMessagesRecyclerAdapter(
 			}
 
 			override fun areContentsTheSame(oldItem: MessageModels.Message, newItem: MessageModels.Message): Boolean {
-				return oldItem.time.equals(newItem.time)
+				return oldItem.id.equals(newItem.id)
 			}
 
 			override fun areItemsTheSame(item1: MessageModels.Message, item2: MessageModels.Message): Boolean {
-				return item1.time.equals(item2.time)
+				return item1.id.equals(item2.id)
 			}
 
 			override fun onInserted(position: Int, count: Int) {
@@ -65,12 +55,35 @@ class ChanelChatIMessagesRecyclerAdapter(
 				notifyItemMoved(fromPosition, toPosition)
 			}
 		})
+	}
+
+	private var isFinish:Boolean = false;
+	private var startTime:Long = -1;
+	private var lastTime:Long = -1;
+	public var lastMessageId:String? = null;
+	private var accountId:String?=null;
+
+	private var members:ArrayList<ChanelChatModels.Member> = ArrayList()
+	private var usersSeen:ArrayList<ChanelChatModels.LastTimeMemberSeen> = ArrayList()
+	//private var astUsersSeenPosition:ArrayList<LastUserSeenPosition> = ArrayList()
+
+	private var replyIdNeedToScrollTo:String?=null;
+	fun setInitList(messages:MessageModels.Messages?){
+
 		if(messages != null){
+//			this.itemList!!.add(messages!!.messages?.get(0)!!)
+//			this.itemList!!.beginBatchedUpdates()
 			messages.messages!!.forEach {
-				this.itemList!!.add(it)
+				if(!isExistId(it.id)){
+					this.itemList!!.add(it)
+				}
+
+//				println("count:$itemCount id:${it.id}")
 			}
 			isFinish = messages.isFinish
 			updateStartLastTime()
+//			this.itemList!!.endBatchedUpdates()
+			this.notifyDataSetChanged()
 		}
 	}
 	fun setAccountId(accountId:String?){
@@ -155,6 +168,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 			messages!!.forEach {
 				if(isExistId(it.id)){
 					this.itemList!!.add(it)
+					println("insert:$itemCount")
 				}
 			}
 			updateStartLastTime()
@@ -186,10 +200,12 @@ class ChanelChatIMessagesRecyclerAdapter(
 	}
 
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+		val space: View = itemView.findViewById(R.id.componentChanelChatMessagesItemSpace)
 		val loadMore: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemLoadMoreContainer)
 		val timeContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemTimeContainer)
 		val time: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemTime)
 		val friendContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendContainer)
+		val friendContainerContent: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendContainerContent)
 		val friendAvatar: ImageView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendAvatar)
 		val friendName: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendName)
 		val friendReplyContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendReplyContainer)
@@ -197,6 +213,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 		val friendContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendContent)
 		val friendTime: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemFriendTime)
 		val meContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemMeContainer)
+		val meContainerContent: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemMeContainerContent)
 		val meReplyContainer: LinearLayout = itemView.findViewById(R.id.componentChanelChatMessagesItemMeReplyContainer)
 		val meReplyContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemMeReplyContent)
 		val meContent: TextView = itemView.findViewById(R.id.componentChanelChatMessagesItemMeContent)
@@ -215,27 +232,41 @@ class ChanelChatIMessagesRecyclerAdapter(
 		val message = itemList!![position];
 		val beforeMessage = if(position==0)null else itemList!![position-1];
 		val afterMessage = if(position== getItemCount() -1)null else itemList!![position+1];
-
-		if(!message.isLoaded){
+//		println("position:$position")
+//		if(!message.isLoaded){
 			//load static data
 			if(position==0&&!this.isFinish){
 				holder.loadMore.visibility = View.VISIBLE
 				holder.loadMore.setOnClickListener {
 					callbackLoadHistoryMessages(startTime)
 				}
+			}else{
+				holder.loadMore.visibility = View.GONE
 			}
 			val isOverTimeBefore = beforeMessage==null||isDifferentTime(beforeMessage.time,message.time)
 			val isOverTimeAfter = afterMessage==null||isDifferentTime(afterMessage.time,message.time)
 			val isFarMessageBefore = isOverTimeBefore||beforeMessage!!.userId!=message.userId
 			val isFarMessageAfter = isOverTimeAfter||afterMessage!!.userId!=message.userId
 
+		println("position:$position time:${message.time} isFarMessageBefore:$isFarMessageBefore isFarMessageAfter:$isFarMessageAfter")
+
+			if(isFarMessageBefore){
+				holder.space.visibility=View.VISIBLE
+			}else{
+				holder.space.visibility=View.GONE
+			}
 			if(isOverTimeBefore){
 				holder.timeContainer.visibility = View.VISIBLE;
 				holder.time.text = Genaral.getDateTimeByUTC(message.time)
+			}else{
+				holder.timeContainer.visibility = View.GONE;
 			}
+
 			if(message.userId==accountId){
 				//me
 				holder.meContainer.visibility = View.VISIBLE;
+				holder.friendContainer.visibility = View.GONE;
+
 				if(message.replyId!=null&&message.replyId!=""){
 					holder.meReplyContainer.visibility=View.VISIBLE
 					holder.meReplyContent.text = message.replyContent
@@ -245,20 +276,28 @@ class ChanelChatIMessagesRecyclerAdapter(
 				}
 				holder.meContent.text=message.content
 				if(isFarMessageAfter){
+					holder.meTime.visibility=View.VISIBLE
 					holder.meTime.text = Genaral.getMinimizeDateTimeByUTC(message.time)
+				}else{
+					holder.meTime.visibility=View.GONE
 				}
-				holder.meContainer.setOnLongClickListener(OnLongClickListener {
+				holder.meContainerContent.setOnLongClickListener(OnLongClickListener {
 					callbackLongTouchMessage(message.id,message.content)
 					true
 				})
 			}else{
 				//friend
 				holder.friendContainer.visibility = View.VISIBLE;
+				holder.meContainer.visibility = View.GONE;
+
 				if(isFarMessageBefore){
 					Genaral.setUserAvatarImage(context,getAvatarBaseId(message.userId),holder.friendAvatar)
 					holder.friendName.visibility=View.VISIBLE
 					holder.friendName.text = getNameBaseId(message.userId)
 					holder.friendName.setOnClickListener {
+						callbackOfViewUser(message.userId!!)
+					}
+					holder.friendAvatar.setOnClickListener {
 						callbackOfViewUser(message.userId!!)
 					}
 				}
@@ -271,20 +310,25 @@ class ChanelChatIMessagesRecyclerAdapter(
 				}
 				holder.friendContent.text=message.content
 				if(isFarMessageAfter){
+					holder.friendTime.visibility=View.VISIBLE
 					holder.friendTime.text = Genaral.getMinimizeDateTimeByUTC(message.time)
+				}else{
+					holder.friendTime.visibility=View.GONE
 				}
-				holder.friendContainer.setOnLongClickListener(OnLongClickListener {
+				holder.friendContainerContent.setOnLongClickListener(OnLongClickListener {
 					callbackLongTouchMessage(message.id,message.content)
 					true
 				})
 			}
 			itemList!![position].isLoaded=true
-		}
+//		}
 		//users seen
 		val usersSeenNotifi = getNotificationUsersSeenBaseIdMessage(message.id)
 		if(usersSeenNotifi.isNotEmpty()){
 			holder.usersSeenContainer.visibility=View.VISIBLE
 			holder.usersSeenNotifi.text=usersSeenNotifi
+		}else{
+			holder.usersSeenContainer.visibility=View.GONE
 		}
 	}
 
@@ -320,6 +364,6 @@ class ChanelChatIMessagesRecyclerAdapter(
 		}
 	}
 
-	override fun getItemCount() = itemList!!.size()
+	override fun getItemCount() = if(itemList!=null)itemList!!.size() else 0
 
 }

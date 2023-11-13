@@ -50,31 +50,40 @@ class ChanelChatInsertMembersRecyclerAdapter(
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val member = itemList[position];
-		if(!member.isLoadImage){
+
+//		if(!member.isLoadImage){
 			Genaral.setUserAvatarImage(context,member.avatar,holder.avatar)
 			holder.name.text = member.name
+			holder.name.setOnClickListener {
+				callbackOfViewUser(member.id!!)
+			}
+			holder.avatar.setOnClickListener {
+				callbackOfViewUser(member.id!!)
+			}
+			member.isLoadImage=true
+//		}
+
+		if(member.wasExist){
+			holder.notCheck.visibility = View.GONE
+			holder.checked.visibility = View.GONE
 		}else{
-			if(member.wasExist){
+			if(member.isCheck){
 				holder.notCheck.visibility = View.GONE
-				holder.checked.visibility = View.GONE
+				holder.checked.visibility = View.VISIBLE
+				holder.checked.setOnClickListener {
+					callbackOfSelectUser(member.id!!)
+					toggleItemIsCheck(position)
+				}
 			}else{
-				if(member.isCheck){
-					holder.notCheck.visibility = View.GONE
-					holder.checked.visibility = View.VISIBLE
-					holder.checked.setOnClickListener {
-						callbackOfSelectUser(member.id!!)
-						toggleItemIsCheck(position)
-					}
-				}else{
-					holder.notCheck.visibility = View.VISIBLE
-					holder.checked.visibility = View.GONE
-					holder.notCheck.setOnClickListener {
-						callbackOfSelectUser(member.id!!)
-						toggleItemIsCheck(position)
-					}
+				holder.notCheck.visibility = View.VISIBLE
+				holder.checked.visibility = View.GONE
+				holder.notCheck.setOnClickListener {
+					callbackOfSelectUser(member.id!!)
+					toggleItemIsCheck(position)
 				}
 			}
 		}
+
 	}
 
 	public fun updateInsertedMembers(membersId:ArrayList<String>?){

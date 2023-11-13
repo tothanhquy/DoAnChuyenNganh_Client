@@ -12,7 +12,7 @@ import com.google.gson.Gson
 import java.net.URISyntaxException
 
 
-class ChanelChatDetailsService(var context: Context) : Service() {
+class ChanelChatDetailsService() : Service() {
     private final val SERVICE_NAME = "chanel-chat-details"
     private val mBinder: IBinder = ChanelChatDetailsServiceBinder()
     var mStartMode = 0

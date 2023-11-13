@@ -54,7 +54,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private var chanelChatName:String?=null;
 	private var chanelChatAvatar:String?=null;
 
-	private var newGroupChatNameBefore:String?=null;
+	private var newGroupChatNameBefore:String="";
 
 	private var backgroundColor:Int =0
 	private var  loadingLayout:View? = null;
@@ -101,7 +101,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		messagesAdapter!!.setCallbackScrollRecyclerView(::messagesRecyclerViewScrollToPosition)
 
 		//start service
-		val intent = Intent(this, MyChanelChatsService::class.java)
+		val intent = Intent(this, ChanelChatDetailsService::class.java)
 		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
 
 
@@ -110,11 +110,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		setRender()
 		loadData()
 	}
-	
-	override fun onResume() {
-		super.onResume()
-		loadData()
-	}
+
 	override fun onDestroy() {
 		unbindService(mConnectionService);
 		setIsBoundMService(false)
@@ -155,6 +151,8 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		chanelChatId = intent.getStringExtra("chanelChatId").toString()
 		println(chanelChatId)
 		objectViewModel.loadData(chanelChatId)
+		loadDefaultMessages()
+//		messagesAdapter!!.setInitList(MessageModels.Messages())
 	}
 	private fun initEvents(){
 		chatBoxInput!!.addTextChangedListener(object : TextWatcher {
@@ -225,14 +223,27 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		//set avatar
 		objectViewModel.chanelChatAvatar.observe(this, Observer {
 			runOnUiThread {
-				setChanelChatAvatar(it)
+				if(it!=null) {
+					setChanelChatAvatar(it)
+				}
 			}
 		})
 		//set chanel chat data
 		objectViewModel.chanelChat.observe(this, Observer {
 			runOnUiThread {
-				chanelChatDetails = it;
-				setView(it)
+				if(it!=null){
+					chanelChatDetails = it;
+					setView(it)
+				}
+
+			}
+		})
+		objectViewModel.fullMembers.observe(this, Observer {
+			runOnUiThread {
+				if(it!=null){
+					messagesAdapter!!.setInitList(it)
+				}
+
 			}
 		})
 	}
@@ -246,7 +257,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 					ChanelChatModels.Type.Team -> {
 						Genaral.setTeamAvatarImage(this,avatarPath,avatar)
 					}
-					ChanelChatModels.Type.User -> {
+					ChanelChatModels.Type.Friend -> {
 						Genaral.setUserAvatarImage(this,avatarPath,avatar)
 					}
 					else -> {
@@ -261,6 +272,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 			findViewById<TextView>(R.id.chanelChatDetailsActivityName).text =
 				chanelChat.name;
 			chanelChatName = chanelChat.name;
+			newGroupChatNameBefore = chanelChatName ?: ""
 			super.setDynamicTitleBar(chanelChat.name)
 			setOptions(chanelChat);
 			setSelectNewGroupOwnerContainer(chanelChat.members,chanelChat.accountId)
@@ -285,9 +297,9 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		exitGroupChat.visibility = View.GONE;
 		
 		if(chanelChat?.type==ChanelChatModels.Type.Team){
-			viewMembers.visibility = View.VISIBLE
+//			viewMembers.visibility = View.VISIBLE
 			viewTeam.visibility = View.VISIBLE
-		}else if(chanelChat?.type==ChanelChatModels.Type.User){
+		}else if(chanelChat?.type==ChanelChatModels.Type.Friend){
 			if(chanelChat.friendId!=null&&chanelChat.friendId!=""){
 				viewUser.visibility = View.VISIBLE
 			}
@@ -368,14 +380,14 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 
 	fun changeGroupName(view:View){
-		showDialogChangeName("new name")
+		showDialogChangeName(newGroupChatNameBefore!!)
 	}
 	private fun showDialogChangeName(inputDefault:String){
 		val dialog = createGetStringDialog(this@ChanelChatDetailsActivity,"New group chat name",inputDefault,::changeGroupName)
 		dialog.show();
 	}
 	private fun changeGroupName(name:String?):Boolean{
-		newGroupChatNameBefore = name;
+		newGroupChatNameBefore = name?: "";
 		objectViewModel.changeNewNameGroupChat(chanelChatId,name,::changeGroupNameOkCallback);
 		return true;
 	}
@@ -411,6 +423,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		runOnUiThread {
 			messagesAdapter!!.setInitList(messages)
 		}
+
 	}
 	fun loadHistoryMessages(time:Long){
 		objectViewModel!!.getMessagesHistory(chanelChatId,time,::loadHistoryMessagesOkCallback)
@@ -448,6 +461,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		messageReplyIdReal = messageReplyIdOpenOption
 		findViewById<TextView>(R.id.chanelChatDetailsActivityMessageChatReplyContent).text=messageReplyContentOpenOption
 		messageReplyContainer!!.visibility = View.VISIBLE
+		closeMessageOptionContainer(View(applicationContext))
 	}
 	fun closeMessageReplyContainer(view:View){
 		messageReplyContainer!!.visibility = View.GONE
@@ -471,11 +485,19 @@ class ChanelChatDetailsActivity : CoreActivity() {
 
 	private fun chanelChatNewMessagesSocketCallback(newMessages:ArrayList<MessageModels.NewMessageSocket>?){
 		if(newMessages!=null){
-			val messages:ArrayList<MessageModels.Message> = ArrayList(newMessages.map { MessageModels.Message(it.id,it.content,it.userId,it.time,it.replyContent,it.replyTime,it.replyId) })
-			messagesAdapter?.insertMessages(messages)
+			val messages:ArrayList<MessageModels.Message> = ArrayList(newMessages.filter{it.chanelChatId==chanelChatId}.map { MessageModels.Message(it.id,it.content,it.userId,it.time,it.replyContent,it.replyTime,it.replyId) })
+			runOnUiThread {
+				messagesAdapter?.insertMessages(messages)
+			}
+
 		}
 	}
 	private fun chanelChatUserSeenSocketCallback(userSeen:ChanelChatModels.UserSeenSocket?){
-		if(userSeen!=null&&userSeen.idChanelChat==chanelChatId)messagesAdapter?.updateUserSeen(userSeen.idUserSeen,userSeen.idMessage)
+		runOnUiThread {
+			if (userSeen != null && userSeen.idChanelChat == chanelChatId) messagesAdapter?.updateUserSeen(
+				userSeen.idUserSeen,
+				userSeen.idMessage
+			)
+		}
 	}
 }

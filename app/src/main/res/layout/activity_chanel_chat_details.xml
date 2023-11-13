@@ -106,6 +106,7 @@
 		style="@style/MainLinearLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:background="?attr/backgroundScreenDark"
 		android:elevation="1dp"
 		android:orientation="vertical"
 		app:layout_constraintBottom_toBottomOf="parent"
@@ -134,14 +135,17 @@
 				android:id="@+id/chanelChatDetailsActivityMessageChatReplyContainer"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:background="@drawable/message_chat_friend_bg"
 				android:gravity="center_vertical"
-				android:orientation="horizontal">
+				android:orientation="horizontal"
+				android:visibility="gone"
+				tools:visibility="visible">
 
 				<LinearLayout
-					android:onClick="closeMessageReplyContainer"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center_horizontal"
+					android:onClick="closeMessageReplyContainer"
 					android:orientation="vertical">
 
 					<TextView
@@ -149,6 +153,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:text="Reply"
+						android:textSize="12sp"
 						android:textStyle="bold" />
 
 					<ImageView
@@ -169,6 +174,7 @@
 					android:layout_height="wrap_content"
 					android:maxHeight="60dp"
 					android:text="TextView"
+					android:textSize="13sp"
 					tools:text="asdmk askd naksnd kansdkn akdkas nkas nfkdakfnka n qenaw gggggg gggg  ggg  gg g ggg ggg   g  gginawa" />
 			</LinearLayout>
 
@@ -240,6 +246,7 @@
 					android:clickable="true"
 					android:contentDescription="leader avatar"
 					android:onClick="openLeaderProfileNavigation"
+					app:strokeColor="@null"
 					tools:srcCompat="@tools:sample/avatars" />
 
 				<TextView

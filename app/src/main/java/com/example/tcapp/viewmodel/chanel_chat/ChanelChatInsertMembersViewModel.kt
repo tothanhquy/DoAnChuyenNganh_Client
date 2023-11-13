@@ -131,7 +131,7 @@ class ChanelChatInsertMembersViewModel (private val context : Context){
 					insertMembers.add(
 						ChanelChatModels.InsertMemberAdapterItem(
 							myFriend.userId,myFriend.userName,myFriend.userAvatar,
-							membersId.indexOf(myFriend.userId)!=1
+							membersId.indexOf(myFriend.userId)!=-1
 							))
 				}
 			}

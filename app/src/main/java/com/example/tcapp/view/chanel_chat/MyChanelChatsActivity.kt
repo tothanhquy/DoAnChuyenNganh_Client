@@ -106,7 +106,7 @@ class MyChanelChatsActivity : CoreActivity() {
 					super.showError(it.title,it.contents,fun(dialogInterface: DialogInterface , i:Int){
 						if(reShowCreateNewGroupChat!=objectViewModel.reShowCreateNewGroupChat){
 							reShowCreateNewGroupChat=objectViewModel.reShowCreateNewGroupChat;
-							showDialogCreateNewTeam(newChanelChatNameBefore?:"")
+							showDialogCreateNewGroupChat(newChanelChatNameBefore?:"")
 						}
 					})
 				}
@@ -152,7 +152,10 @@ class MyChanelChatsActivity : CoreActivity() {
 	}
 	private fun pushNewChanelChat(newChanelChat: ChanelChatModels.ChanelChat){
 		try{
-			myChanelChatsContainerAdapter!!.add(newChanelChat)
+			myChanelChatsContainerAdapter!!.changeOrAdd(newChanelChat)
+			if(myChanelChatsContainerAdapter!!.itemCount<=1){
+				loadData()
+			}
 		}catch(e:Exception){}
 	}
 	private fun setChanelChatsContainer(chanelChats: ArrayList<ChanelChatModels.ChanelChat>){
@@ -161,22 +164,23 @@ class MyChanelChatsActivity : CoreActivity() {
 		myChanelChatsContainer!!.setHasFixedSize(true)
 		myChanelChatsContainer!!.layoutManager = LinearLayoutManager(this)
 		myChanelChatsContainer!!.adapter = myChanelChatsContainerAdapter;
+		myChanelChatsContainerAdapter!!.setInitList(chanelChats)
 		
 	}
 	
-	private fun openChanelChat(idTeam:String){
-//		val intent = Intent(applicationContext ,TeamProfileActivity::class.java)
-//		intent.putExtra("teamId", idTeam)
-//		startActivity(intent)
+	private fun openChanelChat(id:String){
+		val intent = Intent(applicationContext ,ChanelChatDetailsActivity::class.java)
+		intent.putExtra("chanelChatId", id)
+		startActivity(intent)
 	}
 	fun createNewChanelChatClick(view:View){
-		showDialogCreateNewTeam("new team")
+		showDialogCreateNewGroupChat("new group chat")
 	}
-	private fun showDialogCreateNewTeam(inputDefault:String){
-		val dialog = createGetStringDialog(this@MyChanelChatsActivity,"New team name",inputDefault,::createNewTeam)
+	private fun showDialogCreateNewGroupChat(inputDefault:String){
+		val dialog = createGetStringDialog(this@MyChanelChatsActivity,"New group chat name",inputDefault,::createNewGroupChat)
 		dialog.show();
 	}
-	private fun createNewTeam(name:String?):Boolean{
+	private fun createNewGroupChat(name:String?):Boolean{
 		newChanelChatNameBefore = name;
 		objectViewModel.createNewGroupChat(name);
 		return true;
@@ -186,6 +190,10 @@ class MyChanelChatsActivity : CoreActivity() {
 		loadData()
 	}
 	private fun chanelChatNotifiLastMessageSocketCallback(chanelChat:ChanelChatModels.LastNewMessageSocket?){
-		if(chanelChat!=null)myChanelChatsContainerAdapter?.updateLastMessageBySocket(chanelChat)
+		runOnUiThread {
+			if (chanelChat != null) myChanelChatsContainerAdapter?.updateLastMessageBySocket(
+				chanelChat
+			)
+		}
 	}
 }
