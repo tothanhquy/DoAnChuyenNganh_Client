@@ -19,7 +19,7 @@ class SocketServiceCallbackMethod {
     public fun registerMethod(eventName:String, serviceName: String, method: (String?) -> Unit){
         events.forEach {
             if(it.name==eventName){
-                if(it.isExistService(serviceName)){
+                if(!it.isExistService(serviceName)){
                     it.addServiceMethod(serviceName,method)
                 }
             }

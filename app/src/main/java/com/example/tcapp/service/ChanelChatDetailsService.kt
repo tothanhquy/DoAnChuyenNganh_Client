@@ -20,13 +20,27 @@ class ChanelChatDetailsService() : Service() {
 
     private var socketService:SocketService?=null
     private var isBoundSocketService:Boolean=false
+
+    private var joinRoomFlag:Int=0
     private fun setSocketService(service:SocketService){
         this.socketService = service
     }
     private fun setIsBoundSocketService(isBound:Boolean){
         this.isBoundSocketService=isBound
     }
-    private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService)
+    private fun createdServiceCallback(){
+        if(isBoundSocketService){
+            socketService?.serviceRegisterMethod("chanel-chat-new-messages",SERVICE_NAME,::chanelChatNewMessagesSocketServiceCallback)
+            socketService?.serviceRegisterMethod("chanel-chat-user-seen",SERVICE_NAME,::chanelChatUserSeenSocketServiceCallback)
+        }
+        joinRoomFlag++;
+        if(joinRoomFlag==2){
+            if(isBoundSocketService){
+                socketService?.emit("join_real_chat_chanel_chat_room",ChanelChatJoinRoom(chanelChatId) as Object)
+            }
+        }
+    }
+    private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService,::createdServiceCallback)
 
     private var chanelChatId:String?=null
 
@@ -47,12 +61,6 @@ class ChanelChatDetailsService() : Service() {
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Service is starting, due to a call to startService()
-        if(isBoundSocketService){
-            socketService?.serviceRegisterMethod("chanel-chat-new-messages",SERVICE_NAME,::chanelChatNewMessagesSocketServiceCallback)
-            socketService?.serviceRegisterMethod("chanel-chat-user-seen",SERVICE_NAME,::chanelChatUserSeenSocketServiceCallback)
-
-        }
-
         return mStartMode
     }
     override fun onUnbind(intent: Intent?): Boolean {
@@ -62,8 +70,11 @@ class ChanelChatDetailsService() : Service() {
     data class ChanelChatJoinRoom(var id_chanel_chat:String?){}
     override fun onBind(intent: Intent?): IBinder? {
         chanelChatId = intent?.getStringExtra("chanelChatId")
-        if(isBoundSocketService){
-            socketService?.emit("join_real_chat_chanel_chat_room",ChanelChatJoinRoom(chanelChatId))
+        joinRoomFlag++;
+        if(joinRoomFlag==2){
+            if(isBoundSocketService){
+                socketService?.emit("join_real_chat_chanel_chat_room",ChanelChatJoinRoom(chanelChatId) as Object)
+            }
         }
         return mBinder
     }
@@ -73,7 +84,7 @@ class ChanelChatDetailsService() : Service() {
     }
     override fun onDestroy() {
         if(isBoundSocketService){
-            socketService?.emit("out_real_chat_chanel_chat_room",ChanelChatJoinRoom(chanelChatId))
+            socketService?.emit("out_real_chat_chanel_chat_room",ChanelChatJoinRoom(chanelChatId) as Object)
             socketService?.serviceDestroyAllMethods(SERVICE_NAME)
         }
         unbindService(mConnectionService);
@@ -89,7 +100,9 @@ class ChanelChatDetailsService() : Service() {
         var res = MessageModels.NewMessagesSocket();
         try{
             res = Gson().fromJson(data, MessageModels.NewMessagesSocket::class.java)
-        }catch (e:Exception){}
+        }catch (e:Exception){
+            println(e.toString())
+        }
         chanelChatNewMessagesCallback(res.messages)
     }
     private lateinit var chanelChatUserSeenCallback:(ChanelChatModels.UserSeenSocket?)->Unit;
@@ -98,9 +111,12 @@ class ChanelChatDetailsService() : Service() {
     }
     private fun chanelChatUserSeenSocketServiceCallback(data:String?){
         var res = ChanelChatModels.UserSeenSocket();
+        println("socket service user seen: $data")
         try{
             res = Gson().fromJson(data, ChanelChatModels.UserSeenSocket::class.java)
-        }catch (e:Exception){}
+        }catch (e:Exception){
+            println(e.toString())
+        }
         chanelChatUserSeenCallback(res)
     }
 

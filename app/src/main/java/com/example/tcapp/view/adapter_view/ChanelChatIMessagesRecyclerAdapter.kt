@@ -84,6 +84,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 			updateStartLastTime()
 //			this.itemList!!.endBatchedUpdates()
 			this.notifyDataSetChanged()
+			callbackScrollRecyclerView(itemCount-1)
 		}
 	}
 	fun setAccountId(accountId:String?){
@@ -155,6 +156,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 		if(messages!=null){
 			this.isFinish = messages.isFinish
 			insertMessages(messages.messages)
+			this.notifyItemChanged(0)
 		}
 	}
 	private fun isExistId(id:String?):Boolean{
@@ -166,24 +168,40 @@ class ChanelChatIMessagesRecyclerAdapter(
 	fun insertMessages(messages:ArrayList<MessageModels.Message>?){
 		if(messages != null){
 			messages!!.forEach {
-				if(isExistId(it.id)){
+				if(!isExistId(it.id)){
 					this.itemList!!.add(it)
+					changeMessagesEffected(it.id)
 					println("insert:$itemCount")
+					if(this.itemList!![itemCount-1].id==it.id){
+						//last message
+						callbackScrollRecyclerView(itemCount-1)
+					}
 				}
 			}
-			updateStartLastTime()
 		}
 
 		updateStartLastTime()
 		if(replyIdNeedToScrollTo!=null){
 			gotoReplyMessage(replyIdNeedToScrollTo)
 		}
-		//change update
 
+	}
+	private fun changeMessagesEffected(idMessage: String?){
+		for(i in 0 until itemCount){
+			if(this.itemList!![i].id==idMessage){
+				if(i-1>=0){
+					this.notifyItemChanged(i-1);
+				}
+				if(i+1<itemCount){
+					this.notifyItemChanged(i+1);
+				}
+			}
+		}
 	}
 
 	private fun gotoReplyMessage(replyId:String?,replyTime:Long=0){
 		var isExist:Boolean=false;
+		println("reply click:$replyId");
 		for (i in 0 until itemCount){
 			if(itemList!![i].id==replyId){
 				callbackScrollRecyclerView(i)
@@ -231,7 +249,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val message = itemList!![position];
 		val beforeMessage = if(position==0)null else itemList!![position-1];
-		val afterMessage = if(position== getItemCount() -1)null else itemList!![position+1];
+		val afterMessage = if(position== itemCount -1)null else itemList!![position+1];
 //		println("position:$position")
 //		if(!message.isLoaded){
 			//load static data
@@ -247,8 +265,6 @@ class ChanelChatIMessagesRecyclerAdapter(
 			val isOverTimeAfter = afterMessage==null||isDifferentTime(afterMessage.time,message.time)
 			val isFarMessageBefore = isOverTimeBefore||beforeMessage!!.userId!=message.userId
 			val isFarMessageAfter = isOverTimeAfter||afterMessage!!.userId!=message.userId
-
-		println("position:$position time:${message.time} isFarMessageBefore:$isFarMessageBefore isFarMessageAfter:$isFarMessageAfter")
 
 			if(isFarMessageBefore){
 				holder.space.visibility=View.VISIBLE
@@ -273,6 +289,8 @@ class ChanelChatIMessagesRecyclerAdapter(
 					holder.meReplyContainer.setOnClickListener {
 						gotoReplyMessage(message.replyId,message.replyTime)
 					}
+				}else{
+					holder.meReplyContainer.visibility=View.GONE
 				}
 				holder.meContent.text=message.content
 				if(isFarMessageAfter){
@@ -307,6 +325,8 @@ class ChanelChatIMessagesRecyclerAdapter(
 					holder.friendReplyContainer.setOnClickListener {
 						gotoReplyMessage(message.replyId,message.replyTime)
 					}
+				}else{
+					holder.friendReplyContainer.visibility=View.GONE
 				}
 				holder.friendContent.text=message.content
 				if(isFarMessageAfter){
@@ -349,7 +369,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 		var name = "";
 		var numberOfUsers=0;
 		usersSeen.forEach {
-			if(it.messageId==idMessage){
+			if(it.messageId==idMessage&&it.userId!=accountId){
 				numberOfUsers++;
 				if(numberOfUsers<=3){
 					name+=getNameBaseId(it.userId)+","

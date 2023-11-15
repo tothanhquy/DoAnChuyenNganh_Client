@@ -32,7 +32,7 @@ import com.example.tcapp.view.adapter_view.*
 import com.example.tcapp.view.team_profile.TeamProfileActivity
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 import com.example.tcapp.viewmodel.chanel_chat.ChanelChatDetailsViewModel
-
+import android.os.Handler
 
 const val CHOOSE_AVATAR_REQUEST_CODE = 110
 class ChanelChatDetailsActivity : CoreActivity() {
@@ -46,7 +46,13 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private fun setIsBoundMService(isBound:Boolean){
 		this.isBoundMService=isBound
 	}
-	private var mConnectionService: ServiceConnection = ConnectionService.getChanelChatDetailsServiceConnection(::setIsBoundMService,::setMService)
+	private fun createdServiceCallback(){
+		if(isBoundMService){
+			mService?.setChanelChatNewMessagesCallback(::chanelChatNewMessagesSocketCallback)
+			mService?.setChanelChatUserSeenCallback(::chanelChatUserSeenSocketCallback)
+		}
+	}
+	private var mConnectionService: ServiceConnection = ConnectionService.getChanelChatDetailsServiceConnection(::setIsBoundMService,::setMService,::createdServiceCallback)
 
 
 	private var chanelChatDetails: ChanelChatModels.ChanelChatDetails?=null;
@@ -100,11 +106,6 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		messagesAdapter!!.setCallbackLongTouchMessage(::longTouchMessage)
 		messagesAdapter!!.setCallbackScrollRecyclerView(::messagesRecyclerViewScrollToPosition)
 
-		//start service
-		val intent = Intent(this, ChanelChatDetailsService::class.java)
-		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
-
-
 		initViews()
 		initEvents()
 		setRender()
@@ -118,10 +119,6 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 	override fun onStart() {
 		super.onStart()
-		if(isBoundMService){
-			mService?.setChanelChatNewMessagesCallback(::chanelChatNewMessagesSocketCallback)
-			mService?.setChanelChatUserSeenCallback(::chanelChatUserSeenSocketCallback)
-		}
 	}
 	override fun onCreateOptionsMenu(menu : Menu?) : Boolean {
 		menuInflater.inflate(R.menu.details_menu , menu)
@@ -146,10 +143,14 @@ class ChanelChatDetailsActivity : CoreActivity() {
 			objectViewModel.changeAvatar(selectedPath, chanelChatId)
 		}
 	}
-	
+
 	private fun loadData() {
 		chanelChatId = intent.getStringExtra("chanelChatId").toString()
-		println(chanelChatId)
+		//start service
+		val intent = Intent(this, ChanelChatDetailsService::class.java)
+		intent.putExtra("chanelChatId",chanelChatId)
+		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
+
 		objectViewModel.loadData(chanelChatId)
 		loadDefaultMessages()
 //		messagesAdapter!!.setInitList(MessageModels.Messages())
@@ -179,6 +180,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 					}
 				}
 				//user seen
+				println("last message:$lastMessageIdUserSeen ${messagesAdapter!!.lastMessageId}")
 				if(lastMessageIdUserSeen!=messagesAdapter!!.lastMessageId){
 					objectViewModel.userSeen(chanelChatId,::userSeenOkCallback)
 					lastMessageIdUserSeen=messagesAdapter!!.lastMessageId
@@ -422,6 +424,11 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private fun loadDefaultMessagesOkCallback(messages:MessageModels.Messages?){
 		runOnUiThread {
 			messagesAdapter!!.setInitList(messages)
+			//user seen
+			if(lastMessageIdUserSeen!=messagesAdapter!!.lastMessageId){
+				objectViewModel.userSeen(chanelChatId,::userSeenOkCallback)
+				lastMessageIdUserSeen=messagesAdapter!!.lastMessageId
+			}
 		}
 
 	}
@@ -469,7 +476,11 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 
 	fun messagesRecyclerViewScrollToPosition(position:Int){
-		messagesRecyclerView!!.layoutManager!!.scrollToPosition(position)
+		val handler = Handler()
+		handler.postDelayed({
+			// Code to be executed after a delay
+			messagesRecyclerView!!.smoothScrollToPosition(position)
+		}, 700)
 	}
 	fun chat(view:View){
 		if(chatBoxInput!!.text.isNotEmpty()){
@@ -486,6 +497,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private fun chanelChatNewMessagesSocketCallback(newMessages:ArrayList<MessageModels.NewMessageSocket>?){
 		if(newMessages!=null){
 			val messages:ArrayList<MessageModels.Message> = ArrayList(newMessages.filter{it.chanelChatId==chanelChatId}.map { MessageModels.Message(it.id,it.content,it.userId,it.time,it.replyContent,it.replyTime,it.replyId) })
+			println("new message:"+messages.size)
 			runOnUiThread {
 				messagesAdapter?.insertMessages(messages)
 			}

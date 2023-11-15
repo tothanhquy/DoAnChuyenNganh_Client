@@ -432,7 +432,6 @@ class ChanelChatDetailsViewModel (private val context : Context){
 	}
 
 	public fun userSeen(chanelChatId:String?,okCallback:()->Unit){
-		_isLoading.postValue(true)
 		Thread {
 			userSeenAPI(chanelChatId,okCallback)
 		}.start()
@@ -467,8 +466,6 @@ class ChanelChatDetailsViewModel (private val context : Context){
 			println(err.toString())
 			_error.postValue(AlertDialog.Error("Error!","System error"))
 		}
-		_isLoading.postValue(false)
-
 	}
 
 

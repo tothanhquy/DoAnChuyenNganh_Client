@@ -25,7 +25,14 @@ class MyChanelChatsService() : Service() {
     private fun setIsBoundSocketService(isBound:Boolean){
         this.isBoundSocketService=isBound
     }
-    private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService)
+    private fun createdServiceCallback(){
+        if(isBoundSocketService){
+            socketService?.serviceRegisterMethod("chanel-chat-notifi-last-message",SERVICE_NAME,::chanelChatNotifiLastMessageSocketServiceCallback)
+            socketService?.serviceRegisterMethod("chanel-chat-you-has-new-chanel",SERVICE_NAME,::chanelChatYouHasNewChanelSocketServiceCallback)
+            socketService?.emit("join_chanel_chat_room",null)
+        }
+    }
+    private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService,::createdServiceCallback)
 
 
     public inner class MyChanelChatsServiceBinder : Binder() {
@@ -41,16 +48,11 @@ class MyChanelChatsService() : Service() {
             bindService(intent,mConnectionService , BIND_AUTO_CREATE)
 
         } catch (e: URISyntaxException) {
+            println(e.toString())
         }
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Service is starting, due to a call to startService()
-        if(isBoundSocketService){
-            socketService?.serviceRegisterMethod("chanel-chat-notifi-last-message",SERVICE_NAME,::chanelChatNotifiLastMessageSocketServiceCallback)
-            socketService?.serviceRegisterMethod("chanel-chat-you-has-new-chanel",SERVICE_NAME,::chanelChatYouHasNewChanelSocketServiceCallback)
-
-        }
-
         return mStartMode
     }
     override fun onUnbind(intent: Intent?): Boolean {
@@ -58,9 +60,6 @@ class MyChanelChatsService() : Service() {
         return mAllowRebind
     }
     override fun onBind(intent: Intent?): IBinder? {
-        if(isBoundSocketService){
-            socketService?.emit("join_chanel_chat_room",null)
-        }
         return mBinder
     }
     override fun onRebind(intent: Intent?) {

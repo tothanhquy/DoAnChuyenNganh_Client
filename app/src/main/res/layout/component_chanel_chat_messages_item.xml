@@ -235,7 +235,8 @@
 			style="@style/Title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="teo, adias da xem" />
+			android:text="teo, adias da xem"
+			android:textSize="10sp" />
 	</LinearLayout>
 
 

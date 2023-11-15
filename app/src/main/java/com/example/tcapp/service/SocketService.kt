@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 import com.example.tcapp.api.API
+import com.google.gson.Gson
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -17,7 +18,7 @@ import java.net.URISyntaxException
 public class SocketService() : Service() {
     private val mBinder: IBinder = SocketBinder()
     var mStartMode = 0
-    private var mAllowRebind = true
+    private var mAllowRebind = true;
 
     private var mSocket:Socket?=null;
 
@@ -40,19 +41,25 @@ public class SocketService() : Service() {
         // setup socket
         try {
             mSocket = IO.socket(API.getBaseUrl())
+//            mSocket = IO.socket("http://192.168.1.5")
 
             socketServiceCallbackMethod.events.forEach {
                 val onNewListener =
                     Emitter.Listener { args ->
-                        for(i in 0 until it.methods.size){
+
+                        for (i in 0 until it.methods.size) {
                             it.methods[i].callbackMethod(args[0] as String)
                         }
+                        println("socket receive:${it.name}:${args[0]}")
+                        println("socket receive size callback:${it.methods.size}")
                     }
-                mSocket?.on(it.name,onNewListener)
+                mSocket!!.on(it.name,onNewListener)
             }
 
-            mSocket?.connect();
+            mSocket!!.connect();
+            println(mSocket!!.id())
         } catch (e: URISyntaxException) {
+            println(e.toString())
         }
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -72,15 +79,24 @@ public class SocketService() : Service() {
         // after onUnbind() has already been called
     }
     override fun onDestroy() {
+        emit("out_all_room",null)
         mSocket?.disconnect();
         // The service is no longer used and is being destroyed
     }
 
-    class SocketEmitObject(var jwt:String?,data:Any?){}
-    public fun emit(event:String,data:Any?){
-        val jwt = API.getAuth(applicationContext)
+    class SocketEmitObject{
+        var jwt:String? = null;
+        var data:Object? = null
+        constructor(jwt:String?,data:Object?=null){
+            this.jwt = jwt;
+            this.data=data;
+        }
+    }
+    public fun emit(event:String,data:Object?){
+        println("socket:$event")
+        val jwt = API.getAuth(applicationContext).split(';')[0]
         val sendData = SocketEmitObject(jwt,data)
-        mSocket?.emit(event, sendData);
+        mSocket!!.emit(event, Gson().toJson(sendData));
     }
 
 }

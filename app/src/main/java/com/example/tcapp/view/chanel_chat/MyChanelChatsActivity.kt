@@ -39,7 +39,13 @@ class MyChanelChatsActivity : CoreActivity() {
 	private fun setIsBoundMService(isBound:Boolean){
 		this.isBoundMService=isBound
 	}
-	private var mConnectionService: ServiceConnection = ConnectionService.getMyChanelChatsServiceConnection(::setIsBoundMService,::setMService)
+	private fun createdServiceCallback(){
+		if(isBoundMService){
+			mService?.setChanelChatYouHasNewChanelCallback(::chanelChatYouHasNewChanelSocketCallback)
+			mService?.setChanelChatNotifiLastMessageCallback(::chanelChatNotifiLastMessageSocketCallback)
+		}
+	}
+	private var mConnectionService: ServiceConnection = ConnectionService.getMyChanelChatsServiceConnection(::setIsBoundMService,::setMService,::createdServiceCallback)
 
 
 	private var backgroundColor:Int =0;
@@ -82,10 +88,6 @@ class MyChanelChatsActivity : CoreActivity() {
 
 	override fun onStart() {
 		super.onStart()
-		if(isBoundMService){
-			mService?.setChanelChatYouHasNewChanelCallback(::chanelChatYouHasNewChanelSocketCallback)
-			mService?.setChanelChatNotifiLastMessageCallback(::chanelChatNotifiLastMessageSocketCallback)
-		}
 	}
 
 	private fun loadData() {
