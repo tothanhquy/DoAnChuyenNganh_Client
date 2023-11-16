@@ -476,11 +476,13 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 
 	fun messagesRecyclerViewScrollToPosition(position:Int){
-		val handler = Handler()
-		handler.postDelayed({
-			// Code to be executed after a delay
-			messagesRecyclerView!!.smoothScrollToPosition(position)
-		}, 700)
+		if(position>=0){
+			val handler = Handler()
+			handler.postDelayed({
+				// Code to be executed after a delay
+				messagesRecyclerView!!.smoothScrollToPosition(position)
+			}, 700)
+		}
 	}
 	fun chat(view:View){
 		if(chatBoxInput!!.text.isNotEmpty()){
@@ -497,7 +499,6 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private fun chanelChatNewMessagesSocketCallback(newMessages:ArrayList<MessageModels.NewMessageSocket>?){
 		if(newMessages!=null){
 			val messages:ArrayList<MessageModels.Message> = ArrayList(newMessages.filter{it.chanelChatId==chanelChatId}.map { MessageModels.Message(it.id,it.content,it.userId,it.time,it.replyContent,it.replyTime,it.replyId) })
-			println("new message:"+messages.size)
 			runOnUiThread {
 				messagesAdapter?.insertMessages(messages)
 			}

@@ -88,7 +88,9 @@ class MyChanelChatsService() : Service() {
         var res = ChanelChatModels.LastNewMessageSocket();
         try{
             res = Gson().fromJson(data, ChanelChatModels.LastNewMessageSocket::class.java)
-        }catch (e:Exception){}
+        }catch (e:Exception){
+            println(e.toString())
+        }
         chanelChatNotifiLastMessageCallback(res)
     }
 
