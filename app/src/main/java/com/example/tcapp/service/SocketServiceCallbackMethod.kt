@@ -1,18 +1,24 @@
 package com.example.tcapp.service
 
 class SocketServiceCallbackMethod {
-
+    class EventName {
+        companion object {
+            public final const val ChanelChatUserSeen: String = "chanel-chat-user-seen";
+            public final const val ChanelChatNotifiLastMessage: String = "chanel-chat-notifi-last-message";
+            public final const val ChanelChatNewMessages: String = "chanel-chat-new-messages";
+            public final const val ChanelChatYouHasNewChanel: String = "chanel-chat-you-has-new-chanel";
+            public final const val NotificationNew: String = "notification-new";
+        }
+        constructor(){}
+    }
     public lateinit var events:ArrayList<Event>;
     constructor(){
         events = ArrayList()
-//        ChanelChatUserSeen
-        events.add(Event("chanel-chat-user-seen"))
-//        ChanelChatNotifiLastMessage
-        events.add(Event("chanel-chat-notifi-last-message"))
-//        ChanelChatNewMessages
-        events.add(Event("chanel-chat-new-messages"))
-//        ChanelChatYouHasNewChanel
-        events.add(Event("chanel-chat-you-has-new-chanel"))
+        events.add(Event(EventName.ChanelChatUserSeen))
+        events.add(Event(EventName.ChanelChatNewMessages))
+        events.add(Event(EventName.ChanelChatNotifiLastMessage))
+        events.add(Event(EventName.NotificationNew))
+        events.add(Event(EventName.ChanelChatYouHasNewChanel))
 
 
     }

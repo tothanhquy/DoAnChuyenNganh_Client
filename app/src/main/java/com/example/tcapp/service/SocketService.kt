@@ -51,7 +51,7 @@ public class SocketService() : Service() {
                             it.methods[i].callbackMethod(args[0] as String)
                         }
                         println("socket receive:${it.name}:${args[0]}")
-                        println("socket receive size callback:${it.methods.size}")
+                        println("socket receive size method:${it.methods.size}")
                     }
                 mSocket!!.on(it.name,onNewListener)
             }

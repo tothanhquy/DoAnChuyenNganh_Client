@@ -1,19 +1,19 @@
 package com.example.tcapp.service
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Binder
 import android.os.IBinder
-import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.api.API
+import com.example.tcapp.model.notification.NotificationModels
 import com.google.gson.Gson
 import java.net.URISyntaxException
 
 
-class MyChanelChatsService() : Service() {
-    private final val SERVICE_NAME = "my-chanel-chats"
-    private val mBinder: IBinder = MyChanelChatsServiceBinder()
+class BackgroundService() : Service() {
+    private final val SERVICE_NAME = "notification"
+    private val mBinder: IBinder = NotificationServiceBinder()
     var mStartMode = 0
     private var mAllowRebind = true
 
@@ -27,17 +27,15 @@ class MyChanelChatsService() : Service() {
     }
     private fun createdServiceCallback(){
         if(isBoundSocketService){
-            socketService?.serviceRegisterMethod(SocketServiceCallbackMethod.EventName.ChanelChatNotifiLastMessage,SERVICE_NAME,::chanelChatNotifiLastMessageSocketServiceCallback)
-            socketService?.serviceRegisterMethod(SocketServiceCallbackMethod.EventName.ChanelChatYouHasNewChanel,SERVICE_NAME,::chanelChatYouHasNewChanelSocketServiceCallback)
-            socketService?.emit("join_chanel_chat_room",null)
+            socketService?.serviceRegisterMethod(SocketServiceCallbackMethod.EventName.NotificationNew,SERVICE_NAME,::notificationNewSocketServiceCallback)
         }
     }
     private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService,::createdServiceCallback)
 
 
-    public inner class MyChanelChatsServiceBinder : Binder() {
-        val service: MyChanelChatsService
-            get() = this@MyChanelChatsService
+    public inner class NotificationServiceBinder : Binder() {
+        val service: BackgroundService
+            get() = this@BackgroundService
     }
 
     override fun onCreate() {
@@ -73,26 +71,38 @@ class MyChanelChatsService() : Service() {
         // The service is no longer used and is being destroyed
     }
 
-    private lateinit var chanelChatYouHasNewChanelCallback:(String?)->Unit;
-    public fun setChanelChatYouHasNewChanelCallback(callback:(String?)->Unit){
-        chanelChatYouHasNewChanelCallback = callback
+    private fun notificationNewSocketServiceCallback(data:String?){
+        getNotification(data);
     }
-    private fun chanelChatYouHasNewChanelSocketServiceCallback(data:String?){
-        chanelChatYouHasNewChanelCallback(data)//idUser
-    }
-    private lateinit var chanelChatNotifiLastMessageCallback:(ChanelChatModels.LastNewMessageSocket?)->Unit;
-    public fun setChanelChatNotifiLastMessageCallback(callback:(ChanelChatModels.LastNewMessageSocket?)->Unit){
-        chanelChatNotifiLastMessageCallback = callback
-    }
-    private fun chanelChatNotifiLastMessageSocketServiceCallback(data:String?){
-        var res = ChanelChatModels.LastNewMessageSocket();
+    private fun getNotification(id:String?){
         try{
-            res = Gson().fromJson(data, ChanelChatModels.LastNewMessageSocket::class.java)
-        }catch (e:Exception){
-            println(e.toString())
-        }
-        chanelChatNotifiLastMessageCallback(res)
-    }
+            val  response : API.ResponseAPI = API.getResponse(applicationContext,
+                khttp.get(
+                    url = API.getBaseUrl() + "/Notification/GetNotification",
+                    cookies = mapOf("auth" to API.getAuth(applicationContext)),
+                    params= mapOf(
+                        "id_notification" to (id?:"")
+                    )
+                )
+            )
 
+            if(response.code==1||response.code==404){
+                //system error
+            }else if(response.code==403){
+                //not authen
+            }else{
+                if(response.status=="Success"){
+                    val notificationCrude = Gson().fromJson(response.data.toString(), NotificationModels.NotificationCrude::class.java)
+                    getNotificationOkCallback(NotificationModels().Notification(notificationCrude))
+                }else{
+                }
+            }
+        }catch(err:Exception){
+            println(err.toString())
+        }
+    }
+    private fun getNotificationOkCallback(notifi:NotificationModels.Notification){
+
+    }
 
 }

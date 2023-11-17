@@ -30,8 +30,8 @@ class ChanelChatDetailsService() : Service() {
     }
     private fun createdServiceCallback(){
         if(isBoundSocketService){
-            socketService?.serviceRegisterMethod("chanel-chat-new-messages",SERVICE_NAME,::chanelChatNewMessagesSocketServiceCallback)
-            socketService?.serviceRegisterMethod("chanel-chat-user-seen",SERVICE_NAME,::chanelChatUserSeenSocketServiceCallback)
+            socketService?.serviceRegisterMethod(SocketServiceCallbackMethod.EventName.ChanelChatNewMessages,SERVICE_NAME,::chanelChatNewMessagesSocketServiceCallback)
+            socketService?.serviceRegisterMethod(SocketServiceCallbackMethod.EventName.ChanelChatUserSeen,SERVICE_NAME,::chanelChatUserSeenSocketServiceCallback)
         }
         joinRoomFlag++;
         if(joinRoomFlag==2){
