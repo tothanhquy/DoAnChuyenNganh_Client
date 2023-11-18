@@ -61,13 +61,31 @@ class ConnectionService {
             }
             return mConnection
         }
-        public fun getNotificationServiceConnection(setBound:(Boolean)->Unit, setService:(BackgroundService)->Unit, createdCallback:()->Unit):ServiceConnection{
+        public fun getBackgroundServiceConnection(setBound:(Boolean)->Unit, setService:(BackgroundService)->Unit, createdCallback:()->Unit):ServiceConnection{
             val mConnection: ServiceConnection = object : ServiceConnection {
                 override fun onServiceConnected(
                     className: ComponentName,
                     service: IBinder
                 ) {
-                    val binder = service as BackgroundService.NotificationServiceBinder
+                    val binder = service as BackgroundService.BackgroundServiceBinder
+                    setService(binder.service)
+                    setBound(true)
+                    createdCallback()
+                }
+
+                override fun onServiceDisconnected(arg0: ComponentName) {
+                    setBound(false)
+                }
+            }
+            return mConnection
+        }
+        public fun getMyNotificationsServiceConnection(setBound:(Boolean)->Unit, setService:(MyNotificationsService)->Unit, createdCallback:()->Unit):ServiceConnection{
+            val mConnection: ServiceConnection = object : ServiceConnection {
+                override fun onServiceConnected(
+                    className: ComponentName,
+                    service: IBinder
+                ) {
+                    val binder = service as MyNotificationsService.MyNotificationsServiceBinder
                     setService(binder.service)
                     setBound(true)
                     createdCallback()

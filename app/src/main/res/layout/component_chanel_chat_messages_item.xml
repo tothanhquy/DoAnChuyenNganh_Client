@@ -119,7 +119,7 @@
 					android:layout_height="wrap_content"
 					android:text="TextView"
 					android:textColor="?attr/messageChatFriendColor"
-					android:textSize="16sp"
+					android:textSize="15sp"
 					tools:text="nfdk nskdfnk skdfnksd fk nkdsknlg ndkfgn fdgd gd " />
 			</LinearLayout>
 
@@ -191,7 +191,7 @@
 					android:layout_height="wrap_content"
 					android:text="TextView"
 					android:textColor="?attr/messageChatMeColor"
-					android:textSize="16sp"
+					android:textSize="15sp"
 					tools:text="nfdk nskdfnk skdfnksd fk nkdsknlg ndkfgn fdgd gd " />
 			</LinearLayout>
 

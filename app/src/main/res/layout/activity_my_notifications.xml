@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/myNotificationsActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.notification.MyNotificationsActivity"
+	tools:viewBindingIgnore="true">
+	
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/myNotificationsActivityScrollViewContainer"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/myNotificationsActivityContainer"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+			
+			</androidx.recyclerview.widget.RecyclerView>
+			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:id="@+id/myNotificationsActivityLoadingContainer"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center_horizontal"
+					android:orientation="horizontal"
+					android:visibility="gone"
+					tools:visibility="visible" />
+			
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -187,4 +187,6 @@
 	<string name="my_chanel_chats">Kênh chat</string>
 	<string name="chanel_chat_details">Kênh chat</string>
 	<string name="insert_members">Thêm thành viên</string>
+
+	<string name="my_notifications">Thông báo</string>
 </resources>

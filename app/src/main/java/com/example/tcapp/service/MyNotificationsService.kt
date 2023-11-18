@@ -7,14 +7,15 @@ import android.os.Binder
 import android.os.IBinder
 import com.example.tcapp.api.API
 import com.example.tcapp.core.NotificationSystem
+import com.example.tcapp.model.chanel_chat.ChanelChatModels
 import com.example.tcapp.model.notification.NotificationModels
 import com.google.gson.Gson
 import java.net.URISyntaxException
 
 
-class BackgroundService() : Service() {
-    private final val SERVICE_NAME = "background"
-    private val mBinder: IBinder = BackgroundServiceBinder()
+class MyNotificationsService() : Service() {
+    private final val SERVICE_NAME = "my-notifications"
+    private val mBinder: IBinder = MyNotificationsServiceBinder()
     var mStartMode = 0
     private var mAllowRebind = true
 
@@ -34,9 +35,9 @@ class BackgroundService() : Service() {
     private var mConnectionService: ServiceConnection = ConnectionService.getSocketConnection(::setIsBoundSocketService,::setSocketService,::createdServiceCallback)
 
 
-    public inner class BackgroundServiceBinder : Binder() {
-        val service: BackgroundService
-            get() = this@BackgroundService
+    public inner class MyNotificationsServiceBinder : Binder() {
+        val service: MyNotificationsService
+            get() = this@MyNotificationsService
     }
 
     override fun onCreate() {
@@ -72,38 +73,11 @@ class BackgroundService() : Service() {
         // The service is no longer used and is being destroyed
     }
 
+    private lateinit var notificationNewCallback:(String?)->Unit;
+    public fun setNotificationNewCallback(callback:(String?)->Unit){
+        notificationNewCallback = callback
+    }
     private fun notificationNewSocketServiceCallback(data:String?){
-        getNotification(data);
+        notificationNewCallback(data);
     }
-    private fun getNotification(id:String?){
-        try{
-            val  response : API.ResponseAPI = API.getResponse(applicationContext,
-                khttp.get(
-                    url = API.getBaseUrl() + "/Notification/GetNotification",
-                    cookies = mapOf("auth" to API.getAuth(applicationContext)),
-                    params= mapOf(
-                        "id_notification" to (id?:"")
-                    )
-                )
-            )
-
-            if(response.code==1||response.code==404){
-                //system error
-            }else if(response.code==403){
-                //not authen
-            }else{
-                if(response.status=="Success"){
-                    val notificationCrude = Gson().fromJson(response.data.toString(), NotificationModels.NotificationCrude::class.java)
-                    getNotificationOkCallback(NotificationModels().Notification(notificationCrude))
-                }else{
-                }
-            }
-        }catch(err:Exception){
-            println(err.toString())
-        }
-    }
-    private fun getNotificationOkCallback(notification:NotificationModels.Notification){
-        NotificationSystem().addNotification(applicationContext,NotificationSystem.NotificationShowModel(notification))
-    }
-
 }

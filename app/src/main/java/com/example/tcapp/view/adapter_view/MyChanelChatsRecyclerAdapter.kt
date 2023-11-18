@@ -38,11 +38,11 @@ class MyChanelChatsRecyclerAdapter(
 			}
 
 			override fun areContentsTheSame(oldItem: ChanelChatModels.ChanelChat, newItem: ChanelChatModels.ChanelChat): Boolean {
-				return oldItem.lastTimeAction.equals(newItem.lastTimeAction)
+				return oldItem.id.equals(newItem.id)
 			}
 
 			override fun areItemsTheSame(item1: ChanelChatModels.ChanelChat, item2: ChanelChatModels.ChanelChat): Boolean {
-				return item1.lastTimeAction.equals(item2.lastTimeAction)
+				return item1.id.equals(item2.id)
 			}
 
 			override fun onInserted(position: Int, count: Int) {

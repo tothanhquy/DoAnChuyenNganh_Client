@@ -76,6 +76,9 @@
 		<item name="messageChatMeBg">@color/theme_color_2</item>
 		<item name="messageChatMeColor">@color/black</item>
 
+		<item name="notificationReadBgColor">@color/theme_color_2_contrast_dark</item>
+		<item name="notificationNotReadBgColor">@color/white</item>
+
 		
 	</style>
 	

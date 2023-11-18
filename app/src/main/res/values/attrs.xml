@@ -40,6 +40,9 @@
 		<attr name="messageChatFriendNameColor" format="reference" />
 		<attr name="messageChatMeBg" format="reference" />
 		<attr name="messageChatMeColor" format="reference" />
+
+		<attr name="notificationReadBgColor" format="reference" />
+		<attr name="notificationNotReadBgColor" format="reference" />
 	</declare-styleable>
 	
 	

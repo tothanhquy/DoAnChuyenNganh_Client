@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Rect
@@ -21,13 +22,30 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tcapp.R
 import com.example.tcapp.model.SettingTheme
+import com.example.tcapp.service.BackgroundService
+import com.example.tcapp.service.ChanelChatDetailsService
+import com.example.tcapp.service.ConnectionService
 import com.google.gson.Gson
 
 
 const val  SETTING_THEME_NAME = "setting_theme";
 const val REQUEST_READ_FILE_PERMISSION_CODE = 1
  open class CoreActivity : AppCompatActivity(){
-	override fun onCreate(savedInstanceState : Bundle?) {
+	 private var mService: BackgroundService?=null
+	 private var isBoundMService:Boolean=false
+	 private fun setMService(service: BackgroundService){
+		 this.mService = service
+	 }
+	 private fun setIsBoundMService(isBound:Boolean){
+		 this.isBoundMService=isBound
+	 }
+	 private fun createdServiceCallback(){
+		 if(isBoundMService){
+		 }
+	 }
+	 private var mConnectionService: ServiceConnection = ConnectionService.getBackgroundServiceConnection(::setIsBoundMService,::setMService,::createdServiceCallback)
+
+	 override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
 		
 //		hideTitle()
@@ -57,6 +75,10 @@ const val REQUEST_READ_FILE_PERMISSION_CODE = 1
 //			imm?.hideSoftInputFromWindow(view.windowToken, 0)
 //		}
 		setEvent()
+		 NotificationSystem().createNotificationChannel(applicationContext)
+
+		 val intent = Intent(this, BackgroundService::class.java)
+		 bindService(intent,mConnectionService , BIND_AUTO_CREATE)
 	}
 	 override fun onCreateOptionsMenu(menu : Menu?) : Boolean {
 		 return super.onCreateOptionsMenu(menu)
