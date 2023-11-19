@@ -42,7 +42,6 @@ class HomeViewModel (private val context : Context){
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.get(
 					url = API.getBaseUrl() + "/Account/GetBasicDataUser",
-//					url = "https://ktor.io/docs/getting-started-ktor-client.html#make-request",
 					cookies = mapOf("auth" to API.getAuth(context))
 				)
 			)
@@ -59,7 +58,8 @@ class HomeViewModel (private val context : Context){
 					_user.postValue( HomeModels.UserData(
 						response.data?.getString("name")?:"",
 						response.data?.getString("avatar")?:"",
-						response.data?.getBoolean("isVerifyEmail")?:false
+						response.data?.getBoolean("isVerifyEmail")?:false,
+						response.data?.getInt("numberNotReadNotifications")?:0
 					))
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))

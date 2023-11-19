@@ -71,7 +71,7 @@ class MyNotificationViewModel (private val context : Context){
 	private fun  handleResNotifications(oj: JSONObject?){
 		if(oj!=null){
 			if(!oj.isNull("notifications")){
-				val notificationsObject = oj.getJSONArray("notifications")
+				val notificationsObject = oj.getJSONObject("notifications")
 				val notificationsCrude = Gson().fromJson(notificationsObject.toString(), NotificationModels.NotificationsCrude::class.java)
 				_myNotifications.postValue(NotificationModels().Notifications(notificationsCrude));
 			}
@@ -79,7 +79,6 @@ class MyNotificationViewModel (private val context : Context){
 	}
 
 	public fun loadNotification(id:String?,okCallback:(NotificationModels.Notification?)->Unit){
-		_isLoadingMore.postValue(true)
 		Thread {
 			loadNotificationAPI(id,okCallback)
 		}.start()

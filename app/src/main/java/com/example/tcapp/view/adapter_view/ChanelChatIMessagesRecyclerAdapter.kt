@@ -318,6 +318,9 @@ class ChanelChatIMessagesRecyclerAdapter(
 					holder.friendAvatar.setOnClickListener {
 						callbackOfViewUser(message.userId!!)
 					}
+				}else{
+					holder.friendName.visibility=View.GONE
+					holder.friendAvatar.setImageDrawable(null)
 				}
 				if(message.replyId!=null&&message.replyId!=""){
 					holder.friendReplyContainer.visibility=View.VISIBLE
@@ -363,7 +366,7 @@ class ChanelChatIMessagesRecyclerAdapter(
 	}
 	private fun getNameBaseId(id:String?):String?{
 		members.forEach { if(it.id==id)return it.name }
-		return ""
+		return "-Undefined Person-"
 	}
 	private fun getNotificationUsersSeenBaseIdMessage(idMessage:String?):String{
 		var name = "";

@@ -71,11 +71,5 @@
 		<item name="shapeAppearanceOverlay">@style/SkillImageSquare</item>
 	</style>
 
-	<style name="NotificationItemReadBgColor">
-		<item name="android:background">?attr/notificationReadBgColor</item>
-	</style>
-	<style name="NotificationItemNotReadBgColor">
-		<item name="android:background">?attr/notificationNotReadBgColor</item>
-	</style>
 
 </resources>

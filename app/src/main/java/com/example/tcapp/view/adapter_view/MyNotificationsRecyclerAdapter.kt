@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
@@ -19,6 +20,7 @@ import com.example.tcapp.model.notification.NotificationModels
 class MyNotificationsRecyclerAdapter(
 	private var context: Context ,
 	private var itemList: SortedList<NotificationModels.Notification>?
+//	private var itemList: ArrayList<NotificationModels.Notification>
 	) : RecyclerView.Adapter<MyNotificationsRecyclerAdapter.ViewHolder>() {
 
 	public var isFinish:Boolean=false;
@@ -45,6 +47,7 @@ class MyNotificationsRecyclerAdapter(
 	
 	fun setInit(){
 		//init list
+//		itemList = ArrayList()
 		itemList = SortedList<NotificationModels.Notification>(NotificationModels.Notification::class.java, object : SortedList.Callback<NotificationModels.Notification>() {
 			override fun compare(o1: NotificationModels.Notification, o2: NotificationModels.Notification): Int {
 				return (o2.time-o1.time).toInt()
@@ -79,6 +82,7 @@ class MyNotificationsRecyclerAdapter(
 		for(i in 0 until itemCount){
 			if(itemList!![i].id==item.id){
 				itemList!!.updateItemAt(i,item)
+//				itemList!![i] = item;
 				this.notifyItemChanged(i)
 				return;
 			}
@@ -97,7 +101,7 @@ class MyNotificationsRecyclerAdapter(
 		val notReadIcon: ImageView = itemView.findViewById(R.id.componentMyNotificationItemNotReadIcon)
 		val content: TextView = itemView.findViewById(R.id.componentMyNotificationItemContent)
 		val time: TextView = itemView.findViewById(R.id.componentMyNotificationItemTime)
-		val layout: TextView = itemView.findViewById(R.id.componentMyNotificationItemLayout)
+		val layout: LinearLayout = itemView.findViewById(R.id.componentMyNotificationItemLayout)
 		val item:View = itemView
 	}
 	
@@ -113,10 +117,10 @@ class MyNotificationsRecyclerAdapter(
 		holder.time.text = Genaral.getMinimizeDateTimeByUTC(item.time);
 
 		if(item.wasRead==true){
-			holder.layout.setTextAppearance(context,R.style.NotificationItemReadBgColor)
+			holder.layout.setBackgroundResource(R.drawable.my_notifications_item_read_bg)
 			holder.notReadIcon.visibility = View.GONE
 		}else{
-			holder.layout.setTextAppearance(context,R.style.NotificationItemNotReadBgColor)
+			holder.layout.setBackgroundResource(R.drawable.my_notifications_item_not_read_bg)
 			holder.notReadIcon.visibility = View.VISIBLE
 		}
 

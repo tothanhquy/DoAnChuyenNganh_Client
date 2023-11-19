@@ -114,8 +114,13 @@
 
 						<TableRow
 							android:layout_width="match_parent"
-							android:layout_height="wrap_content">
+							android:layout_height="wrap_content"
+							android:gravity="center">
 
+
+							<Space
+								android:layout_width="40dp"
+								android:layout_height="wrap_content" />
 
 							<TextView
 								android:id="@+id/homeScreAuthenUserName"
@@ -125,6 +130,42 @@
 								android:layout_weight="1"
 								android:text="xin chao"
 								android:textAlignment="center" />
+
+							<androidx.constraintlayout.widget.ConstraintLayout
+								android:layout_width="40dp"
+								android:layout_height="40dp"
+								android:onClick="openMyNotifications">
+
+								<ImageView
+									android:layout_width="32dp"
+									android:layout_height="32dp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="parent"
+									app:srcCompat="@drawable/home_notification_icon" />
+
+								<LinearLayout
+									android:id="@+id/homeScreAuthenNotificationNumberLayout"
+									android:layout_width="24dp"
+									android:layout_height="24dp"
+									android:background="@drawable/home_notification_number_bg"
+									android:gravity="center"
+									android:orientation="horizontal"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent">
+
+									<TextView
+										android:id="@+id/homeScreAuthenNotificationNumber"
+										android:layout_width="wrap_content"
+										android:layout_height="wrap_content"
+										android:text="5+"
+										android:textColor="?attr/backgroundContainer"
+										android:textSize="12sp"
+										android:textStyle="bold" />
+								</LinearLayout>
+							</androidx.constraintlayout.widget.ConstraintLayout>
+
 						</TableRow>
 
 						<TableRow

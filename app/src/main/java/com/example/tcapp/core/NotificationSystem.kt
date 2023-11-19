@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.tcapp.R
 import com.example.tcapp.model.notification.NotificationModels
-import com.example.tcapp.ui.home.HomeActivity
+import com.example.tcapp.view.home.HomeActivity
 import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
 import com.example.tcapp.view.chanel_chat.MyChanelChatsActivity
 
@@ -80,6 +80,8 @@ class NotificationSystem {
             .setSmallIcon(R.drawable.logo_icon)
             .setContentText(data.content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(data.content))
             .setAutoCancel(true);
         if(data.directLink!=null){
             val pendingIntent = getPendingIntentOpenActivity(context,getIntentOpenActivity(context,data.directLink))
@@ -114,6 +116,15 @@ class NotificationSystem {
         }
 
     }
+    private fun getPendingIntentOpenActivity(context: Context, intent: Intent?): PendingIntent? {
+        if (intent == null) return null;
+        return PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        );
+    }
     public fun getIntentOpenActivity(context: Context, directLink:String?):Intent?{
         if(directLink==null)return null;
         try{
@@ -132,20 +143,12 @@ class NotificationSystem {
                     }
                 }
             }
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             return intent;
         }catch (ex:Exception){
             return null;
         }
     }
-    private fun getPendingIntentOpenActivity(context: Context, intent: Intent?): PendingIntent? {
-        if (intent == null) return null;
-        return PendingIntent.getActivity(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE
-        );
-    }
+
 
 }

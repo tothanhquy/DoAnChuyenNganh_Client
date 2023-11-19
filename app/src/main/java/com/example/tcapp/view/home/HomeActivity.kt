@@ -5,17 +5,21 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.LocalData
+import com.example.tcapp.model.HomeModels
 import com.example.tcapp.view.account.LoginAccountActivity
 import com.example.tcapp.view.account.RegisterAccountActivity
 import com.example.tcapp.view.account.SettingAccountActivity
 import com.example.tcapp.view.chanel_chat.MyChanelChatsActivity
 import com.example.tcapp.view.friend.MyFriendAndRequestsListActivity
+import com.example.tcapp.view.notification.MyNotificationsActivity
 import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.post.UserPostsActivity
 import com.example.tcapp.view.request.RequestsListActivity
@@ -74,10 +78,9 @@ class HomeActivity : CoreActivity() {
 		//set user data
 		homeViewModel.user.observe(this, Observer {
 			runOnUiThread {
-				findViewById<TextView>(R.id.homeScreAuthenUserName).text = "Xin chào, "+ it.name
-				findViewById<Button>(R.id.homeScreAuthenVerifyEmail).visibility= if(!it.isVerifyEmail)View.VISIBLE else View.GONE
-				userName = it.name;
-				userAvatar = it.avatar;
+				if(it!=null){
+					showUserData(it)
+				}
 			}
 		})
 		//set loading
@@ -112,7 +115,18 @@ class HomeActivity : CoreActivity() {
 		})
 	}
 	
-	
+	private fun showUserData(user: HomeModels.UserData){
+		findViewById<TextView>(R.id.homeScreAuthenUserName).text = "Xin chào, "+ user.name
+		findViewById<Button>(R.id.homeScreAuthenVerifyEmail).visibility= if(!user.isVerifyEmail)View.VISIBLE else View.GONE
+		userName = user.name;
+		userAvatar = user.avatar;
+		if(user.numberNotReadNotifications<=0){
+			findViewById<LinearLayout>(R.id.homeScreAuthenNotificationNumberLayout).visibility = View.GONE;
+		}else{
+			findViewById<LinearLayout>(R.id.homeScreAuthenNotificationNumberLayout).visibility = View.VISIBLE;
+			findViewById<TextView>(R.id.homeScreAuthenNotificationNumber).text = if(user.numberNotReadNotifications>9)"9+" else user.numberNotReadNotifications.toString()
+		}
+	}
 	fun loginNavigation(view: View){
 		val intent = Intent(applicationContext , LoginAccountActivity::class.java)
 		startActivity(intent)
@@ -156,6 +170,10 @@ class HomeActivity : CoreActivity() {
 	fun viewPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
 		intent.putExtra("filter", "guest");
+		startActivity(intent)
+	}
+	fun openMyNotifications(view: View){
+		val intent = Intent(applicationContext , MyNotificationsActivity::class.java)
 		startActivity(intent)
 	}
 	fun viewMyPostsNavigation(view: View){

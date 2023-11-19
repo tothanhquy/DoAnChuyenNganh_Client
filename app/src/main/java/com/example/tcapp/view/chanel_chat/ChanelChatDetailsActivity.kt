@@ -95,16 +95,15 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		chatBoxInput =  findViewById<EditText>(R.id.chanelChatDetailsActivityMessageChatBoxInput);
 
 		messagesAdapter = ChanelChatIMessagesRecyclerAdapter(applicationContext, null)
-		messagesRecyclerView !!.setHasFixedSize(true)
-		messagesRecyclerView !!.layoutManager =
-			LinearLayoutManager(this)
-		messagesRecyclerView!!.adapter =
-			messagesAdapter
 		messagesAdapter!!.setCallbackLoadHistoryMessages(::loadHistoryMessages)
 		messagesAdapter!!.setCallbackLoadMessagesBetweenTime(::loadMessagesBetweenTime)
 		messagesAdapter!!.setCallbackOfViewUser(::openMemberProfile)
 		messagesAdapter!!.setCallbackLongTouchMessage(::longTouchMessage)
 		messagesAdapter!!.setCallbackScrollRecyclerView(::messagesRecyclerViewScrollToPosition)
+		messagesRecyclerView !!.setHasFixedSize(true)
+		messagesRecyclerView !!.layoutManager =
+			LinearLayoutManager(this)
+		messagesRecyclerView!!.adapter =messagesAdapter
 
 		initViews()
 		initEvents()
@@ -152,7 +151,7 @@ class ChanelChatDetailsActivity : CoreActivity() {
 		bindService(intent,mConnectionService , BIND_AUTO_CREATE)
 
 		objectViewModel.loadData(chanelChatId)
-		loadDefaultMessages()
+//		loadDefaultMessages()
 //		messagesAdapter!!.setInitList(MessageModels.Messages())
 	}
 	private fun initEvents(){
@@ -240,14 +239,14 @@ class ChanelChatDetailsActivity : CoreActivity() {
 
 			}
 		})
-		objectViewModel.fullMembers.observe(this, Observer {
-			runOnUiThread {
-				if(it!=null){
-					messagesAdapter!!.setInitList(it)
-				}
-
-			}
-		})
+//		objectViewModel.fullMembers.observe(this, Observer {
+//			runOnUiThread {
+//				if(it!=null){
+//					messagesAdapter!!.setInitList(it)
+//				}
+//
+//			}
+//		})
 	}
 	private fun setChanelChatAvatar(avatarPath:String?){
 		try{
@@ -423,6 +422,8 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 	private fun loadDefaultMessagesOkCallback(messages:MessageModels.Messages?){
 		runOnUiThread {
+			messagesRecyclerView !!.layoutManager =
+				LinearLayoutManager(this)
 			messagesAdapter!!.setInitList(messages)
 			//user seen
 			if(lastMessageIdUserSeen!=messagesAdapter!!.lastMessageId){
@@ -437,6 +438,8 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	}
 	private fun loadHistoryMessagesOkCallback(messages:MessageModels.Messages?){
 		runOnUiThread {
+			messagesRecyclerView !!.layoutManager =
+				LinearLayoutManager(this)
 			messagesAdapter!!.insertMessagesBefore(messages)
 		}
 	}
@@ -446,6 +449,8 @@ class ChanelChatDetailsActivity : CoreActivity() {
 	private fun loadMessagesBetweenTimeOkCallback(messages:MessageModels.Messages?){
 		runOnUiThread {
 			if (messages != null) {
+				messagesRecyclerView !!.layoutManager =
+					LinearLayoutManager(this)
 				messagesAdapter!!.insertMessages(messages.messages)
 			}
 		}

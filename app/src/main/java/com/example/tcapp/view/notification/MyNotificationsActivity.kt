@@ -152,6 +152,8 @@ class MyNotificationsActivity : CoreActivity() {
 	}
 	
 	private fun insertIntoMyNotificationsContainer(myNotifications: NotificationModels.Notifications){
+		myNotificationsContainer !!.layoutManager = LinearLayoutManager(this)
+
 		myNotificationsContainerAdapter!!.let{
 			it.isFinish= myNotifications.isFinish;
 			it.insertMany(myNotifications.notifications);
