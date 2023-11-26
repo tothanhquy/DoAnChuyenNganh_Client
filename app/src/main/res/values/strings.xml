@@ -195,4 +195,6 @@
 	<string name="project_inviting_members">Danh sách đang mời</string>
     <string name="vote_star">Vote Star</string>
     <string name="reports">Báo xấu</string>
+    <string name="edit_tags">Sửa thẻ</string>
+    <string name="resources">Tài nguyên</string>
 </resources>

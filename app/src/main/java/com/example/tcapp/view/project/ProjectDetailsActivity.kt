@@ -283,7 +283,7 @@ class ProjectDetailsActivity : CoreActivity() {
 	}
 	
 	fun viewMembersNavigation(view: View){
-		val intent = Intent(applicationContext , ProjectViewMembersListActivity::class.java)
+		val intent = Intent(applicationContext , ProjectViewMembersNowActivity::class.java)
 		intent.putExtra("projectId", projectId)
 		startActivity(intent)
 	}

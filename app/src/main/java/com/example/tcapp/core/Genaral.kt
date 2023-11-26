@@ -96,6 +96,17 @@ class Genaral {
 					.placeholder(R.drawable.placeholder_project_avatar)
 					.into(imageView)
 		}
+		fun setProjectImageResourceWithPlaceholder(context : Context,path:String?,imageView : ImageView){
+			if(path!=null&&path!="")
+				Glide.with(context)
+					.load(API.getBaseUrl()+"/static/images/projects/"+path)
+					.fitCenter()
+					.placeholder(R.drawable.placeholder_project_avatar)
+					.into(imageView)
+		}
+		fun getProjectResourcePath():String{
+			return API.getBaseUrl()+"/static/images/projects/"
+		}
 		fun setTeamAvatarImage(context : Context,path:String?,imageView : ImageView){
 			if(path!=null&&path!="")
 				Glide.with(context)
@@ -119,6 +130,11 @@ class Genaral {
 		}
 		fun getDateTimeByUTC(utcTimeMiliSec:Long):String{
 			val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+			dateFormat.timeZone = TimeZone.getDefault()
+			return dateFormat.format(Date(utcTimeMiliSec))
+		}
+		fun getDateByUTC(utcTimeMiliSec:Long):String{
+			val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 			dateFormat.timeZone = TimeZone.getDefault()
 			return dateFormat.format(Date(utcTimeMiliSec))
 		}

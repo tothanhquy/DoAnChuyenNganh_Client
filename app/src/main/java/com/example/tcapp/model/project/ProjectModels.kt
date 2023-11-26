@@ -36,6 +36,48 @@ class ProjectModels {
         }
         constructor(){}
     }
+    class MembersNow{
+        public var members:ArrayList<MemberNow>?=null;
+        public var isLeader:Boolean=false;
+        constructor(){}
+        constructor(members: ArrayList<MemberNow>?, isLeader: Boolean) {
+            this.members = members
+            this.isLeader = isLeader
+        }
+    }
+    class MemberHistory{
+        public var id:String?=null;
+        public var name:String?=null;
+        public var avatar:String?=null;
+        public var role:String?=null;
+        public var time:Long=0L;
+        public var isOut:Boolean=false;
+        constructor(){}
+        constructor(
+            id: String?,
+            name: String?,
+            avatar: String?,
+            role: String?,
+            time: Long,
+            isOut: Boolean
+        ) {
+            this.id = id
+            this.name = name
+            this.avatar = avatar
+            this.role = role
+            this.time = time
+            this.isOut = isOut
+        }
+    }
+    class MembersHistory{
+        public var members:ArrayList<MemberHistory>?=null;
+        public var isLeader:Boolean=false;
+        constructor(){}
+        constructor(members: ArrayList<MemberHistory>?, isLeader: Boolean) {
+            this.members = members
+            this.isLeader = isLeader
+        }
+    }
     class ProjectDetails{
         public var projectId:String?=null;
         public var projectName:String?=null;
@@ -244,5 +286,30 @@ class ProjectModels {
             this.keywords = keywords
         }
     }
+    class Tags{
+        public var tags:ArrayList<String?>?=null;
+        constructor(){}
+        constructor(tags: ArrayList<String?>?) {
+            this.tags = tags
+        }
 
+    }
+    class Resource{
+        public var path:String?=null;
+        public var alt:String?=null;
+        constructor(){}
+        constructor(path: String?, alt: String?) {
+            this.path = path
+            this.alt = alt
+        }
+    }
+    class Resources{
+        public var resources:ArrayList<Resource>?=null;
+        public var isLeader:Boolean=false;
+        constructor(){}
+        constructor(resources: ArrayList<Resource>?, isLeader: Boolean) {
+            this.resources = resources
+            this.isLeader = isLeader
+        }
+    }
 }

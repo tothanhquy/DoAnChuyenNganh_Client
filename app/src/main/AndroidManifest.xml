@@ -154,6 +154,41 @@
         <activity
             android:name=".view.notification.MyNotificationsActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".view.project.ProjectViewMembersNowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.MyProjectsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectEditCategoryKeywordsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectEditTagsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectEditInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectInvitingMembersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectNegativeReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectResourcesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectViewMembersHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.project.ProjectVoteStarActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

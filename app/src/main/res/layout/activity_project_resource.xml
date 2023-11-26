@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/projectResourceActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.project.ProjectResourcesActivity"
+	tools:viewBindingIgnore="true">
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/projectResourceActivityPlusButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		android:layout_marginBottom="16dp"
+		android:clickable="true"
+		android:onClick="openUploadContainer"
+		app:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:srcCompat="@drawable/create_icon" />
+
+	<LinearLayout
+		android:id="@+id/projectResourceActivityUploadContainer"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="3dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:onClick="closeUploadContainer" />
+
+		<LinearLayout
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tải lên tài nguyên"
+					android:textAlignment="center" />
+
+				<Button
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="uploadFile"
+					android:text="Chọn file" />
+
+				<TextView
+					android:id="@+id/projectResourceActivityUploadContainerPath"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="TextView"
+					android:textAlignment="center" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<com.google.android.material.textfield.TextInputLayout
+						style="@style/Input"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						app:counterEnabled="true"
+						app:counterMaxLength="200">
+
+						<com.google.android.material.textfield.TextInputEditText
+							android:id="@+id/projectResourceActivityUploadContainerAlt"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:hint="alt"
+							android:maxLength="200" />
+					</com.google.android.material.textfield.TextInputLayout>
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:orientation="horizontal">
+
+					<Button
+						style="@style/CloseBtn"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:onClick="closeUploadContainer"
+						android:text="Đóng" />
+
+					<Space
+						android:layout_width="10dp"
+						android:layout_height="wrap_content" />
+
+					<Button
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:onClick="uploadResource"
+						android:text="Upload"
+						android:visibility="visible" />
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="1dp"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<ScrollView
+			style="@style/MainScrollView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:contentDescription="main menu content"
+			android:elevation="2dp">
+
+			<LinearLayout
+				style="@style/MainScrollViewChildContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				tools:layout_editor_absoluteX="15dp"
+				tools:layout_editor_absoluteY="15dp">
+
+				<LinearLayout
+					style="@style/Container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="50dp"
+					android:orientation="vertical">
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/projectResourceActivityRecyclerView"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent" />
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</ScrollView>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/projectResourceActivityOptions"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="3dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:onClick="closeOptions" />
+
+		<LinearLayout
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tùy chọn"
+					android:textAlignment="center" />
+
+				<Button
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="deleteResource"
+					android:text="Xóa tài nguyên"
+					android:visibility="visible" />
+
+				<Button
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeOptions"
+					android:text="Đóng" />
+			</LinearLayout>
+
+		</LinearLayout>
+	</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

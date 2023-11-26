@@ -22,6 +22,7 @@ import com.example.tcapp.view.friend.MyFriendAndRequestsListActivity
 import com.example.tcapp.view.notification.MyNotificationsActivity
 import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.post.UserPostsActivity
+import com.example.tcapp.view.project.MyProjectsActivity
 import com.example.tcapp.view.request.RequestsListActivity
 import com.example.tcapp.view.team_profile.MyTeamsActivity
 import com.example.tcapp.view.user_profile.MyUserProfileActivity
@@ -192,6 +193,10 @@ class HomeActivity : CoreActivity() {
 	}
 	fun viewMyFriendAndRequestsListNavigation(view: View){
 		val intent = Intent(applicationContext , MyFriendAndRequestsListActivity::class.java)
+		startActivity(intent)
+	}
+	fun viewMyProjectsNavigation(view: View){
+		val intent = Intent(applicationContext , MyProjectsActivity::class.java)
 		startActivity(intent)
 	}
 	fun requestVerifyEmail(view: View){

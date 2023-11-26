@@ -287,8 +287,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
+								android:onClick="viewMyProjectsNavigation"
 								android:orientation="vertical"
-								android:onClick="viewMyFriendAndRequestsListNavigation"
 								android:padding="10dp">
 
 								<ImageView
@@ -297,13 +297,13 @@
 									android:layout_marginLeft="20dp"
 									android:layout_marginRight="20dp"
 									android:adjustViewBounds="true"
-									app:srcCompat="@drawable/friends_icon" />
+									app:srcCompat="@drawable/placeholder_project_avatar" />
 
 								<TextView
 									style="@style/Title"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
-									android:text="Bạn bè"
+									android:text="Dự Án"
 									android:textAlignment="center"
 									android:textSize="18sp" />
 							</LinearLayout>
@@ -339,7 +339,31 @@
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content">
 
+							<LinearLayout
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:layout_weight="1"
+								android:gravity="center"
+								android:orientation="vertical"
+								android:onClick="viewMyFriendAndRequestsListNavigation"
+								android:padding="10dp">
 
+								<ImageView
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:layout_marginLeft="20dp"
+									android:layout_marginRight="20dp"
+									android:adjustViewBounds="true"
+									app:srcCompat="@drawable/friends_icon" />
+
+								<TextView
+									style="@style/Title"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:text="Bạn bè"
+									android:textAlignment="center"
+									android:textSize="18sp" />
+							</LinearLayout>
 							<LinearLayout
 								android:layout_width="0dp"
 								android:layout_height="wrap_content"
@@ -366,10 +390,6 @@
 									android:textSize="18sp" />
 							</LinearLayout>
 
-							<Space
-								android:layout_width="0dp"
-								android:layout_height="wrap_content"
-								android:layout_weight="1" />
 
 							<Space
 								android:layout_width="0dp"
