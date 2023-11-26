@@ -189,4 +189,10 @@
 	<string name="insert_members">Thêm thành viên</string>
 
 	<string name="my_notifications">Thông báo</string>
+    <string name="project_details">Project</string>
+    <string name="edit_info">Sửa thông tin</string>
+    <string name="my_projects">Dự án của tôi</string>
+	<string name="project_inviting_members">Danh sách đang mời</string>
+    <string name="vote_star">Vote Star</string>
+    <string name="reports">Báo xấu</string>
 </resources>

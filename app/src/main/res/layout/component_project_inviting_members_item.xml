@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="10dp"
+	android:layout_marginBottom="5dp"
+	android:gravity="top">
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/componentProjectInvitingMembersAvatar"
+		style="@style/MediumSmallAvatar"
+		tools:srcCompat="@tools:sample/avatars" />
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:orientation="vertical">
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:background="@color/background_screen" />
+
+		<TextView
+			android:id="@+id/componentProjectInvitingMembersName"
+			style="@style/Title"
+			android:layout_width="match_parent"
+			android:layout_marginTop="5dp"
+			android:text="team name" />
+
+		<TextView
+			android:id="@+id/componentProjectInvitingMembersRole"
+			style="@style/Label"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Vai tro: quan ly du an" />
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+		android:orientation="vertical">
+
+		<Button
+			android:id="@+id/componentProjectInvitingMembersAgreeButton"
+			style="@style/ActionBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Agree" />
+
+		<Button
+			android:id="@+id/componentProjectInvitingMembersDisagreeButton"
+			style="@style/CloseBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Disagree" />
+
+		<Button
+			android:id="@+id/componentProjectInvitingMembersCancelButton"
+			style="@style/WarningBtn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Cancel" />
+
+	</LinearLayout>
+
+</LinearLayout>

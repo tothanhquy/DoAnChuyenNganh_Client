@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/projectDetailsActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.project.ProjectDetailsActivity"
+	tools:viewBindingIgnore="true">
+	
+	<ScrollView
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			tools:layout_editor_absoluteX="15dp"
+			tools:layout_editor_absoluteY="15dp">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="bottom|center_horizontal"
+				android:orientation="horizontal">
+				
+				<ImageView
+					style="@style/IconBtn"
+					android:visibility="invisible"
+					app:srcCompat="@drawable/dots_icon" />
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/projectDetailsActivityLeaderAvatar"
+					style="@style/MediumAvatar"
+					android:layout_gravity="center"
+					android:clickable="true"
+					android:contentDescription="leader avatar"
+					android:onClick="openLeaderProfileNavigation"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<com.google.android.material.imageview.ShapeableImageView
+					android:id="@+id/projectDetailsActivityProjectAvatar"
+					style="@style/TeamAvatarProfile"
+					android:layout_marginTop="10dp"
+					android:layout_marginBottom="30dp"
+					tools:srcCompat="@tools:sample/avatars" />
+				
+				<ImageView
+					style="@style/IconBtn"
+					android:onClick="openOptions"
+					android:translationX="-40dp"
+					app:srcCompat="@drawable/dots_icon" />
+				
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:gravity="center"
+					android:orientation="vertical" />
+			
+			</LinearLayout>
+			
+			<TextView
+				android:id="@+id/projectDetailsActivityProjectName"
+				style="@style/Title"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="name"
+				android:textAlignment="center" />
+
+			<TextView
+				android:id="@+id/projectDetailsActivityProjectSlogan"
+				style="@style/Label"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="slogan"
+				android:textAlignment="center" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<TextView
+					android:id="@+id/projectDetailsActivityProjectFollowNumber"
+					style="@style/Label"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="204 follows" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityProjectFollowButton"
+					style="@style/ActionBtn2"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="5dp"
+					android:onClick="toggleFollow"
+					android:text="Unfollow" />
+
+				<TextView
+					android:id="@+id/projectDetailsActivityProjectVoteStarNumber"
+					style="@style/Title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:text="3,5" />
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					app:srcCompat="@drawable/star_icon" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityProjectVoteStar"
+					style="@style/ActionBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="5dp"
+					android:onClick="voteStarNavigation"
+					android:text="Vote" />
+			</LinearLayout>
+
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/projectDetailsActivityProjectCategoryKeywordsRecyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="horizontal"
+				tools:visibility="visible">
+
+			</androidx.recyclerview.widget.RecyclerView>
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				tools:visibility="visible">
+
+				<LinearLayout style="@style/ContainerTitle">
+					<TextView
+						style="@style/Title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="Thành viên" />
+
+					<Button
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:onClick="openMembersNavigation"
+						android:text="Xem danh sách" />
+				</LinearLayout>
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/projectDetailsActivityProjectMembersRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:scrollbars="none" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="10dp"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<Button
+					style="@style/ActionBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:onClick="viewPostsNavigation"
+					android:text="Xem các bài đăng của dự án" />
+			</LinearLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityProjectImagesButton"
+					style="@style/ActionBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:onClick="openImageResourcesNavigation"
+					android:text="8 Images" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityProjectVideosButton"
+					style="@style/ActionBtn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:onClick="openVideoResourcesNavigation"
+					android:text=" 3 Videos" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityProjectReportsButton"
+					style="@style/CloseBtn"
+					android:onClick="openReportsNavigation"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="20 Reports" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+			</LinearLayout>
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Giới thiệu" />
+				
+				<TextView
+					android:id="@+id/projectDetailsActivityProjectDescription"
+					style="@style/Content"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="description" />
+
+			</LinearLayout>
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<LinearLayout
+					style="@style/ContainerTitle"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="horizontal">
+
+					<TextView
+						style="@style/Title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_weight="1"
+						android:text="Tags" />
+
+					<Button
+						android:id="@+id/projectDetailsActivityProjectEditTagsButton"
+						style="@style/ActionBtn"
+						android:layout_width="wrap_content"
+						android:onClick="openEditTagsNavigation"
+						android:text="Chỉnh sửa" />
+				</LinearLayout>
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/projectDetailsActivityProjectTagsRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:scrollbars="none" />
+			</LinearLayout>
+		
+		</LinearLayout>
+	
+	</ScrollView>
+
+	<ScrollView
+		android:id="@+id/projectDetailsActivityOptions"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="options"
+		android:elevation="3dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionOpenInvitingMembers"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="openInvitingMembersNavigation"
+					android:text="Quản lý mời thành viên" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionChangeCategoryKeywords"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="openEditCategoryKeywordsNavigation"
+					android:text="Đổi danh mục từ khóa" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionEditAvatar"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="changeAvatar"
+					android:text="Đổi ảnh Avatar" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionEditInfo"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="openEditInfoNavigation"
+					android:text="Đổi thông tin dự án" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionClose"
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeOptions"
+					android:text="Đóng"
+					tools:visibility="visible" />
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionExitProject"
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="200dp"
+					android:onClick="exitProjectNavigation"
+					android:text="Rời Dự Án" />
+
+			</LinearLayout>
+
+		</LinearLayout>
+	</ScrollView>
+
+	<ScrollView
+		android:id="@+id/projectDetailsActivityChooseNewLeader"
+		style="@style/MainScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="Choose New Leader"
+		android:elevation="4dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<LinearLayout
+			style="@style/MainScrollViewChildContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Danh sách chọn leader thay thế"
+					android:textAlignment="center" />
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/projectDetailsActivityChooseNewLeaderRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+
+				<Button
+					style="@style/CloseBtn"
+					android:onClick="closeNewLeaderSelect"
+					android:text="Đóng" />
+			</LinearLayout>
+
+		</LinearLayout>
+	</ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

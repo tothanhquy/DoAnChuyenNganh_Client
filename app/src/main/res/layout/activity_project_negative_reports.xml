@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/projectReportsActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.project.ProjectNegativeReportsActivity"
+	tools:viewBindingIgnore="true">
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		android:layout_marginBottom="16dp"
+		android:clickable="true"
+		android:onClick="openCreateContainer"
+		app:elevation="2dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:srcCompat="@drawable/create_icon" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="1dp"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<ScrollView
+			style="@style/MainScrollView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:contentDescription="main menu content">
+
+			<LinearLayout
+				style="@style/MainScrollViewChildContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingBottom="50dp"
+				tools:layout_editor_absoluteX="15dp"
+				tools:layout_editor_absoluteY="15dp">
+
+				<LinearLayout
+					style="@style/Container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						style="@style/Label"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="Danh sách tiêu chí vi phạm"
+						android:textAlignment="center" />
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/projectReportsActivityGeneralKeywordsRecyclerView"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:overScrollMode="never">
+
+					</androidx.recyclerview.widget.RecyclerView>
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</ScrollView>
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/projectReportsActivityCreateContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="3dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<ScrollView
+			style="@style/MainScrollView"
+			android:layout_weight="1"
+			android:contentDescription="main menu content">
+
+			<LinearLayout
+				style="@style/MainScrollViewChildContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:paddingBottom="1000dp"
+				tools:layout_editor_absoluteX="15dp"
+				tools:layout_editor_absoluteY="15dp">
+
+				<LinearLayout
+					style="@style/Container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<TextView
+						style="@style/Label"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="Danh sách tiêu chí vi phạm đã chọn"
+						android:textAlignment="center" />
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/projectReportsActivityKeywordsSelectedRecyclerView"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:overScrollMode="never">
+
+					</androidx.recyclerview.widget.RecyclerView>
+
+					<Button
+						style="@style/ActionBtn2"
+						android:onClick="toggleShowSelectedKeywordsContainer"
+						android:text="Ẩn/Hiện danh sách" />
+
+				</LinearLayout>
+
+				<LinearLayout
+					style="@style/Container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center"
+						android:orientation="horizontal">
+
+						<EditText
+							android:id="@+id/projectReportsActivitySearchInput"
+							style="@style/Input"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_weight="1"
+							android:ems="10"
+							android:hint="tiêu chí..."
+							android:inputType="text" />
+
+						<Button
+							android:id="@+id/button6"
+							style="@style/ActionBtn"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="5dp"
+							android:onClick="search"
+							android:text="Tìm" />
+					</LinearLayout>
+
+					<TextView
+						style="@style/Label"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="Danh sách các tiêu chí"
+						android:textAlignment="center" />
+
+					<androidx.recyclerview.widget.RecyclerView
+						android:id="@+id/projectReportsActivityAllKeywordsRecyclerView"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:overScrollMode="never" />
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</ScrollView>
+
+		<LinearLayout
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="0dp"
+			android:gravity="center"
+			android:orientation="horizontal">
+
+			<Button
+				style="@style/CloseBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="3"
+				android:onClick="closeCreateContainer"
+				android:text="Hủy" />
+
+			<Space
+				android:layout_width="10dp"
+				android:layout_height="wrap_content" />
+
+			<Button
+				style="@style/ActionBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="5"
+				android:onClick="updateReport"
+				android:text="Báo cáo" />
+
+		</LinearLayout>
+	</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

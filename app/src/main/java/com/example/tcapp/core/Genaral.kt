@@ -88,6 +88,14 @@ class Genaral {
 					.placeholder(R.drawable.placeholder_image_icon)
 					.into(imageView)
 		}
+		fun setProjectImageWithPlaceholder(context : Context,path:String?,imageView : ImageView){
+			if(path!=null&&path!="")
+				Glide.with(context)
+					.load(API.getBaseUrl()+"/static/images/projects_avatar/"+path)
+					.fitCenter()
+					.placeholder(R.drawable.placeholder_project_avatar)
+					.into(imageView)
+		}
 		fun setTeamAvatarImage(context : Context,path:String?,imageView : ImageView){
 			if(path!=null&&path!="")
 				Glide.with(context)

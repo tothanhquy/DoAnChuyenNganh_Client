@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/projectVoteStarActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:theme="@style/AppTheme"
+	tools:context=".view.project.ProjectVoteStarActivity"
+	tools:viewBindingIgnore="true">
+
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="vertical">
+
+			<com.google.android.material.imageview.ShapeableImageView
+				android:id="@+id/projectVoteStarActivityProjectAvatar"
+				style="@style/TeamAvatarProfile"
+				android:layout_marginTop="10dp"
+				android:layout_marginBottom="30dp"
+				tools:srcCompat="@tools:sample/avatars" />
+
+			<TextView
+				android:id="@+id/projectVoteStarActivityProjectName"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="TextView" />
+
+		</LinearLayout>
+
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:orientation="horizontal">
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<ImageView
+				android:id="@+id/projectVoteStarActivityStar1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="chooseStar"
+				app:srcCompat="@drawable/vote_star_icon" />
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<ImageView
+				android:id="@+id/projectVoteStarActivityStar2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="chooseStar"
+				app:srcCompat="@drawable/vote_star_icon" />
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<ImageView
+				android:id="@+id/projectVoteStarActivityStar3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="chooseStar"
+				app:srcCompat="@drawable/vote_star_icon" />
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<ImageView
+				android:id="@+id/projectVoteStarActivityStar4"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="chooseStar"
+				app:srcCompat="@drawable/vote_star_icon" />
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<ImageView
+				android:id="@+id/projectVoteStarActivityStar5"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="chooseStar"
+				app:srcCompat="@drawable/vote_star_icon" />
+
+			<Space
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+		</LinearLayout>
+
+		<Space
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" />
+
+		<Button
+			style="@style/ActionBtn"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:onClick="voteStar"
+			android:text="Vote" />
+
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
