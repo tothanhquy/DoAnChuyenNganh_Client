@@ -51,7 +51,6 @@ class HomeActivity : CoreActivity() {
 		checkShowWelcomeActivity()
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

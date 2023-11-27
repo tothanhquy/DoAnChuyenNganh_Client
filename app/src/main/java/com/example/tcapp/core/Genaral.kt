@@ -151,11 +151,11 @@ class Genaral {
 
 			if(yearFormat.format(Date(utcTimeMiliSec)).equals(yearFormat.format(Date(now)))){
 				//out year
-				dateFormat.format(Date(utcTimeMiliSec))
+				return dateFormat.format(Date(utcTimeMiliSec))
 			}
 			if(dateFormat.format(Date(utcTimeMiliSec)).equals(dateFormat.format(Date(now)))){
 				//out date
-				monthDayFormat.format(Date(utcTimeMiliSec))
+				return monthDayFormat.format(Date(utcTimeMiliSec))
 			}
 			//in date
 			return timeFormat.format(Date(utcTimeMiliSec))

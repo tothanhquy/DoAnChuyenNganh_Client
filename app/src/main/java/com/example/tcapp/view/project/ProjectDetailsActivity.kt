@@ -61,7 +61,6 @@ class ProjectDetailsActivity : CoreActivity() {
 		
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

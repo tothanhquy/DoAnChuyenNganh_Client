@@ -45,7 +45,6 @@ class MyUserProfileActivity : CoreActivity() {
 		
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

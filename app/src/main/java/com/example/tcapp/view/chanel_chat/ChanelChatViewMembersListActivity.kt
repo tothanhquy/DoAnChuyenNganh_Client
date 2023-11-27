@@ -55,7 +55,6 @@ class ChanelChatViewMembersListActivity : CoreActivity() {
 		
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

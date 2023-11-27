@@ -44,14 +44,13 @@ class MyProjectsActivity : CoreActivity() {
 		objectViewModel = MyProjectsViewModel(applicationContext)
 		backgroundColor = getColor(R.color.light_blue_900)
 		super.setTitleBarAndNavigationBar(backgroundColor,R.string.my_projects)
-		setContentView(R.layout.activity_my_teams)
+		setContentView(R.layout.activity_my_projects)
 		
 		myProjectsContainer =  findViewById<RecyclerView>(R.id.myProjectsActivityRecyclerView);
 		invitingRequestsNumber =  findViewById(R.id.myProjectsActivityInvitingRequestsNumber);
 
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

@@ -52,7 +52,6 @@ class TeamProfileViewMembersListActivity : CoreActivity() {
 		
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

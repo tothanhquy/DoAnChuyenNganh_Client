@@ -61,7 +61,6 @@ class ProjectViewMembersNowActivity : CoreActivity() {
 
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

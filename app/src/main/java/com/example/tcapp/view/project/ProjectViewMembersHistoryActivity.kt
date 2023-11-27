@@ -52,7 +52,6 @@ class ProjectViewMembersHistoryActivity : CoreActivity() {
 
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

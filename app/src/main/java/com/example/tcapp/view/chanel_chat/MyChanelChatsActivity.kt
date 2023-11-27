@@ -72,7 +72,6 @@ class MyChanelChatsActivity : CoreActivity() {
 
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {

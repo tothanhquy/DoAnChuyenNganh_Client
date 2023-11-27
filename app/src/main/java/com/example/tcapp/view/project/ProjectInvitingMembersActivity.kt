@@ -51,7 +51,6 @@ class ProjectInvitingMembersActivity : CoreActivity() {
 
 		initViews()
 		setRender()
-		loadData()
 	}
 	
 	override fun onResume() {
