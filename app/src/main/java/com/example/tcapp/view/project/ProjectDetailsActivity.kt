@@ -321,6 +321,12 @@ class ProjectDetailsActivity : CoreActivity() {
 		intent.putExtra("projectId", projectId);
 		startActivity(intent)
 	}
+	fun openCreatePostNavigation(view: View){
+		val intent = Intent(applicationContext , CreatePostActivity::class.java)
+		intent.putExtra("creator", "project");
+		intent.putExtra("projectId", projectId);
+		startActivity(intent)
+	}
 	fun openEditCategoryKeywordsNavigation(view: View){
 		val intent = Intent(applicationContext , ProjectEditCategoryKeywordsActivity::class.java)
 		intent.putExtra("projectId", projectId);

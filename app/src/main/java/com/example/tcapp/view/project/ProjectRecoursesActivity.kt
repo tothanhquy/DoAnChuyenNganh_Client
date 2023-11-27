@@ -74,7 +74,7 @@ class ProjectResourcesActivity : CoreActivity() {
 
 
 		resourcesContainerAdapter = ProjectResourceRecyclerAdapter(applicationContext,
-			arrayListOf()
+			this,arrayListOf()
 		)
 		resourcesContainerAdapter!!.setType(resourceType);
 		resourcesContainerAdapter!!.setCallbackOfOpenOptions(::openOptions);
@@ -129,7 +129,8 @@ class ProjectResourcesActivity : CoreActivity() {
 		objectViewModel.newResource.observe(this, Observer {
 			runOnUiThread {
 				if(it!=null){
-					resourcesContainerAdapter?.add(it)
+					resourcesContainer!!.setHasFixedSize(true)
+					resourcesContainerAdapter!!.add(it)
 					closeUploadContainer(View(applicationContext))
 				}
 			}
@@ -180,6 +181,7 @@ class ProjectResourcesActivity : CoreActivity() {
 	}
 	private fun deleteResourceOkCallback(path:String?){
 		runOnUiThread {
+			resourcesContainer!!.setHasFixedSize(true)
 			resourcesContainerAdapter?.deleteItem(path)
 			closeOptions(View(applicationContext))
 		}
@@ -187,10 +189,11 @@ class ProjectResourcesActivity : CoreActivity() {
 
 	fun closeUploadContainer(view:View){
 		findViewById<LinearLayout>(R.id.projectResourceActivityUploadContainer).visibility = View.GONE;
-		uploadSelectedFilePath("")
 	}
 	fun openUploadContainer(view:View){
 		findViewById<LinearLayout>(R.id.projectResourceActivityUploadContainer).visibility = View.VISIBLE;
+		uploadSelectedFilePath("")
+		uploadInputAlt!!.setText("")
 	}
 
 	private fun uploadSelectedFilePath(path:String?){
@@ -204,7 +207,7 @@ class ProjectResourcesActivity : CoreActivity() {
 					.setType("video/*")
 					.setAction(Intent.ACTION_GET_CONTENT)
 					.addCategory(Intent.CATEGORY_OPENABLE);
-				startActivityForResult(Intent.createChooser(intent, "Select  image"), CHOOSE_AVATAR_REQUEST_CODE);
+				startActivityForResult(Intent.createChooser(intent, "Select video"), CHOOSE_AVATAR_REQUEST_CODE);
 			}else{
 				requestPermissionsReadFile()
 			}
@@ -214,7 +217,7 @@ class ProjectResourcesActivity : CoreActivity() {
 					.setType("image/*")
 					.setAction(Intent.ACTION_GET_CONTENT)
 					.addCategory(Intent.CATEGORY_OPENABLE);
-				startActivityForResult(Intent.createChooser(intent, "Select  image"), CHOOSE_AVATAR_REQUEST_CODE);
+				startActivityForResult(Intent.createChooser(intent, "Select image"), CHOOSE_AVATAR_REQUEST_CODE);
 			}else{
 				requestPermissionsReadFile()
 			}
@@ -222,7 +225,7 @@ class ProjectResourcesActivity : CoreActivity() {
 	}
 
 	fun uploadResource(view:View){
-		if(selectedFilePath!=null&& selectedFilePath!!.isEmpty()){
+		if(selectedFilePath!=null&& selectedFilePath!!.isNotEmpty()){
 			val alt = uploadInputAlt!!.text.toString()
 			objectViewModel.uploadResource(projectId,resourceType, selectedFilePath!!,alt)
 		}else{

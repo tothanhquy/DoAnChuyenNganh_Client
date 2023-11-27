@@ -69,7 +69,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="uploadFile"
-					android:text="Chọn file" />
+					android:text="Chọn file (image:5mb|video:30mb)" />
 
 				<TextView
 					android:id="@+id/projectResourceActivityUploadContainerPath"
@@ -163,13 +163,19 @@
 					style="@style/Container"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginBottom="50dp"
+					android:layout_marginBottom="100dp"
 					android:orientation="vertical">
 
-					<androidx.recyclerview.widget.RecyclerView
-						android:id="@+id/projectResourceActivityRecyclerView"
+					<RelativeLayout
 						android:layout_width="match_parent"
-						android:layout_height="match_parent" />
+						android:layout_height="wrap_content">
+
+						<androidx.recyclerview.widget.RecyclerView
+							android:id="@+id/projectResourceActivityRecyclerView"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content" />
+					</RelativeLayout>
+
 				</LinearLayout>
 
 			</LinearLayout>

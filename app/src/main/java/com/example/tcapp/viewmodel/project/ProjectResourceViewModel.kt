@@ -159,7 +159,7 @@ class ProjectResourceViewModel (private val context : Context):ViewModel(){
 					)
 				)
 				.build()
-			val response = API.requestPost(context , "/Project/EditAvatar",requestBody)
+			val response = API.requestPost(context , "/Project/UploadResource",requestBody)
 
 			if(response.code==1||response.code==404){
 				//system error
@@ -170,6 +170,7 @@ class ProjectResourceViewModel (private val context : Context):ViewModel(){
 			}else{
 				if(response.status=="Success"){
 					_notification.postValue(AlertDialog.Notification("Success!","Resource was Uploaded."))
+					println(response.data.toString())
 					val parseOj = Gson().fromJson(response.data.toString(), ProjectModels.Resource::class.java)
 					_newResource.postValue(parseOj)
 				}else{

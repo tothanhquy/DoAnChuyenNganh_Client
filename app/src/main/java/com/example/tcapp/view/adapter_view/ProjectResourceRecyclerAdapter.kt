@@ -1,6 +1,7 @@
 package com.example.tcapp.view.adapter_view
 
 import android.content.Context
+import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.tcapp.model.project.ProjectModels
 
 class ProjectResourceRecyclerAdapter(
 	private var context: Context,
+	private var thisContext: Context,
 	private var itemList: ArrayList<ProjectModels.Resource>
 	) : RecyclerView.Adapter<ProjectResourceRecyclerAdapter.ViewHolder>() {
 	
@@ -49,6 +51,8 @@ class ProjectResourceRecyclerAdapter(
 	}
 	fun add(item:ProjectModels.Resource){
 		itemList.add(item)
+//		this.notifyItemInserted(itemCount-1)
+		this.notifyDataSetChanged()
 	}
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val image: ImageView = itemView.findViewById(R.id.componentProjectResourceItemImage)
@@ -65,19 +69,21 @@ class ProjectResourceRecyclerAdapter(
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = itemList[position];
-		
+		println("position:$position")
 		try{
 			if(resourceType=="video"){
 				holder.image.visibility=View.GONE
 				holder.video.visibility=View.VISIBLE
+				holder.video.stopPlayback()
 				val urlPath = Genaral.getProjectResourcePath()
 				val uri = Uri.parse(urlPath+item.path)
 				// sets the resource from the
 				// videoUrl to the videoView
-				holder.video.setVideoURI(uri)
+
+//				holder.video.requestFocus()
 				// creating object of
 				// media controller class
-				val mediaController = MediaController(context)
+				val mediaController = MediaController(thisContext)
 				// sets the anchor view
 				// anchor view for the videoView
 				mediaController.setAnchorView(holder.video)
@@ -86,8 +92,17 @@ class ProjectResourceRecyclerAdapter(
 				// sets the media controller to the videoView
 				holder.video.setMediaController(mediaController)
 				// starts the video
-//				videoView.start()
+//				println(holder.video.height)
+				holder.video.setVideoURI(uri)
+//				holder.video.setVideoPath(urlPath+item.path)
+//				holder.video.start()
+				holder.video.setOnPreparedListener(OnPreparedListener { mp ->
+					mp.isLooping = false
+//					holder.video.start()
+				})
 			}else{
+				val urlPath = Genaral.getProjectResourcePath()
+				println(urlPath+item.path)
 				Genaral.setProjectImageResourceWithPlaceholder(context , item.path , holder.image)
 				holder.image.visibility=View.VISIBLE
 				holder.video.visibility=View.GONE
@@ -100,7 +115,9 @@ class ProjectResourceRecyclerAdapter(
 				holder.btnAction.visibility = View.VISIBLE;
 			else
 				holder.btnAction.visibility = View.GONE;
-		}catch(e:Exception){}
+		}catch(e:Exception){
+			println(e.toString())
+		}
 	}
 	
 	override fun getItemCount() = itemList.size
