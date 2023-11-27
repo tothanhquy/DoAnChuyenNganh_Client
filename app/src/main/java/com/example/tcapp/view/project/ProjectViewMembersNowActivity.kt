@@ -24,6 +24,7 @@ import com.example.tcapp.view.adapter_view.TeamProfileViewMembersListRecyclerAda
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 import com.example.tcapp.viewmodel.project.ProjectViewMembersNowViewModel
 import com.example.tcapp.viewmodel.team_profile.TeamProfileViewMembersListViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ProjectViewMembersNowActivity : CoreActivity() {
 	private lateinit var objectViewModel: ProjectViewMembersNowViewModel;
@@ -38,6 +39,8 @@ class ProjectViewMembersNowActivity : CoreActivity() {
 	private var memberFocusId:String? = null;
 	private var memberFocusName:String? = null;
 	private var memberFocusRole:String? = null;
+
+	private var plusButton:FloatingActionButton? = null;
 
 	
 	override fun onCreate(savedInstanceState : Bundle?) {
@@ -58,6 +61,7 @@ class ProjectViewMembersNowActivity : CoreActivity() {
 		membersContainer!!.layoutManager = LinearLayoutManager(this)
 		membersContainer!!.adapter = membersContainerAdapter;
 
+		plusButton=findViewById(R.id.projectViewMembersNowActivityInviteButton)
 
 		initViews()
 		setRender()
@@ -112,11 +116,16 @@ class ProjectViewMembersNowActivity : CoreActivity() {
 				if(it!=null){
 					membersContainerAdapter!!.setActionAble(it.isLeader)
 					setMembersContainer(it.members)
+					setOptions(it.isLeader)
 				}
 			}
 		})
 	}
-	
+
+	private fun setOptions(isLeader: Boolean) {
+		plusButton?.visibility = if(isLeader) View.VISIBLE else View.GONE
+	}
+
 	private fun setMembersContainer(members: ArrayList<ProjectModels.MemberNow>?){
 		if(members!=null){
 			membersContainer!!.setHasFixedSize(true)
@@ -150,13 +159,14 @@ class ProjectViewMembersNowActivity : CoreActivity() {
 	private fun deleteMemberOkCallback(id:String?){
 		runOnUiThread {
 			membersContainerAdapter?.deleteMember(id)
+			closeOptions(View(applicationContext))
 		}
 	}
 
 	fun openChangeRoleContainer(view:View){
 		findViewById<LinearLayout>(R.id.projectViewMembersNowActivityChangeRoleContainer).visibility = View.VISIBLE;
 		findViewById<TextView>(R.id.projectViewMembersNowActivityChangeRoleContainerMemberName).text = memberFocusName;
-		findViewById<EditText>(R.id.projectViewMembersNowActivityChangeRoleContainerMemberName).setText(memberFocusRole);
+		findViewById<EditText>(R.id.projectViewMembersNowActivityChangeRoleContainerMemberRole).setText(memberFocusRole);
 		closeOptions(View(applicationContext))
 	}
 	fun closeChangeRoleContainer(view:View){

@@ -19,6 +19,7 @@ class SelectKeywordsRecyclerAdapter(
 
 	fun setInitList(list:ArrayList<GeneralModel.Keyword>){
 		itemList = ArrayList(list.map{SelectKeyword(it.id,it.name)})
+		this.notifyDataSetChanged()
 	}
 	private lateinit var clickCallback:(GeneralModel.Keyword,Boolean)->Unit
 	public fun setClickCallback(a:(GeneralModel.Keyword,Boolean)->Unit){
@@ -39,10 +40,10 @@ class SelectKeywordsRecyclerAdapter(
 			}
 		}
 	}
-	public fun filterByName(name:String){
+	public fun filterByName(searchString:String){
 		for (i in 0 until itemList.size){
 			val beforeIsShow = itemList[i].isShow;
-			itemList[i].isShow = name.lowercase()==""||(itemList[i].name!=null&&itemList[i].name?.lowercase()!!.contains(name.lowercase()))
+			itemList[i].isShow = searchString==""||(itemList[i].name!=null&&Genaral.searchByWords(itemList[i].name!!,searchString))
 			if(beforeIsShow!=itemList[i].isShow){
 				this.notifyItemChanged(i)
 			}

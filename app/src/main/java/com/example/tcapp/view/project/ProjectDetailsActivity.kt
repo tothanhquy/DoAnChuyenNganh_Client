@@ -207,10 +207,10 @@ class ProjectDetailsActivity : CoreActivity() {
 			follow.visibility = View.VISIBLE;
 			if(isFollow){
 				follow.text = "Unfollow";
-				follow.setTextAppearance(applicationContext,R.style.ActionBtn2);
+//				follow.setTextAppearance(applicationContext,R.style.ActionBtn2);
 			}else{
 				follow.text = "Follow";
-				follow.setTextAppearance(applicationContext,R.style.ActionBtn);
+//				follow.setTextAppearance(applicationContext,R.style.ActionBtn);
 			}
 		}
 		if(relationship.contains("guest")){
@@ -234,11 +234,11 @@ class ProjectDetailsActivity : CoreActivity() {
 	private fun setTagsContainer(tags: ArrayList<String>?){
 		if(tags!=null){
 			val setList = ArrayList<String?>(tags)
-			var keywordsAdapter = StringListRecyclerAdapter(applicationContext, setList);
-			categoryKeywordsContainer!!.setHasFixedSize(true)
-			categoryKeywordsContainer!!.layoutManager =
+			var tagsAdapter = StringListRecyclerAdapter(applicationContext, setList);
+			tagsContainer!!.setHasFixedSize(true)
+			tagsContainer!!.layoutManager =
 				Genaral.Static.HorizontalLayoutAutoWrapper(this)
-			categoryKeywordsContainer!!.adapter = keywordsAdapter;
+			tagsContainer!!.adapter = tagsAdapter;
 		}
 	}
 	private fun setMembersContainer(members: ArrayList<ProjectModels.MemberNow>?){
@@ -281,7 +281,7 @@ class ProjectDetailsActivity : CoreActivity() {
 		}
 	}
 	
-	fun viewMembersNavigation(view: View){
+	fun openMembersNavigation(view: View){
 		val intent = Intent(applicationContext , ProjectViewMembersNowActivity::class.java)
 		intent.putExtra("projectId", projectId)
 		startActivity(intent)
@@ -375,10 +375,10 @@ class ProjectDetailsActivity : CoreActivity() {
 
 			if(isFollow){
 				follow.text = "Unfollow";
-				follow.setTextAppearance(applicationContext,R.style.ActionBtn2);
+//				follow.setTextAppearance(applicationContext,R.style.ActionBtn2);
 			}else{
 				follow.text = "Follow";
-				follow.setTextAppearance(applicationContext,R.style.ActionBtn);
+//				follow.setTextAppearance(applicationContext,R.style.ActionBtn);
 			}
 		}
 	}

@@ -46,7 +46,7 @@ class ProjectNegativeReportsActivity : CoreActivity() {
 		viewModelObject = ProjectNegativeReportsViewModel(applicationContext)
 		backgroundColor = getColor(R.color.light_blue_900)
 		super.setTitleBarAndNavigationBar(backgroundColor,R.string.reports)
-		setContentView(R.layout.activity_project_edit_category_keywords)
+		setContentView(R.layout.activity_project_negative_reports)
 
 		initViews()
 
@@ -72,7 +72,10 @@ class ProjectNegativeReportsActivity : CoreActivity() {
 	}
 	
 	public fun updateReport(view: View){
-		viewModelObject.saveKeywords(projectId,allKeywordsAdapter!!.getIdIsCheck())
+		viewModelObject.saveKeywords(projectId,allKeywordsAdapter!!.getIdIsCheck(),::updateReportOkCallback)
+	}
+	private fun updateReportOkCallback(){
+		runOnUiThread { viewModelObject.getGeneralNegativeReportKeywordsOfProject(projectId) }
 	}
 	
 	private fun loadData() {
@@ -147,15 +150,17 @@ class ProjectNegativeReportsActivity : CoreActivity() {
 	fun toggleShowSelectedKeywordsContainer(view:View){
 		keywordsSelectedAdapter!!.toggleIsContainerShow()
 	}
-	private fun setShowSelectedKeywordsAdapter(myKeywords:ArrayList<ProjectModels.GeneralNegativeKeyword>){
+	private fun setShowSelectedKeywordsAdapter(myKeywords:ArrayList<ProjectModels.GeneralNegativeReport>){
 		//set selected keywords
 		val myKeywordsId = ArrayList<String?>(myKeywords.map{it.id})
 		val subMyKeywords = ArrayList(allNegativeReportKeywords!!.filter { myKeywordsId.indexOf(it.id)!=-1 })
 
 		keywordsSelectedRecyclerView!!.setHasFixedSize(false)
 		keywordsSelectedAdapter!!.setInitList(subMyKeywords)
+		allKeywordsRecyclerView!!.setHasFixedSize(false)
+		allKeywordsAdapter!!.setIsCheckOfItems(subMyKeywords,true)
 	}
-	private fun setGeneralKeywordsOfProjectAdapter(myKeywords:ArrayList<ProjectModels.GeneralNegativeKeyword>){
+	private fun setGeneralKeywordsOfProjectAdapter(myKeywords:ArrayList<ProjectModels.GeneralNegativeReport>){
 		val myKeywordsId = ArrayList<String?>(myKeywords.map{it.id})
 		val subMyKeywords = ArrayList(allNegativeReportKeywords!!.filter{ myKeywordsId.indexOf(it.id)!=-1 }.map{ProjectNegativeReportGeneralKeywordsRecyclerAdapter.GeneralNegativeKeyword(it.id,it.name,0)});
 		for(i in 0 until subMyKeywords.size){
@@ -164,6 +169,7 @@ class ProjectNegativeReportsActivity : CoreActivity() {
 				subMyKeywords[i].number = myKeywords[ind].number
 			}
 		}
+
 		generalKeywordsOfProjectRecyclerView!!.setHasFixedSize(true)
 		generalKeywordsOfProjectAdapter!!.setInitList(subMyKeywords)
 	}

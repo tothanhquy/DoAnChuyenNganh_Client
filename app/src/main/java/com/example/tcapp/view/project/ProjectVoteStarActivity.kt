@@ -98,7 +98,7 @@ class ProjectVoteStarActivity : CoreActivity() {
 				changeStar(4)
 			}
 			else -> {
-				changeStar(4)
+				changeStar(5)
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tcapp.R
@@ -53,10 +54,16 @@ class ProjectViewMembersHistoryRecyclerAdapter(
 			holder.time.text = Genaral.getDateByUTC(member.time)
 			if(!member.isOut){
 				holder.role.text="Đảm nhiệm vai trò: ${member.role}";
-				holder.role.setTextColor(R.color.theme_color_2_dark)
+				holder.role.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2_dark))
 			}else{
 				holder.role.text="Rời Dự Án";
-				holder.role.setTextColor(R.color.theme_color_5_dark)
+				holder.role.setTextColor(ContextCompat.getColor(context,R.color.theme_color_5_dark))
+			}
+			holder.name.setOnClickListener {
+				callbackOfViewUser(member.id!!)
+			}
+			holder.avatar.setOnClickListener {
+				callbackOfViewUser(member.id!!)
 			}
 
 		}catch(e:Exception){}

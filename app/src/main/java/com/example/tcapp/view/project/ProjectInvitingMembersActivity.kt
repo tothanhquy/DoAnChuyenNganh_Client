@@ -151,10 +151,10 @@ class ProjectInvitingMembersActivity : CoreActivity() {
 	}
 	private fun deleteRequestOkCallback(idProject:String?,idMember:String?){
 		runOnUiThread {
-			if(viewer==="leader"){
-				invitingMembersContainerAdapter?.deleteId(idMember)
+			if(viewer.equals("leader")){
+				invitingMembersContainerAdapter!!.deleteId(idMember)
 			}else{
-				invitingProjectsContainerAdapter?.deleteId(idProject)
+				invitingProjectsContainerAdapter!!.deleteId(idProject)
 			}
 		}
 	}

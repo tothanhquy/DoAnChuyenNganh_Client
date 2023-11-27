@@ -16,8 +16,8 @@ class ProjectEditTagsRecyclerAdapter(
 	) : RecyclerView.Adapter<ProjectEditTagsRecyclerAdapter.ViewHolder>() {
 	public val MAX_COUNT = 7;
 
-	private lateinit var callbackOfOpenOptions:(Int)->Unit
-	public fun setCallbackOfOpenOptions(a:(Int)->Unit){
+	private lateinit var callbackOfOpenOptions:(String)->Unit
+	public fun setCallbackOfOpenOptions(a:(String)->Unit){
 		callbackOfOpenOptions = a
 	}
 
@@ -36,10 +36,11 @@ class ProjectEditTagsRecyclerAdapter(
 		itemList.add(item);
 		this.notifyItemInserted(itemCount-1)
 	}
-	public fun deleteAt(position:Int){
-		if(position in 0..itemCount){
-			itemList.removeAt(position)
-			this.notifyItemRemoved(position)
+	public fun deleteTag(tag:String){
+		val ind = itemList.indexOf(tag)
+		if(ind!=-1){
+			itemList.removeAt(ind)
+			this.notifyItemRemoved(ind)
 		}
 	}
 
@@ -57,7 +58,7 @@ class ProjectEditTagsRecyclerAdapter(
 		val item = itemList[position];
 		holder.content.text = item;
 		holder.item.setOnLongClickListener {
-			callbackOfOpenOptions(position)
+			callbackOfOpenOptions(item?:"")
 			true
 		}
 	}

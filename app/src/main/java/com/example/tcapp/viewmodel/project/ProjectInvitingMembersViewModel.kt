@@ -105,7 +105,7 @@ class ProjectInvitingMembersViewModel (private val context : Context):ViewModel(
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(
-					url = API.getBaseUrl() + "/Project/Create",
+					url = API.getBaseUrl() + "/Project/UpdateInvitingMember",
 					cookies = mapOf("auth" to API.getAuth(context)) ,
 					data = mapOf(
 						"id_project" to (projectId?:""),

@@ -100,7 +100,7 @@
 
 				<Button
 					android:id="@+id/projectDetailsActivityProjectFollowButton"
-					style="@style/ActionBtn2"
+					style="@style/ActionBtn"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="5dp"
@@ -116,9 +116,8 @@
 					android:text="3,5" />
 
 				<ImageView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					app:srcCompat="@drawable/star_icon" />
+					style="@style/IconImage"
+					app:srcCompat="@drawable/vote_star_icon" />
 
 				<Button
 					android:id="@+id/projectDetailsActivityProjectVoteStar"

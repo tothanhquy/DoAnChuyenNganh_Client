@@ -270,7 +270,7 @@ class ProjectModels {
             this.invitingProjects = invitingProjects
         }
     }
-    class GeneralNegativeKeyword{
+    class GeneralNegativeReport{
         public var id:String?=null;
         public var number:Int=0;
         constructor(){}
@@ -279,11 +279,11 @@ class ProjectModels {
             this.number = number
         }
     }
-    class GeneralNegativeKeywords{
-        public var keywords:ArrayList<GeneralNegativeKeyword>?=null;
+    class GeneralNegativeReports{
+        public var reports:ArrayList<GeneralNegativeReport>?=null;
         constructor(){}
-        constructor(keywords: ArrayList<GeneralNegativeKeyword>?) {
-            this.keywords = keywords
+        constructor(reports: ArrayList<GeneralNegativeReport>?) {
+            this.reports = reports
         }
     }
     class Tags{

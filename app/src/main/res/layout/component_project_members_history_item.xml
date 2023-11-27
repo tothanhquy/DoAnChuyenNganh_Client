@@ -4,7 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:layout_marginTop="5dp"
+	android:layout_marginTop="10dp"
 	android:gravity="center">
 
 	<com.google.android.material.imageview.ShapeableImageView
@@ -25,15 +25,17 @@
 			android:layout_height="wrap_content"
 			android:layout_marginTop="0dp"
 			android:layout_marginBottom="0dp"
+			android:paddingLeft="10dp"
 			android:text="20:10:2028"
-			android:textColor="@color/theme_color_2_dark"
-			android:textStyle="bold" />
+			android:textAlignment="textStart"
+			android:textColor="@color/theme_color_2_dark" />
 
 		<TextView
 			android:id="@+id/componentProjectMembersHistoryItemName"
 			style="@style/Title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:paddingLeft="10dp"
 			android:text="member name" />
 
 		<TextView
@@ -41,9 +43,9 @@
 			style="@style/Label"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="5dp"
 			android:layout_marginTop="0dp"
 			android:layout_marginBottom="0dp"
+			android:paddingLeft="10dp"
 			android:text="role" />
 	</LinearLayout>
 

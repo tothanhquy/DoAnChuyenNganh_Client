@@ -29,6 +29,7 @@ class ProjectNegativeReportGeneralKeywordsRecyclerAdapter(
 
 	fun setInitList(list:ArrayList<GeneralNegativeKeyword>){
 		itemList = list
+		this.notifyDataSetChanged()
 	}
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val name: TextView = itemView.findViewById(R.id.componentProjectNegativeReportsItemName)

@@ -32,6 +32,7 @@ class ProjectInvitingProjectsRecyclerAdapter(
 		for(i in 0..itemCount){
 			if(itemList[i].id==id){
 				itemList.removeAt(i)
+				this.notifyItemRemoved(i)
 				break;
 			}
 		}

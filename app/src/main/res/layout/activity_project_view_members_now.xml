@@ -10,12 +10,14 @@
 	tools:viewBindingIgnore="true">
 
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/projectViewMembersNowActivityInviteButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginEnd="16dp"
 		android:layout_marginBottom="16dp"
 		android:clickable="true"
 		android:onClick="openInviteMemberContainer"
+		android:visibility="gone"
 		app:elevation="2dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"

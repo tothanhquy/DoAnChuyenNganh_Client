@@ -18,25 +18,25 @@ import java.io.File
 
 class ProjectNegativeReportsViewModel(private val context : Context):ViewModel(){
 	private var _allKeywords:MutableLiveData<ArrayList<GeneralModel.Keyword>> = MutableLiveData<ArrayList<GeneralModel.Keyword>>(ArrayList())
-	private var _generalKeywordsOfProject:MutableLiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>> = MutableLiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>>(ArrayList())
-	private var _myKeywordsOfProject:MutableLiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>> = MutableLiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>>(ArrayList())
+	private var _generalKeywordsOfProject:MutableLiveData<ArrayList<ProjectModels.GeneralNegativeReport>> = MutableLiveData<ArrayList<ProjectModels.GeneralNegativeReport>>(ArrayList())
+	private var _myKeywordsOfProject:MutableLiveData<ArrayList<ProjectModels.GeneralNegativeReport>> = MutableLiveData<ArrayList<ProjectModels.GeneralNegativeReport>>(ArrayList())
 
 	public val allKeywords:LiveData<ArrayList<GeneralModel.Keyword>>
 		get() = _allKeywords
-	public val generalKeywordsOfProject:LiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>>
+	public val generalKeywordsOfProject:LiveData<ArrayList<ProjectModels.GeneralNegativeReport>>
 		get() = _generalKeywordsOfProject
-	public val myKeywordsOfProject:LiveData<ArrayList<ProjectModels.GeneralNegativeKeyword>>
+	public val myKeywordsOfProject:LiveData<ArrayList<ProjectModels.GeneralNegativeReport>>
 		get() = _myKeywordsOfProject
 
-	public fun saveKeywords(projectId: String?,keywordsId:ArrayList<String>){
+	public fun saveKeywords(projectId: String?,keywordsId:ArrayList<String>,okCallback:()->Unit){
 		val keywordsIdJson = Gson().toJson(keywordsId)
 		_isLoading.postValue(true)
 		Thread {
-			saveKeywordsAPI(projectId,keywordsIdJson)
+			saveKeywordsAPI(projectId,keywordsIdJson,okCallback)
 		}.start()
 	}
 	
-	private fun saveKeywordsAPI(projectId: String?,keywords:String){
+	private fun saveKeywordsAPI(projectId: String?,keywords:String,okCallback:()->Unit){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(
@@ -57,6 +57,7 @@ class ProjectNegativeReportsViewModel(private val context : Context):ViewModel()
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
+					okCallback()
 					_notification.postValue(AlertDialog.Notification("Success!","Report complete."))
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
@@ -133,8 +134,8 @@ class ProjectNegativeReportsViewModel(private val context : Context):ViewModel()
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
-					val parseOj = Gson().fromJson(response.data.toString(), ProjectModels.GeneralNegativeKeywords::class.java)
-					_myKeywordsOfProject.postValue(parseOj.keywords)
+					val parseOj = Gson().fromJson(response.data.toString(), ProjectModels.GeneralNegativeReports::class.java)
+					_myKeywordsOfProject.postValue(parseOj.reports)
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}
@@ -173,8 +174,8 @@ class ProjectNegativeReportsViewModel(private val context : Context):ViewModel()
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
-					val parseOj = Gson().fromJson(response.data.toString(), ProjectModels.GeneralNegativeKeywords::class.java)
-					_generalKeywordsOfProject.postValue(parseOj.keywords)
+					val parseOj = Gson().fromJson(response.data.toString(), ProjectModels.GeneralNegativeReports::class.java)
+					_generalKeywordsOfProject.postValue(parseOj.reports)
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}

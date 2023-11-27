@@ -25,7 +25,7 @@ class ProjectEditTagsActivity : CoreActivity() {
 	private var  loadingLayout:View? = null;
 	
 	private var projectId:String?=null;
-	private var focusTagPosition:Int=-1;
+	private var focusTagContent:String="";
 
 	private var tagsRecyclerView:RecyclerView?=null;
 	private var editTagsRecyclerAdapter: ProjectEditTagsRecyclerAdapter?=null;
@@ -59,9 +59,7 @@ class ProjectEditTagsActivity : CoreActivity() {
 		input?.addTextChangedListener(object : TextWatcher {
 			override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 			override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-				if (charSequence.isEmpty()) {
-					input?.error = "không được để trống"
-				} else if (!isValidTag(charSequence.toString())) {
+				if (!isValidTag(charSequence.toString())) {
 					input?.error = "không chứa khoảng trắng"
 				} else {
 					input?.error = null
@@ -77,7 +75,7 @@ class ProjectEditTagsActivity : CoreActivity() {
 		return super.onCreateOptionsMenu(menu)
 	}
 	override fun onOptionsItemSelected(item : MenuItem) : Boolean {
-		when (item.getItemId()) {
+		when (item.itemId) {
 			R.id.save -> {
 				changeTags()
 			}
@@ -96,6 +94,7 @@ class ProjectEditTagsActivity : CoreActivity() {
 		}
 	}
 	private fun setTagsContainer(tags:ArrayList<String?>?){
+		tagsRecyclerView!!.setHasFixedSize(true)
 		editTagsRecyclerAdapter?.setInit(tags)
 		updateButton()
 	}
@@ -146,8 +145,8 @@ class ProjectEditTagsActivity : CoreActivity() {
 			}
 		})
 	}
-	private fun openOptions(position:Int){
-		focusTagPosition = position;
+	private fun openOptions(tag:String){
+		focusTagContent = tag;
 		findViewById<LinearLayout>(R.id.projectEditTagsActivityOptions).visibility = View.VISIBLE;
 	}
 	fun closeOptions(view:View){
@@ -155,12 +154,13 @@ class ProjectEditTagsActivity : CoreActivity() {
 	}
 
 	fun deleteTag(view:View){
-		editTagsRecyclerAdapter?.deleteAt(focusTagPosition)
+		tagsRecyclerView!!.setHasFixedSize(true)
+		editTagsRecyclerAdapter?.deleteTag(focusTagContent)
 		closeOptions(View(applicationContext))
 		updateButton()
 	}
 	private fun isValidTag(tag:String):Boolean{
-		return tag.indexOf(' ')!=-1
+		return tag.indexOf(' ')==-1
 	}
 	fun addTag(view:View){
 		val count = editTagsRecyclerAdapter!!.itemCount
@@ -168,7 +168,7 @@ class ProjectEditTagsActivity : CoreActivity() {
 		if(count>=maxCount){
 			super.showNotificationDialog("Lưu ý","Chỉ tối đa $maxCount thẻ.",null)
 		}else{
-			val tagContent = input!!.text.toString()
+			val tagContent = input!!.text.toString().replace(" ","")
 			if(tagContent.isEmpty())return;
 			input!!.setText("")
 			editTagsRecyclerAdapter?.add(tagContent)
