@@ -6,8 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tcapp.api.API
 import com.example.tcapp.model.AlertDialog
+import com.example.tcapp.model.post.PostModels
 import com.example.tcapp.model.team_profile.TeamProfileModels
 import com.example.tcapp.model.user_profile.UserProfileModels
+import com.example.tcapp.viewmodel.ViewModel
+import com.google.gson.Gson
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,34 +18,25 @@ import org.json.JSONObject
 import java.io.File
 
 
-class CreatePostViewModel (private val context : Context){
-	private var _isLoading:MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
-	private var _error:MutableLiveData<AlertDialog.Error?> = MutableLiveData<AlertDialog.Error?>(null)
-	private var _notification:MutableLiveData<AlertDialog.Notification?> = MutableLiveData<AlertDialog.Notification?>(null)
-	
-	public val isLoading:LiveData<Boolean>
-		get() = _isLoading
-	public val error:LiveData<AlertDialog.Error?>
-		get() = _error
-	public val notification:LiveData<AlertDialog.Notification?>
-		get() = _notification
-	
-	
-	public fun createPost(creator:String,teamId:String?,content:String?,filesPath:ArrayList<String?>){
+class CreatePostViewModel (private val context : Context):ViewModel(){
+	public fun createPost(creatorType:PostModels.CreatorType,authorId:String?,content:String?,categoryKeywordsId:ArrayList<String?>,filesPath:ArrayList<String?>,okCallback:(String?,String?)->Unit){
 		_isLoading.postValue(true)
+		val keywordsIdJson = Gson().toJson(categoryKeywordsId);
+		val createTypeString = PostModels.convertCreatorToString(creatorType);
 		Thread {
-			createPostAPI(creator,teamId,content,filesPath)
+			createPostAPI(createTypeString,authorId,content,keywordsIdJson,filesPath,okCallback)
 		}.start()
 	}
 
-	private fun createPostAPI(creator:String,teamId:String?,content:String?,filesPath:ArrayList<String?>){
+	private fun createPostAPI(creatorType:String,authorId:String?,content:String?,categoryKeywordsIdString:String?,filesPath:ArrayList<String?>,okCallback:(String?,String?)->Unit){
 		try{
 			val requestBody  = MultipartBody.Builder()
 				.setType(MultipartBody.FORM)
-				.addFormDataPart("creator",creator)
-				.addFormDataPart("team_id",teamId?:"")
-				.addFormDataPart("content",content?:"");
-			
+				.addFormDataPart("creator_type",creatorType)
+				.addFormDataPart("creator_id",authorId?:"")
+				.addFormDataPart("content",content?:"")
+				.addFormDataPart("keywords",categoryKeywordsIdString?:"[]");
+
 			filesPath.forEach{
 				val image = File(it);
 				requestBody.addFormDataPart(
@@ -65,7 +59,9 @@ class CreatePostViewModel (private val context : Context){
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
-					_notification.postValue(AlertDialog.Notification("Success!","You created a post."))
+					val newPostId = if(!response.data!!.isNull("newPostId"))response.data!!.getString("newPostId") else null;
+					val uploadImageResult = if(!response.data!!.isNull("uploadImageResult"))response.data!!.getString("uploadImageResult") else null;
+					_notification.postValue(AlertDialog.Notification("Success!","You created a post.",fun(dia: DialogInterface, i:Int){okCallback(newPostId,uploadImageResult);}))
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}
