@@ -159,12 +159,12 @@ class PostModels {
 		public var relationship:Relationship=Relationship.GUEST;
 		public var wasSaved:Boolean=false;
 		public var savedTime:Long=0L;
-		public var likeNumber:Int=0;
+		public var likeNumber:Long=0L;
 		public var wasLiked:Boolean=false;
 		public var likedTime:Long=0L;
 		public var wasFollowed:Boolean=false;
 		public var followedTime:Long=0L;
-		public var commentsNumber:Int=0;
+		public var commentsNumber:Long=0L;
 		//for adapter
 		var wasLoaded:Boolean=false;
 		constructor()
@@ -183,12 +183,12 @@ class PostModels {
 			relationship: Relationship,
 			wasSaved: Boolean,
 			savedTime: Long,
-			likeNumber: Int,
+			likeNumber: Long,
 			wasLiked: Boolean,
 			likedTime: Long,
 			wasFollowed: Boolean,
 			followedTime: Long,
-			commentsNumber: Int,
+			commentsNumber: Long,
 			wasLoaded: Boolean=false
 		) {
 			this.authorAvatar = authorAvatar
@@ -255,12 +255,12 @@ class PostModels {
 		public var relationship:String="";
 		public var wasSaved:Boolean=false;
 		public var savedTime:Long=0L;
-		public var likeNumber:Int=0;
+		public var likeNumber:Long=0L;
 		public var wasLiked:Boolean=false;
 		public var likedTime:Long=0L;
 		public var wasFollowed:Boolean=false;
 		public var followedTime:Long=0L;
-		public var commentsNumber:Int=0;
+		public var commentsNumber:Long=0L;
 		constructor()
 		constructor(
 			authorAvatar: String?,
@@ -277,12 +277,12 @@ class PostModels {
 			relationship: String,
 			wasSaved: Boolean,
 			savedTime: Long,
-			likeNumber: Int,
+			likeNumber: Long,
 			wasLiked: Boolean,
 			likedTime: Long,
 			wasFollowed: Boolean,
 			followedTime: Long,
-			commentsNumber: Int
+			commentsNumber: Long
 		) {
 			this.authorAvatar = authorAvatar
 			this.authorName = authorName

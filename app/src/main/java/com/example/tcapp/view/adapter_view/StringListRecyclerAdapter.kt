@@ -15,6 +15,10 @@ class StringListRecyclerAdapter(
 	private var itemList: ArrayList<String?>
 	) : RecyclerView.Adapter<StringListRecyclerAdapter.ViewHolder>() {
 
+	fun setList(items:ArrayList<String?>){
+		this.itemList=items;
+		this.notifyDataSetChanged()
+	}
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		val content: TextView = itemView.findViewById(R.id.componentStringListItemContent)
 		val item:View = itemView

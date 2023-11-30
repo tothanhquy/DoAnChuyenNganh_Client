@@ -303,7 +303,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="gone">
+		tools:visibility="visible">
 
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
@@ -316,6 +316,14 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
+
+				<Button
+					android:id="@+id/projectDetailsActivityOptionOpenCreatePost"
+					style="@style/ActionBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="openCreatePostNavigation"
+					android:text="Tạo bài viết" />
 
 				<Button
 					android:id="@+id/projectDetailsActivityOptionOpenInvitingMembers"

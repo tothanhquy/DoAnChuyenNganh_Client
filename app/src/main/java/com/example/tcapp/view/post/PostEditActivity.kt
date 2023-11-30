@@ -1,5 +1,6 @@
 package com.example.tcapp.view.post
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -31,27 +33,31 @@ import com.example.tcapp.view.team_profile.CHOOSE_AVATAR_REQUEST_CODE
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 import com.example.tcapp.viewmodel.category_keyword.CategoryKeywordsViewModel
 import com.example.tcapp.viewmodel.post.CreatePostViewModel
+import com.example.tcapp.viewmodel.post.PostEditViewModel
 //import com.example.tcapp.viewmodel.post
 import com.example.tcapp.viewmodel.team_profile.TeamProfileViewModel
+import khttp.post
 
-const val CHOOSE_UPLOAD_IMAGES_CODE = 109
 
-class CreatePostActivity : CoreActivity() {
-	private lateinit var objectViewModel: CreatePostViewModel;
+class PostEditActivity : CoreActivity() {
+	val CHOOSE_UPLOAD_IMAGES_CODE = 178
+
+	private lateinit var objectViewModel: PostEditViewModel;
 	private lateinit var objectCategoryKeywordsViewModel: CategoryKeywordsViewModel;
 
-	private var authorId:String?=null;
-	private var authorName:String?=null;
-	private var authorAvatar:String?=null;
-	
-	private lateinit var creator: PostModels.CreatorType;
 	private var oldCategoryKeywords: ArrayList<GeneralModel.Keyword>?=ArrayList();
+	private var allCategoryKeywords: ArrayList<GeneralModel.Keyword>?=ArrayList();
 
 	private var backgroundColor:Int =0
 	private var  loadingLayout:View? = null;
-	
+
+	private var  postId:String? = null;
+
 	private var uploadImagesContainerRecyclerView:RecyclerView?= null;
 	private var uploadImagesContainerAdapter:CreatePostImagesListRecyclerAdapter?= null;
+
+	private var oldImagesRecyclerView:RecyclerView?= null;
+	private var oldImagesAdapter:PostEditOldImagesRecyclerAdapter?= null;
 
 	private var keywordsViewContainerRecyclerView:RecyclerView?= null;
 	private var keywordsViewContainerAdapter:StringListRecyclerAdapter?= null;
@@ -62,15 +68,25 @@ class CreatePostActivity : CoreActivity() {
 	private var allKeywordsRecyclerView:RecyclerView? = null;
 	private var searchInput:EditText? = null;
 	private var changeCategoryKeywordsContainer:LinearLayout? = null;
+
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
-		objectViewModel = CreatePostViewModel(applicationContext)
+		objectViewModel = PostEditViewModel(applicationContext)
 		objectCategoryKeywordsViewModel = CategoryKeywordsViewModel(applicationContext)
 		backgroundColor = getColor(R.color.light_blue_900)
-		super.setTitleBarAndNavigationBar(backgroundColor,R.string.create_post)
-		setContentView(R.layout.activity_create_post)
-		
-		uploadImagesContainerRecyclerView =  findViewById(R.id.createPostActivityUploadImagesRecyclerView);
+		super.setTitleBarAndNavigationBar(backgroundColor,R.string.edit_post)
+		setContentView(R.layout.activity_post_edit)
+
+		oldImagesRecyclerView =  findViewById(R.id.postEditActivityOldImagesRecyclerView);
+		oldImagesAdapter = PostEditOldImagesRecyclerAdapter(this,
+			arrayListOf()
+		)
+		oldImagesRecyclerView!!.setHasFixedSize(true)
+		oldImagesRecyclerView!!.layoutManager =
+			Genaral.Static.HorizontalLayoutAutoWrapper(this)
+		oldImagesRecyclerView!!.adapter = oldImagesAdapter;
+
+		uploadImagesContainerRecyclerView =  findViewById(R.id.postEditActivityUploadImagesRecyclerView);
 		uploadImagesContainerAdapter = CreatePostImagesListRecyclerAdapter(this,
 			arrayListOf()
 		)
@@ -128,40 +144,38 @@ class CreatePostActivity : CoreActivity() {
 	}
 	
 	private fun loadData() {
-		val creatorString = intent.getStringExtra("creator").toString()
-		creator = PostModels.convertStringToCreator(creatorString);
-
-		authorId = intent.getStringExtra("authorId")?.toString()
-		authorName = intent.getStringExtra("authorName")?.toString()
-		authorAvatar = intent.getStringExtra("authorAvatar")?.toString()
-		
-		viewAuthorInfo();
+		postId = intent.getStringExtra("postId").toString()
 		objectCategoryKeywordsViewModel.getAllKeywords()
 	}
-	private fun viewAuthorInfo(){
-		findViewById<TextView>(R.id.createPostActivityName).text = authorName;
-		val avatarView = findViewById<ImageView>(R.id.createPostActivityAvatar);
-		when (creator) {
-			PostModels.CreatorType.TEAM -> {
-				Genaral.setTeamAvatarImage(this , authorAvatar , avatarView);
+	private fun setEditDetailsView(post:PostModels.PostOwnerDetail){
+		findViewById<TextView>(R.id.postEditActivityName).text = post.authorName;
+		val avatarView = findViewById<ImageView>(R.id.postEditActivityAvatar);
+		when (post.authorType) {
+			PostModels.AuthorType.TEAM -> {
+				Genaral.setTeamAvatarImage(this , post.authorAvatar , avatarView);
 			}
-			PostModels.CreatorType.PROJECT -> {
-				Genaral.setProjectImageWithPlaceholder(this , authorAvatar , avatarView)
+			PostModels.AuthorType.PROJECT -> {
+				Genaral.setProjectImageWithPlaceholder(this , post.authorAvatar , avatarView)
 			}
 			else -> {
-				Genaral.setUserAvatarImage(this , authorAvatar , avatarView);
+				Genaral.setUserAvatarImage(this , post.authorAvatar , avatarView);
 			}
 		}
+		val postKeywords = ArrayList(allCategoryKeywords!!.filter { a -> post.categoryKeywordsId!!.indexOfFirst { it==a.id}!=-1 });
+
+		keywordsViewContainerAdapter?.setList(ArrayList(postKeywords!!.map{it.name}));
+		keywordsSelectedAdapter?.setInitList(postKeywords);
+		allKeywordsAdapter?.setIsCheckOfAll(false);
+		allKeywordsAdapter?.setIsCheckOfItems(postKeywords,true);
+		oldImagesAdapter?.setInitList(ArrayList(post.images!!.map{it!!}));
+		findViewById<TextView>(R.id.postEditActivityContent).text = post.content;
+		findViewById<CheckBox>(R.id.postEditActivityIsActive).isChecked = post.isActive;
 	}
 	private fun initViews(){
-		var viewActivity = findViewById<ViewGroup>(R.id.createPostActivity)
+		var viewActivity = findViewById<ViewGroup>(R.id.postEditActivity)
 		loadingLayout = Genaral.getLoadingScreen(this,viewActivity,backgroundColor)
 		viewActivity.addView(loadingLayout)
-		keywordsSelectedRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView)
-		allKeywordsRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView)
-		keywordsViewContainerRecyclerView = findViewById(R.id.createPostActivityCategoryKeywordsViewRecyclerView)
-		searchInput = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerSearchInput)
-		changeCategoryKeywordsContainer = findViewById(R.id.createPostChangeCategoryKeywordsContainer)
+		searchInput = findViewById(R.id.postEditActivityChangeCategoryKeywordsContainerSearchInput)
 	}
 	private fun setRender(){
 		//set alert error
@@ -187,6 +201,14 @@ class CreatePostActivity : CoreActivity() {
 			runOnUiThread {
 				if(it!=null){
 					super.showNotificationDialog(it.title,it.contents,it.listener)
+				}
+			}
+		})
+
+		objectViewModel.postEditDetails.observe(this, Observer {
+			runOnUiThread {
+				if(it!=null){
+					setEditDetailsView(it!!)
 				}
 			}
 		})
@@ -226,20 +248,20 @@ class CreatePostActivity : CoreActivity() {
 		})
 	}
 	
-	fun createPost(view:View){
-		val content = findViewById<TextView>(R.id.createPostActivityContent).text.toString();
-		
+	fun updatePost(view:View){
+		val content = findViewById<TextView>(R.id.postEditActivityContent).text.toString();
+		val isActive = findViewById<CheckBox>(R.id.postEditActivityIsActive).isChecked
+
 		val uris = uploadImagesContainerAdapter!!.getList();
 		val files = uris.map {
 			a->Genaral.URIPathHelper().getPath(applicationContext, a)
 		} as ArrayList<String?>;
 		val categoryKeywordsId = ArrayList(oldCategoryKeywords!!.map{it.id})
-		objectViewModel.createPost(creator,authorId,content,categoryKeywordsId,files,::createPostOkCallback)
+		val oldImages = oldImagesAdapter!!.getResList()
+		objectViewModel.updatePost(postId!!,isActive,content,categoryKeywordsId,oldImages,files,::updatePostOkCallback)
 	}
-	private fun createPostOkCallback(newPostId:String?,uploadImageSuccessNumber:String?){
-		val intent = Intent(applicationContext , PostDetailsActivity::class.java)
-		intent.putExtra("postId", newPostId)
-		startActivity(intent)
+	private fun updatePostOkCallback(){
+
 	}
 	fun uploadImage(view: View){
 		if(checkPermissionsReadFile()){
@@ -256,8 +278,10 @@ class CreatePostActivity : CoreActivity() {
 
 	private fun setAllCategoryKeywordsContainer(keywords: ArrayList<GeneralModel.Keyword>?){
 		if(keywords!=null){
+			allCategoryKeywords = keywords
 			allKeywordsAdapter?.setInitList(keywords)
 		}
+		objectViewModel.loadPostEditDetails(postId)
 	}
 	fun search(view:View){
 		allKeywordsAdapter?.filterByName(searchInput!!.text.toString())

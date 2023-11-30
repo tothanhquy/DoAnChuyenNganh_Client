@@ -58,7 +58,7 @@
 		</LinearLayout>
 	
 	</androidx.core.widget.NestedScrollView>
-	
+
 	<ScrollView
 		android:id="@+id/postsListActivityViewImages"
 		style="@style/MainScrollView"
@@ -72,7 +72,7 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		tools:visibility="gone">
-		
+
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
 			android:layout_width="match_parent"
@@ -80,47 +80,48 @@
 			android:orientation="vertical"
 			tools:layout_editor_absoluteX="15dp"
 			tools:layout_editor_absoluteY="15dp">
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:background="@color/transparent"
 				android:orientation="vertical">
-				
+
 				<Button
 					style="@style/CloseBtn"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="closeSlideImages"
 					android:text="Đóng" />
-				
+
 				<androidx.recyclerview.widget.RecyclerView
 					android:id="@+id/postsListActivityViewImagesContainer"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content">
-				
+
 				</androidx.recyclerview.widget.RecyclerView>
-			
+
 			</LinearLayout>
-		
+
 		</LinearLayout>
-	
+
 	</ScrollView>
-	
+
 	<androidx.constraintlayout.widget.ConstraintLayout
 		android:id="@+id/postsListActivityOptionsContainer"
 		style="@style/MainOptionsLayout"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:contentDescription="main menu content"
-		android:elevation="4dp"
+		android:elevation="6dp"
 		android:visibility="gone"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
-		
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+
 		<View
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -129,7 +130,7 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
-		
+
 		<LinearLayout
 			android:id="@+id/postsListActivityOptionsContainerList"
 			style="@style/MainOptionsContainer"
@@ -139,8 +140,8 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent">
-			
-			
+
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -148,46 +149,21 @@
 				android:layout_marginTop="0dp"
 				android:background="@color/transparent"
 				android:orientation="vertical">
-				
+
 				<TextView
 					style="@style/Label"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="Tùy chọn"
 					android:textAlignment="center" />
-				
+
 				<Button
-					android:id="@+id/postsListActivityOptionSetActive"
-					style="@style/ActionBtn"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:onClick="toggleIsActive"
-					android:text="Kích hoạt lại bài viết(bỏ ẩn)" />
-				
-				<Button
-					android:id="@+id/postsListActivityOptionSetInactive"
-					style="@style/WarningBtn"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:onClick="toggleIsActive"
-					android:text="Ẩn bài viết" />
-				
-				<Button
-					android:id="@+id/postsListActivityOptionSetSave"
-					style="@style/ActionBtn"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:onClick="toggleWasSaved"
-					android:text="Lưu bài viết" />
-				
-				<Button
-					android:id="@+id/postsListActivityOptionSetUnsave"
 					style="@style/ActionBtn2"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:onClick="toggleWasSaved"
-					android:text="Bỏ lưu bài viết" />
-				
+					android:onClick="openEditPost"
+					android:text="Chỉnh sửa bài viết" />
+
 				<Button
 					style="@style/CloseBtn"
 					android:layout_width="match_parent"
@@ -195,9 +171,9 @@
 					android:onClick="closeOptions"
 					android:text="Đóng" />
 			</LinearLayout>
-		
+
 		</LinearLayout>
-	
+
 	</androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

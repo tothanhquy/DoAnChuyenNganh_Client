@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
+import com.example.tcapp.model.post.PostModels
+
 //import com.example.tcapp.viewmodel.post
 
 class UserPostsActivity : CoreActivity() {
@@ -37,19 +39,34 @@ class UserPostsActivity : CoreActivity() {
 	}
 	fun viewPostsISavedNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
-		intent.putExtra("filter", "user_save");
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER_SAVED));
+		intent.putExtra("authorId", "");
+		startActivity(intent)
+	}
+	fun viewPostsILikedNavigation(view: View){
+		val intent = Intent(applicationContext , PostsListActivity::class.java)
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER_LIKED));
+		intent.putExtra("authorId", "");
+		startActivity(intent)
+	}
+	fun viewPostsIFollowedNavigation(view: View){
+		val intent = Intent(applicationContext , PostsListActivity::class.java)
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER_FOLLOWED));
+		intent.putExtra("authorId", "");
 		startActivity(intent)
 	}
 	fun viewMyPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
-		intent.putExtra("filter", "user_own");
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER));
+		intent.putExtra("authorId", "");
 		startActivity(intent)
 	}
 	fun viewCreatePostNavigation(view: View){
 		val intent = Intent(applicationContext , CreatePostActivity::class.java)
-		intent.putExtra("creator", "user");
-		intent.putExtra("name", userName?:"");
-		intent.putExtra("avatar", userAvatar?:"");
+		intent.putExtra("creator", PostModels.convertCreatorToString(PostModels.CreatorType.USER));
+		intent.putExtra("authorName", userName?:"");
+		intent.putExtra("authorAvatar", userAvatar?:"");
+		intent.putExtra("authorId", "");
 		startActivity(intent);
 	}
 }

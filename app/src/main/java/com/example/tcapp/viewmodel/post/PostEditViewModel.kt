@@ -68,7 +68,7 @@ class PostEditViewModel (private val context : Context): ViewModel(){
 		}
 	}
 
-	public fun updatePost(postId:String,isActive:Boolean,content:String?,categoryKeywordsId:ArrayList<String?>,oldImages:ArrayList<String?>,filesPath:ArrayList<String?>,okCallback:()->Unit){
+	public fun updatePost(postId:String,isActive:Boolean,content:String?,categoryKeywordsId:ArrayList<String?>,oldImages:ArrayList<String>,filesPath:ArrayList<String?>,okCallback:()->Unit){
 		_isLoading.postValue(true)
 		val keywordsIdJson = Gson().toJson(categoryKeywordsId);
 		val oldImagesJson = Gson().toJson(oldImages);

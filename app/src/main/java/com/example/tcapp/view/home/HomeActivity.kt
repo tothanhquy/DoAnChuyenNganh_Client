@@ -14,6 +14,7 @@ import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.LocalData
 import com.example.tcapp.model.HomeModels
+import com.example.tcapp.model.post.PostModels
 import com.example.tcapp.view.account.LoginAccountActivity
 import com.example.tcapp.view.account.RegisterAccountActivity
 import com.example.tcapp.view.account.SettingAccountActivity
@@ -169,7 +170,8 @@ class HomeActivity : CoreActivity() {
 	}
 	fun viewPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
-		intent.putExtra("filter", "guest");
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.GUEST));
+		intent.putExtra("authorId", "");
 		startActivity(intent)
 	}
 	fun openMyNotifications(view: View){

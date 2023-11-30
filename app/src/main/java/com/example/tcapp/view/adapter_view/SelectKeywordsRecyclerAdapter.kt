@@ -40,6 +40,12 @@ class SelectKeywordsRecyclerAdapter(
 			}
 		}
 	}
+	public fun setIsCheckOfAll(value:Boolean){
+		for (i in 0 until itemList.size){
+			itemList[i].isCheck=value
+		}
+		this.notifyDataSetChanged()
+	}
 	public fun filterByName(searchString:String){
 		for (i in 0 until itemList.size){
 			val beforeIsShow = itemList[i].isShow;
@@ -55,6 +61,13 @@ class SelectKeywordsRecyclerAdapter(
 			if(itemList[i].isCheck)ids.add(itemList[i].id!!)
 		}
 		return ids
+	}
+	public fun getKeywordsIsCheck():ArrayList<GeneralModel.Keyword>{
+		val items = ArrayList<GeneralModel.Keyword>();
+		for (i in 0 until itemList.size){
+			if(itemList[i].isCheck)items.add(GeneralModel.Keyword(itemList[i].id,itemList[i].name));
+		}
+		return items
 	}
 	class SelectKeyword{
 		var id:String?=null;

@@ -20,7 +20,7 @@ import com.example.tcapp.view.team_profile.TeamProfileActivity
 import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 import com.example.tcapp.viewmodel.post.PostsListViewModel
 
-class PostsListActivity : CoreActivity() {
+class PostDetailsActivity : CoreActivity() {
 	private lateinit var objectViewModel: PostsListViewModel;
 	
 	private var backgroundColor:Int =0;
@@ -32,8 +32,7 @@ class PostsListActivity : CoreActivity() {
 	private var postsListViewImagesContainer:RecyclerView?= null;
 	private var postsListViewImagesContainerAdapter: PostsListViewSlideImagesRecyclerAdapter?= null;
 	
-	private lateinit var filter: PostModels.Filter;
-	private var authorId: String?=null;
+	private var postId: String?=null;
 	private var focusPostId: String?=null;
 	private var focusPostPosition: Int=-1;
 	
@@ -74,30 +73,15 @@ class PostsListActivity : CoreActivity() {
 		initViews()
 		setRender()
 		loadData()
-		setAutoLoadWhenEndOfList();
 	}
 
-	private fun setAutoLoadWhenEndOfList(){
-		findViewById<NestedScrollView>(R.id.postsListActivityScrollViewContainer)
-			.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v , scrollX , scrollY , oldScrollX , oldScrollY ->
-				// on scroll change we are checking when users scroll as bottom.
-				//300 px
-				if (scrollY + 300 > v.getChildAt(0)
-						.measuredHeight - v.measuredHeight
-				) {
-					loadMorePosts()
-				}
-			})
-	}
 	private fun loadData() {
-		authorId = intent.getStringExtra("authorId")?.toString();
-		val filterIntent =  intent.getStringExtra("filter").toString();
-		this.filter = PostModels.convertStringToFilter(filterIntent);
-		loadMorePosts();
+		postId = intent.getStringExtra("postId")?.toString();
+		loadPostDetails();
 	}
-	private fun loadMorePosts(){
+	private fun loadPostDetails(){
 		if(!postsListContainerAdapter!!.isFinish)
-			objectViewModel.loadPosts(filter,postsListContainerAdapter!!.timePrevious,authorId)
+			objectViewModel.loadPostDetails(postId)
 	}
 	private fun initViews(){
 		var viewActivity = findViewById<ViewGroup>(R.id.postsListActivity)
@@ -147,7 +131,7 @@ class PostsListActivity : CoreActivity() {
 			}
 		})
 		//set requests
-		objectViewModel.postsList.observe(this, Observer {
+		objectViewModel.postDetails.observe(this, Observer {
 			runOnUiThread {
 				if(it!=null)setPostsContainer(it)
 			}

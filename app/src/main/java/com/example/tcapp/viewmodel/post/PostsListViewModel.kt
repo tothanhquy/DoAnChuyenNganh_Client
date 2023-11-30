@@ -74,8 +74,6 @@ class PostsListViewModel (private val context : Context): ViewModel(){
 	
 	public fun userInteract(postId:String , status: PostModels.UserUpdateInteractStatus , okCallback:(String,PostModels.PostUpdateInteractResponse)->Unit){
 		val statusString = PostModels.convertUserUpdateInteractStatusToString(status);
-		if(isLoading.value==true)return;
-		_isLoading.postValue(true)
 		Thread {
 			userInteractAPI(postId,statusString,okCallback)
 		}.start()
@@ -111,7 +109,6 @@ class PostsListViewModel (private val context : Context): ViewModel(){
 			println(err.toString())
 			_error.postValue(AlertDialog.Error("Error!","System error"))
 		}
-		_isLoading.postValue(false)
 	}
 
 	public fun loadPostDetails(postId:String?){

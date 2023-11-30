@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/createPostActivity"
+	android:id="@+id/postEditActivity"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:theme="@style/AppTheme"
-	tools:context=".view.post.CreatePostActivity"
+	tools:context=".view.post.PostEditActivity"
 	tools:viewBindingIgnore="true">
 	
 	<ScrollView
@@ -39,18 +39,29 @@
 				tools:visibility="visible">
 				
 				<com.google.android.material.imageview.ShapeableImageView
-					android:id="@+id/createPostActivityAvatar"
+					android:id="@+id/postEditActivityAvatar"
 					style="@style/MediumSmallAvatar"
 					tools:srcCompat="@tools:sample/avatars" />
 				
 				<TextView
-					android:id="@+id/createPostActivityName"
+					android:id="@+id/postEditActivityName"
 					style="@style/Title"
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
 					android:text="name" />
 			
+			</LinearLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				style="@style/Container">
+
+				<CheckBox
+					android:id="@+id/postEditActivityIsActive"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Is Active" />
 			</LinearLayout>
 			<LinearLayout
 				style="@style/Container"
@@ -63,7 +74,7 @@
 					android:layout_height="wrap_content"
 					android:text="Danh sách từ khóa" />
 				<androidx.recyclerview.widget.RecyclerView
-					android:id="@+id/createPostActivityCategoryKeywordsViewRecyclerView"
+					android:id="@+id/postEditActivityCategoryKeywordsViewRecyclerView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content">
 
@@ -92,7 +103,7 @@
 					android:text="Nội dung" />
 
 				<EditText
-					android:id="@+id/createPostActivityContent"
+					android:id="@+id/postEditActivityContent"
 					style="@style/Input"
 					android:layout_width="match_parent"
 					android:ems="10"
@@ -102,7 +113,25 @@
 					android:textAlignment="viewStart" />
 
 			</LinearLayout>
-			
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Danh sách ảnh hiện tại" />
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/postEditActivityOldImagesRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+				</androidx.recyclerview.widget.RecyclerView>
+
+			</LinearLayout>
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -110,7 +139,7 @@
 				android:orientation="vertical">
 
 				<androidx.recyclerview.widget.RecyclerView
-					android:id="@+id/createPostActivityUploadImagesRecyclerView"
+					android:id="@+id/postEditActivityUploadImagesRecyclerView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content">
 
@@ -132,12 +161,12 @@
 				android:layout_height="wrap_content"
 				android:background="@color/transparent"
 				android:orientation="vertical">
-				
+
 				<Button
 					style="@style/ActionBtn"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:onClick="createPost"
+					android:onClick="updatePost"
 					android:text="Tạo bài đăng" />
 			</LinearLayout>
 		
@@ -156,7 +185,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="visible">
+		tools:visibility="gone">
 
 		<ScrollView
 			style="@style/MainScrollView"
@@ -188,7 +217,7 @@
 						android:textAlignment="center" />
 
 					<androidx.recyclerview.widget.RecyclerView
-						android:id="@+id/createPostActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView"
+						android:id="@+id/postEditActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:overScrollMode="never">
@@ -215,7 +244,7 @@
 						android:orientation="horizontal">
 
 						<EditText
-							android:id="@+id/createPostActivityChangeCategoryKeywordsContainerSearchInput"
+							android:id="@+id/postEditActivityChangeCategoryKeywordsContainerSearchInput"
 							style="@style/Input"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -242,7 +271,7 @@
 						android:textAlignment="center" />
 
 					<androidx.recyclerview.widget.RecyclerView
-						android:id="@+id/createPostActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView"
+						android:id="@+id/postEditActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:overScrollMode="never" />
@@ -268,7 +297,7 @@
 
 			<Space
 				android:layout_width="10dp"
-				android:layout_height="match_parent"/>
+				android:layout_height="match_parent" />
 
 			<Button
 				style="@style/ActionBtn"

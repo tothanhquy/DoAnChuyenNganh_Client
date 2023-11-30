@@ -17,6 +17,7 @@ import com.example.tcapp.R
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.core.Genaral.Static.setUserAvatarImage
+import com.example.tcapp.model.post.PostModels
 import com.example.tcapp.model.project.ProjectModels
 import com.example.tcapp.view.adapter_view.*
 import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
@@ -186,6 +187,8 @@ class ProjectDetailsActivity : CoreActivity() {
 		invitingMembers.visibility = View.GONE;
 		val changeCategoryKeywords = findViewById<Button>(R.id.projectDetailsActivityOptionChangeCategoryKeywords);
 		changeCategoryKeywords.visibility = View.GONE;
+		val createPost = findViewById<Button>(R.id.projectDetailsActivityOptionOpenCreatePost);
+		createPost.visibility = View.GONE;
 
 		val follow = findViewById<Button>(R.id.projectDetailsActivityProjectFollowButton);
 		follow.visibility = View.GONE;
@@ -200,6 +203,7 @@ class ProjectDetailsActivity : CoreActivity() {
 			tagEdit.visibility=View.VISIBLE;
 			invitingMembers.visibility = View.VISIBLE;
 			changeCategoryKeywords.visibility = View.VISIBLE;
+			createPost.visibility = View.VISIBLE;
 		}
 		if(relationship.contains("userlogin")){
 			//request join
@@ -317,15 +321,17 @@ class ProjectDetailsActivity : CoreActivity() {
 	}
 	fun viewPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
-		intent.putExtra("filter", "project");
-		intent.putExtra("projectId", projectId);
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.PROJECT));
+		intent.putExtra("authorId", projectId);
 		startActivity(intent)
 	}
 	fun openCreatePostNavigation(view: View){
 		val intent = Intent(applicationContext , CreatePostActivity::class.java)
-		intent.putExtra("creator", "project");
-		intent.putExtra("projectId", projectId);
-		startActivity(intent)
+		intent.putExtra("creator", PostModels.convertCreatorToString(PostModels.CreatorType.PROJECT));
+		intent.putExtra("authorName", projectName?:"");
+		intent.putExtra("authorAvatar", projectAvatar?:"");
+		intent.putExtra("authorId", projectId);
+		startActivity(intent);
 	}
 	fun openEditCategoryKeywordsNavigation(view: View){
 		val intent = Intent(applicationContext , ProjectEditCategoryKeywordsActivity::class.java)

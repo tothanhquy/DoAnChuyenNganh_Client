@@ -18,6 +18,7 @@ import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.core.Genaral.Static.setTeamAvatarImage
 import com.example.tcapp.core.Genaral.Static.setUserAvatarImage
+import com.example.tcapp.model.post.PostModels
 import com.example.tcapp.model.team_profile.TeamProfileModels
 import com.example.tcapp.model.user_profile.UserProfileModels
 import com.example.tcapp.view.adapter_view.*
@@ -291,16 +292,16 @@ class TeamProfileActivity : CoreActivity() {
 	}
 	fun viewPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
-		intent.putExtra("filter", "team");
-		intent.putExtra("teamId", teamId);
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.TEAM));
+		intent.putExtra("authorId", teamId);
 		startActivity(intent)
 	}
 	fun createPostNavigation(view: View){
 		val intent = Intent(applicationContext , CreatePostActivity::class.java)
-		intent.putExtra("creator", "leader");
-		intent.putExtra("teamId", teamId);
-		intent.putExtra("name", teamName?:"");
-		intent.putExtra("avatar", teamAvatar?:"");
+		intent.putExtra("creator", PostModels.convertCreatorToString(PostModels.CreatorType.TEAM));
+		intent.putExtra("authorName", teamName?:"");
+		intent.putExtra("authorAvatar", teamAvatar?:"");
+		intent.putExtra("authorId", teamId);
 		startActivity(intent);
 	}
 	fun openEditInfoNavigation(view: View){

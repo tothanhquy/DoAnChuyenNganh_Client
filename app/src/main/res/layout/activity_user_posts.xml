@@ -34,14 +34,29 @@
 				android:layout_height="wrap_content"
 				android:background="@color/transparent"
 				android:orientation="vertical">
-				
+
 				<Button
 					style="@style/ActionBtn"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="viewCreatePostNavigation"
 					android:text="Tạo bài đăng" />
-				
+
+				<Button
+					android:id="@+id/button7"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewPostsIFollowedNavigation"
+					android:text="Xem các bài viết đã follow" />
+
+				<Button
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="viewPostsILikedNavigation"
+					android:text="Xem các bài viết đã like" />
+
 				<Button
 					style="@style/ActionBtn2"
 					android:layout_width="match_parent"

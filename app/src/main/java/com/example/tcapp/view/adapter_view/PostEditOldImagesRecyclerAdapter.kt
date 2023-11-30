@@ -10,31 +10,38 @@ import com.example.tcapp.R
 import com.example.tcapp.core.Genaral
 
 
-class PostsListViewSlideImagesRecyclerAdapter(
+class PostEditOldImagesRecyclerAdapter(
 	private var context: Context,
 	private var itemList: ArrayList<String>
-	) : RecyclerView.Adapter<PostsListViewSlideImagesRecyclerAdapter.ViewHolder>() {
-	
+	) : RecyclerView.Adapter<PostEditOldImagesRecyclerAdapter.ViewHolder>() {
+	fun getResList():ArrayList<String>{
+		return itemList
+	}
+
 	fun setInitList(list:ArrayList<String>){
 		itemList = list
 		this.notifyDataSetChanged()
 	}
 	
 	class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-		val image: ImageView = itemView.findViewById(R.id.componentListPostsViewSlideImagesItemImage)
+		val image: ImageView = itemView.findViewById(R.id.componentPostEditOldImagesItemImage)
+		val delete: ImageView = itemView.findViewById(R.id.componentPostEditOldImagesItemDelete)
 		val item:View = itemView
 	}
 	
 	override fun onCreateViewHolder(parent: ViewGroup , viewType: Int): ViewHolder {
-		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.component_list_posts_view_slide_images_item, parent, false)
+		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.component_post_edit_old_images_item, parent, false)
 		return ViewHolder(itemView)
 	}
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val image = itemList[position];
-		
 		try{
 			Genaral.setPostImageWithPlaceholder(context , image , holder.image)
+			holder.delete.setOnClickListener {
+				itemList.removeAt(position);
+				this.notifyItemRemoved(position)
+			}
 		}catch(e:Exception){}
 	}
 	
