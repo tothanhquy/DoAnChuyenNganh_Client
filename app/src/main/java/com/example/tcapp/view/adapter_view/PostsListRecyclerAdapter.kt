@@ -53,8 +53,8 @@ class PostsListRecyclerAdapter(
 	public fun setCallbackOfViewProject(a:(String)->Unit){
 		callbackOfViewProject = a
 	}
-	private lateinit var callbackOfUserInteractPost:(String,PostModels.UserUpdateInteractStatus)->Unit
-	public fun setCallbackOfUserInteractPost(a:(String,PostModels.UserUpdateInteractStatus)->Unit){
+	private lateinit var callbackOfUserInteractPost:(ViewHolder,String,PostModels.UserUpdateInteractStatus)->Unit
+	public fun setCallbackOfUserInteractPost(a:(ViewHolder,String,PostModels.UserUpdateInteractStatus)->Unit){
 		callbackOfUserInteractPost = a
 	}
 	
@@ -63,14 +63,18 @@ class PostsListRecyclerAdapter(
 		this.notifyDataSetChanged()
 	}
 	fun addItems(list:ArrayList<PostModels.PostListItem>){
-		val previousSize = itemList.size;
-		itemList.addAll(list)
-//		this.notifyDataSetChanged()
-		this.notifyItemRangeInserted(previousSize,list.size)
+		list.forEach {
+			if(itemList.indexOfFirst { a->a.postId==it.postId }==-1){
+				itemList.add(it);
+//				this.notifyItemInserted(itemCount-1)
+			}
+		}
+		this.notifyDataSetChanged()
 	}
-	fun updateInteractStatus(postId:String,status:PostModels.PostUpdateInteractResponse){
+	fun updateInteractStatus(holder: ViewHolder,postId:String,status:PostModels.PostUpdateInteractResponse){
 		val position = itemList.indexOfFirst { it.postId==postId };
 		if(position!=-1){
+			println(position)
 			when (status.status) {
 				PostModels.PostUpdateInteractResponseStatus.LIKED -> {
 					itemList[position].wasLiked=true;
@@ -91,7 +95,7 @@ class PostsListRecyclerAdapter(
 				}
 				else -> itemList[position].wasFollowed=false;
 			}
-			this.notifyItemChanged(position)
+			setInteractStatus(holder,itemList[position]);
 		}
 	}
 	
@@ -132,7 +136,6 @@ class PostsListRecyclerAdapter(
 		return ViewHolder(itemView)
 	}
 	
-	@SuppressLint("ResourceAsColor")
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val post = itemList[position];
 		
@@ -178,7 +181,7 @@ class PostsListRecyclerAdapter(
 					holder.inactive.visibility = View.GONE;
 				}else{
 					holder.option.visibility = View.VISIBLE;
-					holder.inactive.visibility = if(post.isActive)View.VISIBLE else View.GONE;
+					holder.inactive.visibility = if(!post.isActive)View.VISIBLE else View.GONE;
 					holder.option.setOnClickListener {
 						callbackOfOpenOptions(position,post.postId!!)
 					}
@@ -219,44 +222,46 @@ class PostsListRecyclerAdapter(
 					}
 				}
 
-				holder.commentNumber.text = if(post.commentsNumber==1L) ""+post.commentsNumber+" Comment" else ""+post.commentsNumber+" Comments";
 				holder.likeContainer.setOnClickListener {
-					callbackOfUserInteractPost(post.postId!!,PostModels.UserUpdateInteractStatus.LIKE);
+					callbackOfUserInteractPost(holder,post.postId!!,PostModels.UserUpdateInteractStatus.LIKE);
 				}
 				holder.saveContainer.setOnClickListener {
-					callbackOfUserInteractPost(post.postId!!,PostModels.UserUpdateInteractStatus.SAVE);
+					callbackOfUserInteractPost(holder,post.postId!!,PostModels.UserUpdateInteractStatus.SAVE);
 				}
 				holder.followContainer.setOnClickListener {
-					callbackOfUserInteractPost(post.postId!!,PostModels.UserUpdateInteractStatus.FOLLOW);
+					callbackOfUserInteractPost(holder,post.postId!!,PostModels.UserUpdateInteractStatus.FOLLOW);
 				}
 				itemList[position].wasLoaded = true;
 			}
-
-			holder.likeNumber.text = if(post.likeNumber==1L) ""+post.likeNumber+" Like" else ""+post.likeNumber+" Likes";
-			if(post.wasLiked){
-				holder.likeIcon.setImageResource(R.drawable.like_icon);
-				holder.likeText.setTextColor(R.color.theme_color_2_dark)
-			}else{
-				holder.likeIcon.setImageResource(R.drawable.like_blank_icon);
-				holder.likeText.setTextColor(R.color.black)
-			}
-			if(post.wasSaved){
-				holder.saveIcon.setImageResource(R.drawable.save_icon);
-				holder.saveText.setTextColor(R.color.theme_color_2_dark)
-			}else{
-				holder.saveIcon.setImageResource(R.drawable.save_blank_icon);
-				holder.saveText.setTextColor(R.color.black)
-			}
-			if(post.wasFollowed){
-				holder.followIcon.setImageResource(R.drawable.follow_icon);
-				holder.followText.setTextColor(R.color.theme_color_2_dark)
-			}else{
-				holder.followIcon.setImageResource(R.drawable.follow_blank_icon);
-				holder.followText.setTextColor(R.color.black)
-			}
-			
+			setInteractStatus(holder,post);
 
 		}catch(e:Exception){}
+	}
+	@SuppressLint("ResourceAsColor")
+	private fun setInteractStatus(holder: ViewHolder, post:PostModels.PostListItem){
+		holder.commentNumber.text = ""+if(post.commentsNumber>0L)""+post.commentsNumber+" Bình luận" else ""
+		holder.likeNumber.text = ""+if(post.likeNumber>0L)(if(post.likeNumber==1L)""+post.likeNumber+" Like" else ""+post.likeNumber+" Likes") else ""
+		if(post.wasLiked){
+			holder.likeIcon.setImageResource(R.drawable.like_icon);
+			holder.likeText.setTextColor(R.color.theme_color_2_dark)
+		}else{
+			holder.likeIcon.setImageResource(R.drawable.like_blank_icon);
+			holder.likeText.setTextColor(R.color.black)
+		}
+		if(post.wasSaved){
+			holder.saveIcon.setImageResource(R.drawable.save_icon);
+			holder.saveText.setTextColor(R.color.theme_color_2_dark)
+		}else{
+			holder.saveIcon.setImageResource(R.drawable.save_blank_icon);
+			holder.saveText.setTextColor(R.color.black)
+		}
+		if(post.wasFollowed){
+			holder.followIcon.setImageResource(R.drawable.follow_icon);
+			holder.followText.setTextColor(R.color.theme_color_2_dark)
+		}else{
+			holder.followIcon.setImageResource(R.drawable.follow_blank_icon);
+			holder.followText.setTextColor(R.color.black)
+		}
 	}
 	
 	override fun getItemCount() = itemList.size

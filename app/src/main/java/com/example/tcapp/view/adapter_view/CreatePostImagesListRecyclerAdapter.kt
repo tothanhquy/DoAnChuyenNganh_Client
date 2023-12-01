@@ -40,8 +40,7 @@ class CreatePostImagesListRecyclerAdapter(
 	}
 	private fun removeItem(uri:Uri?){
 		val index = itemList.indexOfFirst { it.uri==uri; }
-		if(index!=-1)
-		itemList.removeAt(index);
+		if(index!=-1)itemList.removeAt(index);
 //		this.notifyDataSetChanged();
 		this.notifyItemRemoved(index)
 	}

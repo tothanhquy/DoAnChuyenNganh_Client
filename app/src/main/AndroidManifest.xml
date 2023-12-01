@@ -134,6 +134,12 @@
             android:name=".view.post.UserPostsActivity"
             android:exported="false" />
         <activity
+            android:name=".view.post.PostDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.post.PostEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.friend.MyFriendAndRequestsListActivity"
             android:exported="false" />
         <activity

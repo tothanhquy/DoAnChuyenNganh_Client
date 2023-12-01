@@ -33,6 +33,7 @@ class ShowSelectedKeywordsRecyclerAdapter(
 	}
 	fun setInitList(list:ArrayList<GeneralModel.Keyword>){
 		itemList = list
+		this.notifyDataSetChanged()
 	}
 	fun toggleIsContainerShow(){
 		isContainerShow = !isContainerShow;

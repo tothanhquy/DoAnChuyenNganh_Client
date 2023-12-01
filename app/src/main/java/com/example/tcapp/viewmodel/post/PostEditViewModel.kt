@@ -110,7 +110,7 @@ class PostEditViewModel (private val context : Context): ViewModel(){
 				_error.postValue(AlertDialog.Error("Error!","You are logout."))
 			}else{
 				if(response.status=="Success"){
-					_notification.postValue(AlertDialog.Notification("Success!","You created a post.",fun(dia: DialogInterface, i:Int){okCallback();}))
+					_notification.postValue(AlertDialog.Notification("Success!","You updated complete.",fun(dia: DialogInterface, i:Int){okCallback();}))
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}

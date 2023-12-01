@@ -17,7 +17,8 @@ class UserPostsActivity : CoreActivity() {
 	private var  loadingLayout:View? = null;
 	private var userName:String?=null;
 	private var userAvatar:String?=null;
-	
+	private var userId:String?=null;
+
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
 		backgroundColor = getColor(R.color.light_blue_900)
@@ -30,7 +31,7 @@ class UserPostsActivity : CoreActivity() {
 	private fun loadData(){
 		userName = intent.getStringExtra("user_name")?.toString()
 		userAvatar = intent.getStringExtra("user_avatar")?.toString()
-		
+		userId = intent.getStringExtra("user_id")?.toString()
 	}
 	private fun initViews(){
 		var viewActivity = findViewById<ViewGroup>(R.id.myPostsActivity)
@@ -58,7 +59,7 @@ class UserPostsActivity : CoreActivity() {
 	fun viewMyPostsNavigation(view: View){
 		val intent = Intent(applicationContext , PostsListActivity::class.java)
 		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER));
-		intent.putExtra("authorId", "");
+		intent.putExtra("authorId", userId);
 		startActivity(intent)
 	}
 	fun viewCreatePostNavigation(view: View){
@@ -66,7 +67,7 @@ class UserPostsActivity : CoreActivity() {
 		intent.putExtra("creator", PostModels.convertCreatorToString(PostModels.CreatorType.USER));
 		intent.putExtra("authorName", userName?:"");
 		intent.putExtra("authorAvatar", userAvatar?:"");
-		intent.putExtra("authorId", "");
+		intent.putExtra("authorId", userId);
 		startActivity(intent);
 	}
 }

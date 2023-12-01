@@ -77,6 +77,8 @@ class PostEditActivity : CoreActivity() {
 		super.setTitleBarAndNavigationBar(backgroundColor,R.string.edit_post)
 		setContentView(R.layout.activity_post_edit)
 
+		changeCategoryKeywordsContainer =  findViewById(R.id.postEditActivityChangeCategoryKeywordsContainer);
+
 		oldImagesRecyclerView =  findViewById(R.id.postEditActivityOldImagesRecyclerView);
 		oldImagesAdapter = PostEditOldImagesRecyclerAdapter(this,
 			arrayListOf()
@@ -95,11 +97,13 @@ class PostEditActivity : CoreActivity() {
 			Genaral.Static.HorizontalLayoutAutoWrapper(this)
 		uploadImagesContainerRecyclerView!!.adapter = uploadImagesContainerAdapter;
 
+		keywordsSelectedRecyclerView =  findViewById(R.id.postEditActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView);
 		keywordsSelectedAdapter = ShowSelectedKeywordsRecyclerAdapter(this, arrayListOf())
 		keywordsSelectedRecyclerView!!.setHasFixedSize(false)
 		keywordsSelectedRecyclerView!!.layoutManager = LinearLayoutManager(this)
 		keywordsSelectedRecyclerView!!.adapter = keywordsSelectedAdapter
 
+		allKeywordsRecyclerView =  findViewById(R.id.postEditActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView);
 		allKeywordsAdapter = SelectKeywordsRecyclerAdapter(this, arrayListOf())
 		allKeywordsAdapter!!.setClickCallback(::selectKeywordsAdapterCallbackClick)
 		allKeywordsRecyclerView!!.setHasFixedSize(false)
@@ -107,6 +111,7 @@ class PostEditActivity : CoreActivity() {
 		allKeywordsRecyclerView!!.adapter = allKeywordsAdapter
 		allKeywordsAdapter!!.setIsCheckOfItems(arrayListOf(),true)
 
+		keywordsViewContainerRecyclerView =  findViewById(R.id.postEditActivityCategoryKeywordsViewRecyclerView);
 		keywordsViewContainerAdapter = StringListRecyclerAdapter(applicationContext, arrayListOf());
 		keywordsViewContainerRecyclerView!!.setHasFixedSize(true)
 		keywordsViewContainerRecyclerView!!.layoutManager =
@@ -163,6 +168,7 @@ class PostEditActivity : CoreActivity() {
 		}
 		val postKeywords = ArrayList(allCategoryKeywords!!.filter { a -> post.categoryKeywordsId!!.indexOfFirst { it==a.id}!=-1 });
 
+		oldCategoryKeywords = postKeywords;
 		keywordsViewContainerAdapter?.setList(ArrayList(postKeywords!!.map{it.name}));
 		keywordsSelectedAdapter?.setInitList(postKeywords);
 		allKeywordsAdapter?.setIsCheckOfAll(false);

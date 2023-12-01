@@ -25,6 +25,7 @@
 		android:id="@+id/componentPostEditOldImagesItemDelete"
 		style="@style/IconImage"
 		android:elevation="2dp"
+		android:visibility="gone"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
 		app:srcCompat="@drawable/x_button_icon" />

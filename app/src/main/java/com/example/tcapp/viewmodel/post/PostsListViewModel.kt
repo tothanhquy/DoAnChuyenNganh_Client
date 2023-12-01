@@ -7,6 +7,7 @@ import com.example.tcapp.api.API
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.AlertDialog
 import com.example.tcapp.model.post.PostModels
+import com.example.tcapp.view.adapter_view.PostsListRecyclerAdapter
 import com.example.tcapp.viewmodel.ViewModel
 import com.google.gson.Gson
 import org.json.JSONObject
@@ -72,13 +73,13 @@ class PostsListViewModel (private val context : Context): ViewModel(){
 		}
 	}
 	
-	public fun userInteract(postId:String , status: PostModels.UserUpdateInteractStatus , okCallback:(String,PostModels.PostUpdateInteractResponse)->Unit){
+	public fun userInteract(holder: PostsListRecyclerAdapter.ViewHolder, postId:String, status: PostModels.UserUpdateInteractStatus, okCallback:(PostsListRecyclerAdapter.ViewHolder,String, PostModels.PostUpdateInteractResponse)->Unit){
 		val statusString = PostModels.convertUserUpdateInteractStatusToString(status);
 		Thread {
-			userInteractAPI(postId,statusString,okCallback)
+			userInteractAPI(holder,postId,statusString,okCallback)
 		}.start()
 	}
-	private fun userInteractAPI(postId:String,status:String,okCallback:(String,PostModels.PostUpdateInteractResponse)->Unit){
+	private fun userInteractAPI(holder:PostsListRecyclerAdapter.ViewHolder,postId:String,status:String,okCallback:(PostsListRecyclerAdapter.ViewHolder,String,PostModels.PostUpdateInteractResponse)->Unit){
 		try{
 			val  response : API.ResponseAPI = API.getResponse(context,
 				khttp.post(
@@ -100,7 +101,7 @@ class PostsListViewModel (private val context : Context): ViewModel(){
 			}else{
 				if(response.status=="Success"){
 					val resCrude = Gson().fromJson(response.data.toString(), PostModels.PostUpdateInteractResponseCrude::class.java)
-					okCallback(postId,PostModels.PostUpdateInteractResponse(resCrude));
+					okCallback(holder,postId,PostModels.PostUpdateInteractResponse(resCrude));
 				}else{
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}

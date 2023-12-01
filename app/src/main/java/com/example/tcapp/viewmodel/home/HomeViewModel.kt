@@ -58,6 +58,7 @@ class HomeViewModel (private val context : Context){
 					_user.postValue( HomeModels.UserData(
 						response.data?.getString("name")?:"",
 						response.data?.getString("avatar")?:"",
+						response.data?.getString("id")?:"",
 						response.data?.getBoolean("isVerifyEmail")?:false,
 						response.data?.getInt("numberNotReadNotifications")?:0
 					))

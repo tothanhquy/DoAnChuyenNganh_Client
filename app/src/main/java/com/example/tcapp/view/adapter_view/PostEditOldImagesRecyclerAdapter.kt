@@ -42,6 +42,10 @@ class PostEditOldImagesRecyclerAdapter(
 				itemList.removeAt(position);
 				this.notifyItemRemoved(position)
 			}
+			holder.image.setOnClickListener {
+				holder.delete.visibility =
+					if(holder.delete.visibility==View.GONE)View.VISIBLE else View.GONE;
+			}
 		}catch(e:Exception){}
 	}
 	

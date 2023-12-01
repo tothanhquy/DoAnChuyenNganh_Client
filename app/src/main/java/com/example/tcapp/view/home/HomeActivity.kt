@@ -41,7 +41,8 @@ class HomeActivity : CoreActivity() {
 	
 	private var userName:String?=null;
 	private var userAvatar:String?=null;
-	
+	private var userId:String?=null;
+
 	override fun onCreate(savedInstanceState : Bundle?) {
 		super.onCreate(savedInstanceState)
 		homeViewModel = HomeViewModel(applicationContext)
@@ -121,6 +122,7 @@ class HomeActivity : CoreActivity() {
 		findViewById<Button>(R.id.homeScreAuthenVerifyEmail).visibility= if(!user.isVerifyEmail)View.VISIBLE else View.GONE
 		userName = user.name;
 		userAvatar = user.avatar;
+		userId = user.id;
 		if(user.numberNotReadNotifications<=0){
 			findViewById<LinearLayout>(R.id.homeScreAuthenNotificationNumberLayout).visibility = View.GONE;
 		}else{
@@ -182,6 +184,7 @@ class HomeActivity : CoreActivity() {
 		val intent = Intent(applicationContext , UserPostsActivity::class.java)
 		intent.putExtra("user_name", userName?:"");
 		intent.putExtra("user_avatar", userAvatar?:"");
+		intent.putExtra("user_id", userId?:"");
 		startActivity(intent)
 	}
 	fun viewSettingAccountNavigation(view: View){

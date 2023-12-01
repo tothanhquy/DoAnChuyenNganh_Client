@@ -34,6 +34,12 @@
 		<item name="android:layout_marginRight">5dp</item>
 		<item name="android:scaleType">centerInside</item>
 	</style>
+	<style name="IconImageSmall">
+		<item name="android:layout_width">20dp</item>
+		<item name="android:layout_height">20dp</item>
+		<item name="android:layout_marginRight">5dp</item>
+		<item name="android:scaleType">centerInside</item>
+	</style>
 	<style name="TeamAvatarItem">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">100dp</item>

@@ -149,12 +149,15 @@ class PostsListActivity : CoreActivity() {
 		//set requests
 		objectViewModel.postsList.observe(this, Observer {
 			runOnUiThread {
+				println(it)
 				if(it!=null)setPostsContainer(it)
 			}
 		})
 	}
 	
 	private fun setPostsContainer(postsList: PostModels.PostsList){
+		println(postsList.posts.size)
+		postsListContainer!!.setHasFixedSize(true)
 		postsListContainerAdapter!!.let{
 			it.isActionale = postsList.isActionable;
 			it.timePrevious = postsList.timePrevious;
@@ -162,7 +165,6 @@ class PostsListActivity : CoreActivity() {
 			it.isFinish= postsList.isFinish;
 			it.addItems(postsList.posts!!);
 		}
-		postsListContainer?.setHasFixedSize(true)
 	}
 	
 	private fun openSlideImages(arr:ArrayList<String>){
@@ -183,12 +185,12 @@ class PostsListActivity : CoreActivity() {
 	private fun closeOptions(){
 		findViewById<ViewGroup>(R.id.postsListActivityOptionsContainer).visibility = View.GONE;
 	}
-	private fun userInteractPost(postId:String,status:PostModels.UserUpdateInteractStatus){
-		objectViewModel.userInteract(postId,status,::okInteractCallback)
+	private fun userInteractPost(holder:PostsListRecyclerAdapter.ViewHolder,postId:String,status:PostModels.UserUpdateInteractStatus){
+		objectViewModel.userInteract(holder,postId,status,::okInteractCallback)
 	}
-	private fun okInteractCallback(postId:String,status:PostModels.PostUpdateInteractResponse){
+	private fun okInteractCallback(holder:PostsListRecyclerAdapter.ViewHolder,postId:String,status:PostModels.PostUpdateInteractResponse){
 		runOnUiThread{
-			postsListContainerAdapter!!.updateInteractStatus(postId,status);
+			postsListContainerAdapter!!.updateInteractStatus(holder,postId,status);
 		}
 	}
 	private fun viewUserNavigation(authorId:String){

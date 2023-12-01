@@ -18,10 +18,12 @@ import com.example.tcapp.api.API
 import com.example.tcapp.core.CoreActivity
 import com.example.tcapp.core.Genaral
 import com.example.tcapp.model.chanel_chat.ChanelChatModels
+import com.example.tcapp.model.post.PostModels
 import com.example.tcapp.model.user_profile.UserProfileModels
 import com.example.tcapp.view.adapter_view.*
 import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
 import com.example.tcapp.view.friend.CreateFriendRequestActivity
+import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.request.CreateRequestActivity
 import com.example.tcapp.view.team_profile.TeamProfileEditInfoActivity
 import com.example.tcapp.viewmodel.user_profile.GuestUserProfileViewModel
@@ -216,6 +218,12 @@ class GuestUserProfileActivity : CoreActivity() {
 		intent.putExtra("userId", idAccount);
 		intent.putExtra("userName", nameOfAccount);
 		intent.putExtra("userAvatar", avatarOfAccount);
+		startActivity(intent)
+	}
+	fun optionViewPosts(view: View){
+		val intent = Intent(applicationContext , PostsListActivity::class.java)
+		intent.putExtra("filter", PostModels.convertFilterToString(PostModels.Filter.USER));
+		intent.putExtra("authorId", idAccount);
 		startActivity(intent)
 	}
 	fun optionCancelFriend(view:View){

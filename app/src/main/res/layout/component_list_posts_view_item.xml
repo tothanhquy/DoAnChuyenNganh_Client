@@ -180,14 +180,15 @@
 
 				<ImageView
 					android:id="@+id/componentListPostsItemSaveIcon"
-					style="@style/IconImage"
+					style="@style/IconImageSmall"
 					app:srcCompat="@drawable/save_blank_icon" />
 
 				<TextView
 					android:id="@+id/componentListPostsItemSaveText"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Lưu" />
+					android:text="Lưu"
+					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
 				android:layout_width="wrap_content"
@@ -227,14 +228,15 @@
 
 				<ImageView
 					android:id="@+id/componentListPostsItemLikeIcon"
-					style="@style/IconImage"
+					style="@style/IconImageSmall"
 					app:srcCompat="@drawable/like_blank_icon" />
 
 				<TextView
 					android:id="@+id/componentListPostsItemLikeText"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Like" />
+					android:text="Like"
+					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
 				android:layout_width="wrap_content"
@@ -248,13 +250,14 @@
 				android:orientation="horizontal">
 
 				<ImageView
-					style="@style/IconImage"
+					style="@style/IconImageSmall"
 					app:srcCompat="@drawable/comment_icon" />
 
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Bình luận" />
+					android:text="Bình luận"
+					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
 				android:layout_width="wrap_content"
@@ -269,14 +272,15 @@
 
 				<ImageView
 					android:id="@+id/componentListPostsItemFollowIcon"
-					style="@style/IconImage"
+					style="@style/IconImageSmall"
 					app:srcCompat="@drawable/follow_blank_icon" />
 
 				<TextView
 					android:id="@+id/componentListPostsItemFollowText"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Follow" />
+					android:text="Theo dỏi"
+					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
 				android:layout_width="wrap_content"

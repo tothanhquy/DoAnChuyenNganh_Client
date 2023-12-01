@@ -150,7 +150,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="uploadImage"
-					android:text="Chọn ảnh"
+					android:text="Chọn ảnh mới"
 					android:visibility="visible" />
 			
 			</LinearLayout>
@@ -167,7 +167,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="updatePost"
-					android:text="Tạo bài đăng" />
+					android:text="Cập nhật bài viết" />
 			</LinearLayout>
 		
 		</LinearLayout>
@@ -175,9 +175,9 @@
 	</ScrollView>
 
 	<LinearLayout
-		android:id="@+id/createPostChangeCategoryKeywordsContainer"
+		android:id="@+id/postEditActivityChangeCategoryKeywordsContainer"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
+		android:layout_height="match_parent"
 		android:elevation="3dp"
 		android:orientation="vertical"
 		android:visibility="gone"
@@ -285,6 +285,7 @@
 			style="@style/Container"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="0dp"
 			android:orientation="horizontal">
 
 			<Button

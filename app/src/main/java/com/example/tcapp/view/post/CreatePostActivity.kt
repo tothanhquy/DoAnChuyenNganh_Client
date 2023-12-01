@@ -69,8 +69,15 @@ class CreatePostActivity : CoreActivity() {
 		backgroundColor = getColor(R.color.light_blue_900)
 		super.setTitleBarAndNavigationBar(backgroundColor,R.string.create_post)
 		setContentView(R.layout.activity_create_post)
-		
+
+
+		keywordsSelectedRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView)
+		allKeywordsRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView)
+		keywordsViewContainerRecyclerView = findViewById(R.id.createPostActivityCategoryKeywordsViewRecyclerView)
+		searchInput = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerSearchInput)
+		changeCategoryKeywordsContainer = findViewById(R.id.createPostChangeCategoryKeywordsContainer)
 		uploadImagesContainerRecyclerView =  findViewById(R.id.createPostActivityUploadImagesRecyclerView);
+
 		uploadImagesContainerAdapter = CreatePostImagesListRecyclerAdapter(this,
 			arrayListOf()
 		)
@@ -157,11 +164,6 @@ class CreatePostActivity : CoreActivity() {
 		var viewActivity = findViewById<ViewGroup>(R.id.createPostActivity)
 		loadingLayout = Genaral.getLoadingScreen(this,viewActivity,backgroundColor)
 		viewActivity.addView(loadingLayout)
-		keywordsSelectedRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerKeywordsSelectedRecyclerView)
-		allKeywordsRecyclerView = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerAllKeywordsRecyclerView)
-		keywordsViewContainerRecyclerView = findViewById(R.id.createPostActivityCategoryKeywordsViewRecyclerView)
-		searchInput = findViewById(R.id.createPostActivityChangeCategoryKeywordsContainerSearchInput)
-		changeCategoryKeywordsContainer = findViewById(R.id.createPostChangeCategoryKeywordsContainer)
 	}
 	private fun setRender(){
 		//set alert error
@@ -240,6 +242,7 @@ class CreatePostActivity : CoreActivity() {
 		val intent = Intent(applicationContext , PostDetailsActivity::class.java)
 		intent.putExtra("postId", newPostId)
 		startActivity(intent)
+		finish()
 	}
 	fun uploadImage(view: View){
 		if(checkPermissionsReadFile()){

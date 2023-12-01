@@ -167,12 +167,12 @@ class PostDetailsActivity : CoreActivity() {
 	private fun closeOptions(){
 		findViewById<ViewGroup>(R.id.postsListActivityOptionsContainer).visibility = View.GONE;
 	}
-	private fun userInteractPost(postId:String,status:PostModels.UserUpdateInteractStatus){
-		objectViewModel.userInteract(postId,status,::okInteractCallback)
+	private fun userInteractPost(holder:PostsListRecyclerAdapter.ViewHolder,postId:String,status:PostModels.UserUpdateInteractStatus){
+		objectViewModel.userInteract(holder,postId,status,::okInteractCallback)
 	}
-	private fun okInteractCallback(postId:String,status:PostModels.PostUpdateInteractResponse){
+	private fun okInteractCallback(holder:PostsListRecyclerAdapter.ViewHolder,postId:String,status:PostModels.PostUpdateInteractResponse){
 		runOnUiThread{
-			postsListContainerAdapter!!.updateInteractStatus(postId,status);
+			postsListContainerAdapter!!.updateInteractStatus(holder,postId,status);
 		}
 	}
 	private fun viewUserNavigation(authorId:String){
