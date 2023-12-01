@@ -37,7 +37,9 @@
 				android:id="@+id/componentListPostsItemTime"
 				style="@style/Label"
 				android:layout_height="wrap_content"
-				android:text="date time" />
+				android:layout_marginLeft="5dp"
+				android:text="date time"
+				android:textSize="12sp" />
 		</LinearLayout>
 
 		<ImageView
@@ -188,6 +190,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Lưu"
+					android:textColor="@color/theme_color_2_dark"
 					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
@@ -236,6 +239,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Like"
+					android:textColor="@color/theme_color_2_dark"
 					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
@@ -251,12 +255,13 @@
 
 				<ImageView
 					style="@style/IconImageSmall"
-					app:srcCompat="@drawable/comment_icon" />
+					app:srcCompat="@drawable/comment_blank_icon" />
 
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Bình luận"
+					android:textColor="@color/theme_color_2_dark"
 					android:textStyle="bold" />
 			</LinearLayout>
 			<Space
@@ -280,6 +285,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Theo dỏi"
+					android:textColor="@color/theme_color_2"
 					android:textStyle="bold" />
 			</LinearLayout>
 			<Space

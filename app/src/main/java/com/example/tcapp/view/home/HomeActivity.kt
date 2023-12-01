@@ -25,6 +25,7 @@ import com.example.tcapp.view.post.PostsListActivity
 import com.example.tcapp.view.post.UserPostsActivity
 import com.example.tcapp.view.project.MyProjectsActivity
 import com.example.tcapp.view.request.RequestsListActivity
+import com.example.tcapp.view.search.SearchActivity
 import com.example.tcapp.view.team_profile.MyTeamsActivity
 import com.example.tcapp.view.user_profile.MyUserProfileActivity
 import com.example.tcapp.view.welcome.WelcomeActivity
@@ -132,6 +133,10 @@ class HomeActivity : CoreActivity() {
 	}
 	fun loginNavigation(view: View){
 		val intent = Intent(applicationContext , LoginAccountActivity::class.java)
+		startActivity(intent)
+	}
+	fun openSearchActivity(view: View){
+		val intent = Intent(applicationContext , SearchActivity::class.java)
 		startActivity(intent)
 	}
 	fun registerNavigation(view: View){

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.tcapp.R
@@ -141,10 +142,15 @@ class PostsListRecyclerAdapter(
 		
 		try{
 			if(!post.wasLoaded){
+				val type = when(post.authorType){
+					PostModels.AuthorType.PROJECT->"Dự án - "
+					PostModels.AuthorType.TEAM->"Team - "
+					else -> "Người dùng - "
+				}
 				if(post.lastEditTime!=0L){
-					holder.postTime.text = "Sửa đổi gần nhất: "+getDateTimeByUTC(post.lastEditTime);
+					holder.postTime.text = type+"Sửa đổi gần nhất:\n"+getDateTimeByUTC(post.lastEditTime);
 				}else{
-					holder.postTime.text = getDateTimeByUTC(post.postTime);
+					holder.postTime.text = type+getDateTimeByUTC(post.postTime);
 				}
 				holder.name.text = post.authorName;
 				when (post.authorType) {
@@ -197,7 +203,8 @@ class PostsListRecyclerAdapter(
 				
 				if(post.images==null||post.images!!.size==0) {
 					holder.imagesContainer.visibility = View.GONE;
-				}else{
+				}
+				else{
 					if(post.images!!.size>=1){
 						holder.image1.visibility = View.VISIBLE;
 						setPostImageWithPlaceholder(context,post.images!![0],holder.image1);
@@ -237,30 +244,29 @@ class PostsListRecyclerAdapter(
 
 		}catch(e:Exception){}
 	}
-	@SuppressLint("ResourceAsColor")
 	private fun setInteractStatus(holder: ViewHolder, post:PostModels.PostListItem){
 		holder.commentNumber.text = ""+if(post.commentsNumber>0L)""+post.commentsNumber+" Bình luận" else ""
 		holder.likeNumber.text = ""+if(post.likeNumber>0L)(if(post.likeNumber==1L)""+post.likeNumber+" Like" else ""+post.likeNumber+" Likes") else ""
 		if(post.wasLiked){
 			holder.likeIcon.setImageResource(R.drawable.like_icon);
-			holder.likeText.setTextColor(R.color.theme_color_2_dark)
+			holder.likeText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2))
 		}else{
 			holder.likeIcon.setImageResource(R.drawable.like_blank_icon);
-			holder.likeText.setTextColor(R.color.black)
+			holder.likeText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2_dark))
 		}
 		if(post.wasSaved){
 			holder.saveIcon.setImageResource(R.drawable.save_icon);
-			holder.saveText.setTextColor(R.color.theme_color_2_dark)
+			holder.saveText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2))
 		}else{
 			holder.saveIcon.setImageResource(R.drawable.save_blank_icon);
-			holder.saveText.setTextColor(R.color.black)
+			holder.saveText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2_dark))
 		}
 		if(post.wasFollowed){
 			holder.followIcon.setImageResource(R.drawable.follow_icon);
-			holder.followText.setTextColor(R.color.theme_color_2_dark)
+			holder.followText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2))
 		}else{
 			holder.followIcon.setImageResource(R.drawable.follow_blank_icon);
-			holder.followText.setTextColor(R.color.black)
+			holder.followText.setTextColor(ContextCompat.getColor(context,R.color.theme_color_2_dark))
 		}
 	}
 	

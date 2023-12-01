@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/searchActivity"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:theme="@style/AppTheme"
+	tools:context=".view.search.SearchActivity"
+	tools:viewBindingIgnore="true">
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="16dp"
+		android:layout_marginBottom="16dp"
+		android:clickable="true"
+		android:onClick="goToTop"
+		app:elevation="3dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
+		app:srcCompat="@drawable/arrow_up_icon" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="1dp"
+		android:orientation="vertical"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<LinearLayout
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="0dp"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:paddingBottom="5dp">
+
+			<EditText
+				android:id="@+id/searchActivitySearchInput"
+				style="@style/Input"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:ems="10"
+				android:hint="người dùng, team, dự án..."
+				android:inputType="text" />
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:onClick="search"
+				app:srcCompat="@drawable/search_icon" />
+		</LinearLayout>
+
+		<LinearLayout
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="0dp"
+			android:orientation="horizontal"
+			android:padding="0dp">
+
+			<RadioGroup
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:checkedButton="@id/searchActivityRadioUser"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<RadioButton
+					android:id="@+id/searchActivityRadioUser"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Người dùng" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<RadioButton
+					android:id="@+id/searchActivityRadioTeam"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Team" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+
+				<RadioButton
+					android:id="@+id/searchActivityRadioProject"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="Dự án" />
+
+				<Space
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1" />
+			</RadioGroup>
+		</LinearLayout>
+
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/searchActivityScrollViewContainer"
+			style="@style/MainScrollView"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:contentDescription="main menu content">
+
+			<LinearLayout
+				style="@style/MainScrollViewChildContainer"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				tools:layout_editor_absoluteX="15dp"
+				tools:layout_editor_absoluteY="15dp">
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/searchActivityRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+				</androidx.recyclerview.widget.RecyclerView>
+
+				<LinearLayout
+					style="@style/Container"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@color/transparent"
+					android:orientation="vertical">
+
+					<LinearLayout
+						android:id="@+id/searchActivityLoadingContainer"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center_horizontal"
+						android:orientation="horizontal"
+						android:visibility="gone"
+						tools:visibility="visible" />
+
+				</LinearLayout>
+
+			</LinearLayout>
+
+		</androidx.core.widget.NestedScrollView>
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

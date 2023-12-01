@@ -198,6 +198,9 @@
             android:name=".view.project.ProjectVoteStarActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
