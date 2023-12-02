@@ -311,7 +311,6 @@ class ChanelChatDetailsViewModel (private val context : Context){
 //					_fullMembers.postValue(getMessagesFromOj(response.data))
 					okCallback(getMessagesFromOj(response.data))
 				}else{
-					reShowChangeName()
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}
 			}
@@ -378,7 +377,6 @@ class ChanelChatDetailsViewModel (private val context : Context){
 				if(response.status=="Success"){
 					okCallback(getMessagesFromOj(response.data))
 				}else{
-					reShowChangeName()
 					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
 				}
 			}

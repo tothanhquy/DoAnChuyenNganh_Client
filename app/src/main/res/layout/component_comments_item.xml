@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginTop="5dp"
+	android:gravity="left"
+	android:orientation="horizontal">
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/componentCommentsItemAvatar"
+		style="@style/SmallAvatar"
+		app:strokeColor="@null"
+		tools:srcCompat="@tools:sample/avatars" />
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="left"
+		android:orientation="vertical"
+		android:paddingTop="5dp"
+		android:paddingRight="5dp">
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/message_chat_friend_bg"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/componentCommentsItemName"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:text="TextView"
+				android:textColor="?attr/messageChatFriendNameColor"
+				android:textSize="12sp"
+				android:textStyle="bold"
+				tools:text="Lê Ngọ" />
+
+			<TextView
+				android:id="@+id/componentCommentsItemContent"
+				style="@style/Title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="TextView"
+				android:textColor="?attr/messageChatFriendColor"
+				android:textSize="15sp"
+				tools:text="nkjhsdfn njsdhj absdbahjs ndfs nksdfn ksdfn skjdfn ksjd fn ksfnksd nfksdfndskifn i sfdsf s" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:layout_marginBottom="3dp"
+			android:gravity="center|center_horizontal"
+			android:orientation="horizontal"
+			android:paddingLeft="10dp">
+
+			<TextView
+				android:id="@+id/componentCommentsItemTime"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:textSize="12sp"
+				android:textStyle="bold"
+				tools:text="11:53" />
+
+			<TextView
+				android:id="@+id/componentCommentsItemLikeNumber"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="20 likes"
+				android:textSize="12sp" />
+
+			<ImageView
+				android:id="@+id/componentCommentsItemLikeIcon"
+				style="@style/IconImageSmall"
+				android:layout_marginLeft="5dp"
+				app:srcCompat="@drawable/like_blank_icon" />
+
+			<Space
+				android:layout_width="50dp"
+				android:layout_height="1dp" />
+
+			<TextView
+				android:id="@+id/componentCommentsItemReplyNumber"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="(30) phản hồi"
+				android:textSize="12sp" />
+
+			<TextView
+				android:id="@+id/componentCommentsItemReplyButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:text="Phản hồi"
+				android:textStyle="bold" />
+
+		</LinearLayout>
+
+		<TextView
+			android:id="@+id/componentCommentsItemLoadMore"
+			style="@style/Label"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="0dp"
+			android:layout_marginBottom="10dp"
+			android:text="Xem thêm..."
+			android:textSize="13sp"
+			android:textStyle="bold" />
+
+	</LinearLayout>
+</LinearLayout>

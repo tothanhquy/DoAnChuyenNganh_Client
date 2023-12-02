@@ -8,7 +8,7 @@
 	android:theme="@style/AppTheme"
 	tools:context=".view.post.PostsListActivity"
 	tools:viewBindingIgnore="true">
-	
+
 	<androidx.core.widget.NestedScrollView
 		android:id="@+id/postsListActivityScrollViewContainer"
 		style="@style/MainScrollView"
@@ -20,8 +20,8 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="visible">
-		
+		tools:visibility="gone">
+
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
 			android:layout_width="match_parent"
@@ -29,21 +29,21 @@
 			android:orientation="vertical"
 			tools:layout_editor_absoluteX="15dp"
 			tools:layout_editor_absoluteY="15dp">
-			
+
 			<androidx.recyclerview.widget.RecyclerView
 				android:id="@+id/postsListActivityContainer"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent">
-			
+
 			</androidx.recyclerview.widget.RecyclerView>
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:background="@color/transparent"
 				android:orientation="vertical">
-				
+
 				<LinearLayout
 					android:id="@+id/postsListActivityLoadingContainer"
 					android:layout_width="match_parent"
@@ -52,11 +52,11 @@
 					android:orientation="horizontal"
 					android:visibility="gone"
 					tools:visibility="visible" />
-			
+
 			</LinearLayout>
-		
+
 		</LinearLayout>
-	
+
 	</androidx.core.widget.NestedScrollView>
 
 	<ScrollView
@@ -120,7 +120,7 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		tools:visibility="visible">
+		tools:visibility="gone">
 
 		<View
 			android:layout_width="wrap_content"
@@ -169,6 +169,202 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:onClick="closeOptions"
+					android:text="Đóng" />
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<LinearLayout
+		android:id="@+id/postsListActivityCommentContainer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_screen"
+		android:elevation="7dp"
+		android:orientation="vertical"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="visible">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="30dp"
+			android:background="@drawable/main_options_container_bg"
+			android:orientation="horizontal"
+			android:paddingStart="10dp"
+			android:paddingTop="10dp"
+			android:paddingBottom="10dp">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="closeCommentContainer"
+				app:srcCompat="@drawable/back_icon" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="closeCommentContainer"
+				android:text="Quay lại"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+		</LinearLayout>
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			android:background="@color/white">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/postsListActivityCommentContainerRecyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content" />
+			</LinearLayout>
+		</ScrollView>
+
+		<LinearLayout
+			android:id="@+id/postsListActivityCommentContainerReplyContainer"
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:padding="0dp"
+			android:paddingStart="10dp"
+			android:paddingTop="5dp"
+			android:paddingEnd="10dp"
+			android:paddingBottom="5dp">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="10dp"
+				android:onClick="closeCommentReplyContainer"
+				android:text="Hủy"
+				android:textColor="?attr/backgroundWarningBtn"
+				android:textSize="16sp"
+				android:textStyle="bold" />
+
+			<TextView
+				android:id="@+id/postsListActivityCommentContainerReplyContent"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:maxLines="2"
+				android:text="reply content asndk naksnd ahw fieh  isdfi hsiud hfsdihfi sadh fishf sdifh iei hfblsgvksbskdbfkasjdk fjnsjkdf nusd hfbushdfuie fuseg fsfhsi gfsdfuygasduyfgusdfbsf" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			style="@style/Container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="0dp"
+			android:gravity="center"
+			android:orientation="horizontal"
+			android:padding="0dp"
+			android:paddingStart="10dp"
+			android:paddingTop="5dp"
+			android:paddingEnd="10dp"
+			android:paddingBottom="5dp">
+
+			<EditText
+				android:id="@+id/postsListActivityCommentContainerInput"
+				style="@style/Input"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:ems="10"
+				android:hint="bình luận..."
+				android:inputType="text"
+				android:maxLength="200" />
+
+			<Space
+				android:layout_width="10dp"
+				android:layout_height="wrap_content" />
+
+			<Button
+				style="@style/ActionBtn"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="createComment"
+				android:text="Gửi" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/postsListActivityCommentOptionsContainer"
+		style="@style/MainOptionsLayout"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:contentDescription="main menu content"
+		android:elevation="9dp"
+		android:visibility="gone"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:visibility="gone">
+
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:onClick="closeCommentOptions"
+			app:layout_constraintBottom_toTopOf="@+id/postsListActivityCommentOptionsContainerList"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<LinearLayout
+			android:id="@+id/postsListActivityCommentOptionsContainerList"
+			style="@style/MainOptionsContainer"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent">
+
+
+			<LinearLayout
+				style="@style/Container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_marginTop="0dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Tùy chọn"
+					android:textAlignment="center" />
+
+				<Button
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="deleteComment"
+					android:text="Thu hồi bình luận" />
+
+				<Button
+					style="@style/CloseBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:onClick="closeCommentOptions"
 					android:text="Đóng" />
 			</LinearLayout>
 
