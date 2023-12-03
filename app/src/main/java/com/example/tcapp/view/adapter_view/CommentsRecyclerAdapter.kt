@@ -30,6 +30,7 @@ class CommentsRecyclerAdapter(
 	
 	public var isActionale:Boolean = false;
 	public var postId:String? = null;
+	public var isPostAuthor:Boolean = false;
 
 	private lateinit var callbackLongTouchComment:(ViewHolder,String?,String?)->Unit
 	public fun setCallbackLongTouchComment(a:(ViewHolder,String?,String?)->Unit){
@@ -220,7 +221,7 @@ class CommentsRecyclerAdapter(
 			holder.likeIcon.visibility = View.VISIBLE;
 			holder.replyButton.visibility = View.VISIBLE;
 		}
-		if(item.isAuthor&&!item.wasDeleted){
+		if((isPostAuthor||item.isAuthor)&&!item.wasDeleted){
 			holder.item.setOnLongClickListener {
 				callbackLongTouchComment(holder,item.commentId!!,item.content);
 				true

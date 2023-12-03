@@ -70,7 +70,7 @@
 <!--		<item name="backgroundContainerCV">@color/logo_color_1</item>-->
 		<item name="messageChatTimeBg">@color/theme_color_2_contrast_dark</item>
 		<item name="messageChatTimeColor">@color/theme_color_2_contrast</item>
-		<item name="messageChatFriendBg">@color/background10</item>
+		<item name="messageChatFriendBg">@color/white</item>
 		<item name="messageChatFriendColor">@color/black</item>
 		<item name="messageChatFriendNameColor">@color/theme_color_1</item>
 		<item name="messageChatMeBg">@color/theme_color_2</item>
@@ -79,7 +79,7 @@
 		<item name="notificationReadBgColor">@color/theme_color_2_contrast_dark</item>
 		<item name="notificationNotReadBgColor">@color/white</item>
 
-		
+		<item name="commentBgColor">@color/background_screen</item>
 	</style>
 	
 	

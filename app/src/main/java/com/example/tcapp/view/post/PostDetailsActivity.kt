@@ -266,8 +266,9 @@ class PostDetailsActivity : CoreActivity() {
 		closeCommentReplyContainer(View(applicationContext))
 		findViewById<EditText>(R.id.postsListActivityCommentContainerInput).setText("")
 	}
-	private fun openCommentContainer(postId:String){
+	private fun openCommentContainer(postId:String,isPostAuthor:Boolean){
 		commentsAdapter!!.postId = postId;
+		commentsAdapter!!.isPostAuthor = isPostAuthor;
 		findViewById<LinearLayout>(R.id.postsListActivityCommentContainer).visibility=View.VISIBLE
 		loadMoreComment(null,0)//first
 	}

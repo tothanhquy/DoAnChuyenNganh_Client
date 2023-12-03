@@ -66,7 +66,7 @@ class MyFriendAndRequestsListActivity : CoreActivity() {
 		super.onCreate(savedInstanceState)
 		objectViewModel = MyFriendAndRequestsListViewModel(applicationContext)
 		backgroundColor = getColor(R.color.light_blue_900)
-		super.setTitleBarAndNavigationBar(backgroundColor,R.string.requests)
+		super.setTitleBarAndNavigationBar(backgroundColor,R.string.friends)
 		setContentView(R.layout.activity_my_friend_and_requests_list)
 		//send requests
 		friendRequestsListSendContainer =  findViewById<RecyclerView>(R.id.myFriendAndRequestsListActivitySendContainerRecyclerView);

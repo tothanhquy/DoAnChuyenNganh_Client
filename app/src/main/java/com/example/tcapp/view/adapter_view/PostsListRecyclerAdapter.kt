@@ -58,8 +58,8 @@ class PostsListRecyclerAdapter(
 	public fun setCallbackOfUserInteractPost(a:(ViewHolder,String,PostModels.UserUpdateInteractStatus)->Unit){
 		callbackOfUserInteractPost = a
 	}
-	private lateinit var callbackOfOpenComment:(String)->Unit
-	public fun setCallbackOfOpenComment(a:(String)->Unit){
+	private lateinit var callbackOfOpenComment:(String,Boolean)->Unit
+	public fun setCallbackOfOpenComment(a:(String,Boolean)->Unit){
 		callbackOfOpenComment = a
 	}
 	
@@ -242,7 +242,7 @@ class PostsListRecyclerAdapter(
 					callbackOfUserInteractPost(holder,post.postId!!,PostModels.UserUpdateInteractStatus.FOLLOW);
 				}
 				holder.commentContainer.setOnClickListener {
-					callbackOfOpenComment(post.postId!!);
+					callbackOfOpenComment(post.postId!!,post.isOwner);
 				}
 				itemList[position].wasLoaded = true;
 			}
