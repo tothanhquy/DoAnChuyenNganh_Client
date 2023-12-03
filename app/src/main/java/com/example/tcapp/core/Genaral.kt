@@ -155,11 +155,37 @@ class Genaral {
 			//in date
 			return timeFormat.format(Date(utcTimeMiliSec))
 		}
+		fun getSpaceTimeWithNow(utcTimeMiliSec:Long):String{
+			val now = getMillisecondNow()
+			val space:Long = now - utcTimeMiliSec;
+
+			val oneMinus:Long = 1000*60;
+			val oneHour:Long = oneMinus*60;
+			val oneDay:Long = oneHour*24;
+			val oneMonth:Long = oneDay*30;
+			val oneYear:Long = oneMonth*12;
+
+			if(space>oneYear){
+				return ""+(space/oneYear)+" năm trước";
+			}
+			if(space>oneMonth){
+				return ""+(space/oneMonth)+" tháng trước";
+			}
+			if(space>oneDay){
+				return ""+(space/oneDay)+" ngày trước";
+			}
+			if(space>oneHour){
+				return ""+(space/oneHour)+" giờ trước";
+			}
+			if(space>oneMinus){
+				return ""+(space/oneMinus)+" phút trước";
+			}
+			return "vừa mới";
+		}
 		fun setupActivityTitleBar(activity: AppCompatActivity){
 		
 		}
-		
-		
+
 		
 		fun createBackgroundOpacity(color:Int, alpha:Float):Int{
 			return Color.argb((Color.alpha(color)*alpha).toInt(),

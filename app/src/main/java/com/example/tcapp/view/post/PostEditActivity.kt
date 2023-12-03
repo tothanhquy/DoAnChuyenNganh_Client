@@ -267,7 +267,12 @@ class PostEditActivity : CoreActivity() {
 		objectViewModel.updatePost(postId!!,isActive,content,categoryKeywordsId,oldImages,files,::updatePostOkCallback)
 	}
 	private fun updatePostOkCallback(){
-
+		runOnUiThread {
+			val intent = Intent(applicationContext , PostDetailsActivity::class.java)
+			intent.putExtra("postId", postId!!);
+			startActivity(intent)
+			this.finish()
+		}
 	}
 	fun uploadImage(view: View){
 		if(checkPermissionsReadFile()){

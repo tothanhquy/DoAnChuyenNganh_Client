@@ -60,7 +60,7 @@ class CommentsRecyclerAdapter(
 		var isReset=false;
 		var firstResetPosition = itemCount;
 		list.forEach {
-			if(itemList.indexOfFirst { a->a.commentId==it.commentId }==-1){
+			if(it.postId==this.postId&&itemList.indexOfFirst { a->a.commentId==it.commentId }==-1){
 				if(it.replyId==null||it.replyId==""){
 					//level 0
 					if(isCreate){
@@ -72,7 +72,7 @@ class CommentsRecyclerAdapter(
 						itemList.add(it)
 					}
 				}else{
-					val lastBrotherPosition = itemList.indexOfLast { a->a.replyId==it.replyId }
+					val lastBrotherPosition = itemList.indexOfLast { a->a.replyId==it.replyId&&it.time>a.time }
 					if(lastBrotherPosition==-1){
 						//not brother
 						val parentReplyPosition = itemList.indexOfFirst { a->a.commentId==it.replyId }
@@ -94,14 +94,13 @@ class CommentsRecyclerAdapter(
 		if(isReset){
 			this.notifyDataSetChanged()
 		}else if(firstResetPosition!=itemCount){
-			this.notifyItemRangeInserted(firstResetPosition,itemCount-firstResetPosition)
+			this.notifyItemRangeChanged(firstResetPosition,itemCount-1)
 		}
 	}
 	
 	fun updateInteractStatus(holder: ViewHolder,commentId:String,status:CommentModels.CommentUpdateInteractResponse){
 		val position = itemList.indexOfFirst { it.commentId==commentId };
 		if(position!=-1){
-			println(position)
 			when (status.status) {
 				CommentModels.CommentUpdateInteractResponseStatus.LIKED -> {
 					itemList[position].wasLike=true;
@@ -136,10 +135,32 @@ class CommentsRecyclerAdapter(
 		val itemView = LayoutInflater.from(parent.context).inflate(R.layout.component_comments_item, parent, false)
 		return ViewHolder(itemView)
 	}
-	
+	private fun getCommentPaddingLeft(root:Int=30,level:Int=0):Int{
+		if(level<0)return 0;
+		if(level<=3)return root*level;
+		var resPadding:Int=root*level;
+		var rootRound:Int = root;
+		for(i in 4 .. level){
+			rootRound = (rootRound*2/3)
+			resPadding+rootRound;
+		}
+		return resPadding;
+	}
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = itemList[position];
+
 		try{
+			//set padding
+			var isFarBeforeItem:Boolean = position!=0//not first
+			if(isFarBeforeItem){
+				//parent or brother
+				isFarBeforeItem=itemList[position-1].commentId!=item.replyId&&itemList[position-1].replyId!=item.replyId
+			}
+
+			val paddingTop = if(isFarBeforeItem)Genaral.convertDpToPx(context,10F).toInt() else 0;
+			val paddingLeft = Genaral.convertDpToPx(context,getCommentPaddingLeft(50,item.level).toFloat()).toInt()
+			holder.item.setPadding(paddingLeft,paddingTop,holder.item.paddingRight,holder.item.paddingBottom);
+
 			Genaral.setUserAvatarImage(context , item.authorAvatar , holder.avatar)
 			holder.name.text = item.authorName;
 			holder.name.setOnClickListener {
@@ -148,14 +169,8 @@ class CommentsRecyclerAdapter(
 			holder.avatar.setOnClickListener {
 				callbackOfViewUser(item.authorId!!);
 			}
+			holder.time.text = Genaral.getSpaceTimeWithNow(item.time);
 
-			if(!isActionale){
-				holder.likeIcon.visibility = View.GONE;
-				holder.replyButton.visibility = View.GONE;
-			}else{
-				holder.likeIcon.visibility = View.VISIBLE;
-				holder.replyButton.visibility = View.VISIBLE;
-			}
 			holder.likeIcon.setOnClickListener {
 				callbackOfUserInteractComment(holder,item.commentId!!,CommentModels.CommentUpdateInteractRequestStatus.LIKE);
 			}
@@ -163,12 +178,6 @@ class CommentsRecyclerAdapter(
 				callbackReplyComment(item.commentId!!,item.content);
 			}
 
-			if(item.isAuthor){
-				holder.item.setOnLongClickListener {
-					callbackLongTouchComment(holder,item.commentId!!,item.content);
-					true
-				}
-			}
 			if(item.replyNumber!=0){
 				holder.replyNumber.setOnClickListener {
 					callbackLoadMore(item.commentId,item.time);
@@ -178,12 +187,14 @@ class CommentsRecyclerAdapter(
 			if(item.isLoadMore){
 				holder.loadMore.visibility=View.VISIBLE
 				holder.loadMore.setOnClickListener {
-					callbackLoadMore(item.replyId,item.time);
+					callbackLoadMore(item.replyId,item.time)
+					item.isLoadMore=false
 					holder.loadMore.visibility=View.GONE
 				}
 			}else{
 				holder.loadMore.visibility=View.GONE
 			}
+
 			setInteractStatus(holder,item);
 
 		}catch(e:Exception){}
@@ -201,6 +212,21 @@ class CommentsRecyclerAdapter(
 			holder.content.text="Bình luận đã bị thu hồi."
 		}else{
 			holder.content.text=item.content
+		}
+		if(!isActionale||item.wasDeleted){
+			holder.likeIcon.visibility = View.GONE;
+			holder.replyButton.visibility = View.GONE;
+		}else{
+			holder.likeIcon.visibility = View.VISIBLE;
+			holder.replyButton.visibility = View.VISIBLE;
+		}
+		if(item.isAuthor&&!item.wasDeleted){
+			holder.item.setOnLongClickListener {
+				callbackLongTouchComment(holder,item.commentId!!,item.content);
+				true
+			}
+		}else{
+			holder.item.setOnLongClickListener(null)
 		}
 	}
 	

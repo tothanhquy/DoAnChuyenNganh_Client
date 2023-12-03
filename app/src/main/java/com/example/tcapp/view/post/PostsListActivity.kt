@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,7 +87,7 @@ class PostsListActivity : CoreActivity() {
 		postsListViewImagesContainer!!.adapter =
 			postsListViewImagesContainerAdapter
 
-		commentsContainer =  findViewById<RecyclerView>(R.id.postsListActivityContainer);
+		commentsContainer =  findViewById<RecyclerView>(R.id.postsListActivityCommentContainerRecyclerView);
 		commentsAdapter = CommentsRecyclerAdapter(applicationContext,
 			arrayListOf()
 		)
@@ -178,14 +179,39 @@ class PostsListActivity : CoreActivity() {
 		//set requests
 		objectViewModel.postsList.observe(this, Observer {
 			runOnUiThread {
-				println(it)
 				if(it!=null)setPostsContainer(it)
+			}
+		})
+
+		objectCommentViewModel.error.observe(this, Observer {
+			runOnUiThread {
+				if(it!=null){
+					super.showError(it.title,it.contents,it.listener)
+				}
+			}
+		})
+
+		//set loading
+		objectCommentViewModel.isLoading.observe(this, Observer {
+			runOnUiThread {
+				if(it){
+					loadingLayout?.visibility = View.VISIBLE
+				}else{
+					loadingLayout?.visibility = View.GONE
+				}
+			}
+		})
+		//set alert notification
+		objectCommentViewModel.notification.observe(this, Observer {
+			runOnUiThread {
+				if(it!=null){
+					super.showNotificationDialog(it.title,it.contents,it.listener)
+				}
 			}
 		})
 	}
 	
 	private fun setPostsContainer(postsList: PostModels.PostsList){
-		println(postsList.posts.size)
 		postsListContainer!!.setHasFixedSize(true)
 		postsListContainerAdapter!!.let{
 			it.isActionale = postsList.isActionable;
@@ -249,8 +275,11 @@ class PostsListActivity : CoreActivity() {
 
 
 	fun closeCommentContainer(view:View){
-		commentsAdapter!!.postId=null;
 		findViewById<LinearLayout>(R.id.postsListActivityCommentContainer).visibility=View.GONE
+		commentsAdapter!!.postId=null;
+		commentsAdapter!!.setInitList(arrayListOf());
+		closeCommentReplyContainer(View(applicationContext))
+		findViewById<EditText>(R.id.postsListActivityCommentContainerInput).setText("")
 	}
 	private fun openCommentContainer(postId:String){
 		commentsAdapter!!.postId = postId;
@@ -263,6 +292,8 @@ class PostsListActivity : CoreActivity() {
 	private fun loadOldComments(comments: CommentModels.Comments?){
 		if(comments!=null){
 			runOnUiThread {
+				if(commentsAdapter!!.itemCount==0)commentsContainer !!.layoutManager =
+					LinearLayoutManager(this)
 				commentsAdapter!!.isActionale=comments.isActionable
 				commentsAdapter!!.addItems(comments.comments!!,false)
 			}
@@ -284,13 +315,13 @@ class PostsListActivity : CoreActivity() {
 		focusCommentId=null;
 		focusCommentContent=null;
 		focusCommentHolder=null;
-		findViewById<LinearLayout>(R.id.postsListActivityCommentOptionsContainer).visibility=View.GONE
+		findViewById<ConstraintLayout>(R.id.postsListActivityCommentOptionsContainer).visibility=View.GONE
 	}
 	private fun openCommentOptions(holder:CommentsRecyclerAdapter.ViewHolder,commentId:String?,commentContent:String?){
 		focusCommentId=commentId;
 		focusCommentContent=commentContent;
 		focusCommentHolder=holder;
-		findViewById<LinearLayout>(R.id.postsListActivityCommentOptionsContainer).visibility=View.VISIBLE
+		findViewById<ConstraintLayout>(R.id.postsListActivityCommentOptionsContainer).visibility=View.VISIBLE
 	}
 	private fun userInteractComment(holder:CommentsRecyclerAdapter.ViewHolder,commentId:String,status:CommentModels.CommentUpdateInteractRequestStatus){
 		objectCommentViewModel.userInteract(holder,commentId,status,::okInteractCommentCallback)
@@ -302,7 +333,8 @@ class PostsListActivity : CoreActivity() {
 		}
 	}
 	fun deleteComment(view:View){
-		val content = focusCommentContent!!.substring(0..100)
+		var content = focusCommentContent
+		if(content!!.length>100)content=content!!.substring(0..100)
 		this.showAskDialog(
 			"Important!",
 			"Do you ready want to delete comment'$content'",
@@ -318,10 +350,11 @@ class PostsListActivity : CoreActivity() {
 		}
 	}
 	private fun loadCreateComment(comment: CommentModels.Comment?){
-		closeCommentReplyContainer(View(applicationContext))
-		findViewById<EditText>(R.id.postsListActivityCommentContainerInput).setText("")
 		if(comment!=null){
 			runOnUiThread {
+				if(commentsAdapter!!.itemCount==0)commentsContainer !!.layoutManager =
+					LinearLayoutManager(this)
+				findViewById<EditText>(R.id.postsListActivityCommentContainerInput).setText("")
 				commentsAdapter!!.addItems(arrayListOf(comment),true)
 			}
 		}

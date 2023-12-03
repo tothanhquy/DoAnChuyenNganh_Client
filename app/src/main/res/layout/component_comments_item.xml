@@ -6,7 +6,8 @@
 	android:layout_height="wrap_content"
 	android:layout_marginTop="5dp"
 	android:gravity="left"
-	android:orientation="horizontal">
+	android:orientation="horizontal"
+	android:paddingLeft="0dp">
 
 	<com.google.android.material.imageview.ShapeableImageView
 		android:id="@+id/componentCommentsItemAvatar"
@@ -51,14 +52,16 @@
 				tools:text="nkjhsdfn njsdhj absdbahjs ndfs nksdfn ksdfn skjdfn ksjd fn ksfnksd nfksdfndskifn i sfdsf s" />
 		</LinearLayout>
 
-		<LinearLayout
+		<com.google.android.flexbox.FlexboxLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="5dp"
 			android:layout_marginBottom="3dp"
-			android:gravity="center|center_horizontal"
-			android:orientation="horizontal"
-			android:paddingLeft="10dp">
+			android:paddingLeft="10dp"
+			app:alignContent="stretch"
+			app:alignItems="center"
+			app:flexDirection="row"
+			app:flexWrap="wrap">
 
 			<TextView
 				android:id="@+id/componentCommentsItemTime"
@@ -83,13 +86,15 @@
 				app:srcCompat="@drawable/like_blank_icon" />
 
 			<Space
-				android:layout_width="50dp"
+				android:layout_width="20dp"
 				android:layout_height="1dp" />
 
 			<TextView
 				android:id="@+id/componentCommentsItemReplyNumber"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
 				android:text="(30) phản hồi"
 				android:textSize="12sp" />
 
@@ -98,8 +103,19 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="10dp"
+				android:layout_marginTop="3dp"
+				android:layout_marginBottom="3dp"
 				android:text="Phản hồi"
-				android:textStyle="bold" />
+				android:textStyle="bold"
+				app:layout_alignSelf="stretch" />
+		</com.google.android.flexbox.FlexboxLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center|center_horizontal"
+			android:orientation="horizontal">
+
 
 		</LinearLayout>
 

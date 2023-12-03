@@ -57,6 +57,7 @@ class CommentViewModel (private val context : Context): ViewModel(){
 	}
 
 	public fun create(postId:String?,replyId:String?,content:String,okCallback:(CommentModels.Comment?)->Unit){
+		if(isLoading.value==true)return
 		_isLoading.postValue(true)
 		Thread {
 			createAPI(postId,replyId,content,okCallback)

@@ -71,7 +71,7 @@ class PostsListRecyclerAdapter(
 		list.forEach {
 			if(itemList.indexOfFirst { a->a.postId==it.postId }==-1){
 				itemList.add(it);
-//				this.notifyItemInserted(itemCount-1)
+//				this.notifyItemChanged(itemCount-1)
 			}
 		}
 		this.notifyDataSetChanged()
@@ -143,7 +143,6 @@ class PostsListRecyclerAdapter(
 	
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val post = itemList[position];
-		
 		try{
 			if(!post.wasLoaded){
 				val type = when(post.authorType){
