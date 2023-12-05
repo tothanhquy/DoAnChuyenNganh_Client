@@ -13,10 +13,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.tcapp.R
+import com.example.tcapp.model.friend.FriendModels
 import com.example.tcapp.model.notification.NotificationModels
 import com.example.tcapp.view.home.HomeActivity
 import com.example.tcapp.view.chanel_chat.ChanelChatDetailsActivity
 import com.example.tcapp.view.chanel_chat.MyChanelChatsActivity
+import com.example.tcapp.view.friend.ViewFriendRequestActivity
+import com.example.tcapp.view.post.PostDetailsActivity
+import com.example.tcapp.view.project.ProjectDetailsActivity
+import com.example.tcapp.view.project.ProjectInvitingMembersActivity
+import com.example.tcapp.view.project.ProjectViewMembersNowActivity
+import com.example.tcapp.view.team_profile.TeamProfileActivity
+import com.example.tcapp.view.team_profile.TeamProfileViewMembersListActivity
+import com.example.tcapp.view.user_profile.GuestUserProfileActivity
 
 
 class NotificationSystem {
@@ -76,12 +85,13 @@ class NotificationSystem {
         return false
     }
     private fun getNotificationObject(context: Context, data:NotificationShowModel):NotificationCompat.Builder{
+        val spanContent = NotificationModels.getContentWithStyle(data.content,data.styleRanges)
         val mBuilder: NotificationCompat.Builder=NotificationCompat.Builder(context, CHANEL_NOTIFICATION_ID)
             .setSmallIcon(R.drawable.logo_icon)
-            .setContentText(data.content)
+            .setContentText(spanContent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(data.content))
+                .bigText(spanContent))
             .setAutoCancel(true);
         if(data.directLink!=null){
             val pendingIntent = getPendingIntentOpenActivity(context,getIntentOpenActivity(context,data.directLink))
@@ -130,21 +140,82 @@ class NotificationSystem {
         try{
             var intent:Intent=Intent(context, HomeActivity::class.java);//default
             val splitPath = directLink.split("/");
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             when(splitPath[0]){
                 "chanelchat"->{
-                    when(splitPath[1]){
+                    return when(splitPath[1]){
                         "details"->{
                             intent= Intent(context, ChanelChatDetailsActivity::class.java)
                             intent.putExtra("chanelChatId",splitPath[2])
+                            intent;
                         }
+
                         else->{
                             intent= Intent(context, MyChanelChatsActivity::class.java)
+                            intent;
                         }
                     }
                 }
+                "friend"->{
+                    if(splitPath[1]=="request"){
+                        if(splitPath[2]=="details"){
+                            intent= Intent(context, ViewFriendRequestActivity::class.java)
+                            intent.putExtra("requestId",splitPath[3])
+                            intent.putExtra("method", "receive")
+                            return intent;
+                        }
+                    }
+                }
+                "account"->{
+                    if(splitPath[1]=="details"){
+                        intent= Intent(context, GuestUserProfileActivity::class.java)
+                        intent.putExtra("idUser",splitPath[2])
+                        return intent;
+                    }
+                }
+                "team"->{
+                    when(splitPath[1]){
+                        "details"->{
+                            intent= Intent(context, TeamProfileActivity::class.java)
+                            intent.putExtra("teamId",splitPath[2])
+                            return intent;
+                        }
+                        "members" ->{
+                            intent= Intent(context, TeamProfileViewMembersListActivity::class.java)
+                            intent.putExtra("teamId",splitPath[2])
+                            return intent;
+                        }
+                    }
+                }
+                "project"->{
+                    when(splitPath[1]){
+                        "details"->{
+                            intent= Intent(context, ProjectDetailsActivity::class.java)
+                            intent.putExtra("projectId",splitPath[2])
+                            return intent;
+                        }
+                        "members" ->{
+                            intent= Intent(context, ProjectViewMembersNowActivity::class.java)
+                            intent.putExtra("projectId",splitPath[2])
+                            return intent;
+                        }
+                        "request_of_user"->{
+                            intent = Intent(context , ProjectInvitingMembersActivity::class.java)
+                            intent.putExtra("viewer", "user");
+                            return intent;
+                        }
+                    }
+                }
+                "post"->{
+                    if(splitPath[1]=="details"){
+                        intent= Intent(context, PostDetailsActivity::class.java)
+                        intent.putExtra("postId",splitPath[2])
+                        return intent;
+                    }
+                }
             }
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            return intent;
+
+            return null;
         }catch (ex:Exception){
             return null;
         }

@@ -123,4 +123,44 @@ class PostEditViewModel (private val context : Context): ViewModel(){
 
 	}
 
+	public fun deletePost(postId:String,okCallback:()->Unit){
+		_isLoading.postValue(true)
+		Thread {
+			deletePostAPI(postId,okCallback)
+		}.start()
+	}
+
+	private fun deletePostAPI(postId:String,okCallback:()->Unit){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.post(
+					url = API.getBaseUrl() + "/Post/OwnerDelete",
+					cookies = mapOf("auth" to API.getAuth(context)),
+					data= mapOf(
+						"post_id" to postId
+					)
+				)
+			)
+
+			if(response.code==1||response.code==404){
+				//system error
+				_error.postValue(AlertDialog.Error("Error!","System error"))
+			}else if(response.code==403){
+				//not authen
+				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+			}else{
+				if(response.status=="Success"){
+					_notification.postValue(AlertDialog.Notification("Success!","This post was deleted.",fun(dia: DialogInterface, i:Int){okCallback();}))
+				}else{
+					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+				}
+			}
+		}catch(err:Exception){
+			println(err.toString())
+			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+		_isLoading.postValue(false)
+
+	}
+
 }

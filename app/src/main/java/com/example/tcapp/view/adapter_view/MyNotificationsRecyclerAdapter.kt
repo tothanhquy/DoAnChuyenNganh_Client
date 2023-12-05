@@ -1,6 +1,7 @@
 package com.example.tcapp.view.adapter_view
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
 import com.example.tcapp.R
 import com.example.tcapp.core.Genaral
+import com.example.tcapp.core.NotificationSystem
 import com.example.tcapp.model.chanel_chat.MessageModels
 import com.example.tcapp.model.notification.NotificationModels
 
@@ -40,8 +42,8 @@ class MyNotificationsRecyclerAdapter(
 	public fun setCallbackOfUserRead(a:(String?)->Unit){
 		userReadCallback = a
 	}
-	private lateinit var openDirectActivityCallback:(String?)->Unit
-	public fun setCallbackOfOpenDirectActivity(a:(String?)->Unit){
+	private lateinit var openDirectActivityCallback:(Intent?)->Unit
+	public fun setCallbackOfOpenDirectActivity(a:(Intent?)->Unit){
 		openDirectActivityCallback = a
 	}
 	
@@ -101,6 +103,7 @@ class MyNotificationsRecyclerAdapter(
 		val notReadIcon: ImageView = itemView.findViewById(R.id.componentMyNotificationItemNotReadIcon)
 		val content: TextView = itemView.findViewById(R.id.componentMyNotificationItemContent)
 		val time: TextView = itemView.findViewById(R.id.componentMyNotificationItemTime)
+		val directButton: TextView = itemView.findViewById(R.id.componentMyNotificationItemDirectButton)
 		val layout: LinearLayout = itemView.findViewById(R.id.componentMyNotificationItemLayout)
 		val item:View = itemView
 	}
@@ -113,10 +116,11 @@ class MyNotificationsRecyclerAdapter(
 	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 		val item = itemList!![position];
 
-		holder.content.text = item.content;
+		val spanContent = NotificationModels.getContentWithStyle(item.content,item.styleRanges)
+		holder.content.text = spanContent;
 		holder.time.text = Genaral.getMinimizeDateTimeByUTC(item.time);
 
-		if(item.wasRead==true){
+		if(item.wasRead){
 			holder.layout.setBackgroundResource(R.drawable.my_notifications_item_read_bg)
 			holder.notReadIcon.visibility = View.GONE
 		}else{
@@ -130,8 +134,21 @@ class MyNotificationsRecyclerAdapter(
 				item.wasRead=true;
 				this.notifyItemChanged(position);
 			}
-			if(item.directLink!=null){
-				openDirectActivityCallback(item.directLink)
+		}
+
+		holder.directButton.visibility=View.GONE
+		if(item.directLink!=null){
+			val intent = NotificationSystem().getIntentOpenActivity(context, item.directLink);
+			if(intent!=null) {
+				holder.directButton.visibility=View.VISIBLE
+				holder.directButton.setOnClickListener {
+					if (!item.wasRead) {
+						userReadCallback(item.id)
+						item.wasRead = true;
+						this.notifyItemChanged(position);
+					}
+					openDirectActivityCallback(intent)
+				}
 			}
 		}
 	}

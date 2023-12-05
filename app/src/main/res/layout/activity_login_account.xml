@@ -37,16 +37,21 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:text="Mật khẩu" />
-		
-		<EditText
-			android:id="@+id/loginAccountPassword"
+
+		<com.google.android.material.textfield.TextInputLayout
 			style="@style/Input"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:ems="10"
-			android:hint="mật khẩu"
-			android:inputType="textPassword" />
-		
+			app:passwordToggleEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/loginAccountPassword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="Mật khẩu"
+				android:inputType="text|textPassword"/>
+		</com.google.android.material.textfield.TextInputLayout>
+
 		<Space
 			android:layout_width="match_parent"
 			android:layout_height="30dp" />

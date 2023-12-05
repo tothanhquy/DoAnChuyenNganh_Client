@@ -39,14 +39,27 @@
 			android:layout_height="wrap_content"
 			android:text="Mật Khẩu" />
 		
-		<EditText
-			android:id="@+id/registerAccountPassword"
+<!--		<EditText-->
+<!--			android:id="@+id/registerAccountPassword"-->
+<!--			style="@style/Input"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:ems="8"-->
+<!--			android:hint="mật khẩu"-->
+<!--			android:inputType="textPassword" />-->
+		<com.google.android.material.textfield.TextInputLayout
 			style="@style/Input"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:ems="8"
-			android:hint="mật khẩu"
-			android:inputType="textPassword" />
+			app:passwordToggleEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/registerAccountPassword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="Mật khẩu"
+				android:inputType="text|textPassword"/>
+		</com.google.android.material.textfield.TextInputLayout>
 		
 		<TextView
 			style="@style/Label"
@@ -54,14 +67,27 @@
 			android:layout_height="wrap_content"
 			android:text="Xác nhận mật khẩu" />
 		
-		<EditText
-			android:id="@+id/registerAccountConfirmPassword"
+<!--		<EditText-->
+<!--			android:id="@+id/registerAccountConfirmPassword"-->
+<!--			style="@style/Input"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="wrap_content"-->
+<!--			android:ems="8"-->
+<!--			android:hint="xác nhận mật khẩu"-->
+<!--			android:inputType="textPassword" />-->
+		<com.google.android.material.textfield.TextInputLayout
 			style="@style/Input"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:ems="8"
-			android:hint="xác nhận mật khẩu"
-			android:inputType="textPassword" />
+			app:passwordToggleEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/registerAccountConfirmPassword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="Xác nhận mật khẩu"
+				android:inputType="text|textPassword"/>
+		</com.google.android.material.textfield.TextInputLayout>
 		
 		<TextView
 			style="@style/Label"

@@ -323,5 +323,18 @@ class PostEditActivity : CoreActivity() {
 		closeChangeCategoryKeywordsContainer();
 	}
 
-
+	fun deletePost(view:View){
+		this.showAskDialog(
+			"Important!",
+			"Do you really want to delete this post.",
+			fun(dialogInterface:DialogInterface, i:Int){
+				objectViewModel.deletePost(postId!!,::deletePostOkCallback)
+			}
+		)
+	}
+	private fun deletePostOkCallback(){
+		runOnUiThread {
+			finish()
+		}
+	}
 }

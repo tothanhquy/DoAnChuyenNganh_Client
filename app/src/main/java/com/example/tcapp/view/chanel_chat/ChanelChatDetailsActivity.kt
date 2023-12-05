@@ -308,10 +308,10 @@ class ChanelChatDetailsActivity : CoreActivity() {
 			//group
 			viewMembers.visibility = View.VISIBLE
 			exitGroupChat.visibility = View.VISIBLE
-			if(chanelChat?.isGroupOwner==true){
+//			if(chanelChat?.isGroupOwner==true){
 				editAvatar.visibility = View.VISIBLE
 				editName.visibility = View.VISIBLE
-			}
+//			}
 		}
 	}
 

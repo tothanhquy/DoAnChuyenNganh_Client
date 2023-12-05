@@ -49,7 +49,7 @@ class ChangePasswordAccountActivity : CoreActivity() {
 		objectViewModel.notification.observe(this, Observer {
 			runOnUiThread {
 				if(it!=null){
-					super.showNotificationDialog(it.title,it.contents,null)
+					super.showNotificationDialog(it.title,it.contents,it.listener)
 				}
 			}
 		})
@@ -72,7 +72,12 @@ class ChangePasswordAccountActivity : CoreActivity() {
 		val newPass = findViewById<EditText>(R.id.changePasswordAccountActivityNewPassword).text.toString()
 		val confirmNewPass = findViewById<EditText>(R.id.changePasswordAccountActivityConfirmNewPassword).text.toString()
 		
-		objectViewModel.changePassword(oldPass,newPass,confirmNewPass);
+		objectViewModel.changePassword(oldPass,newPass,confirmNewPass,::changePassOkCallback);
+	}
+	private fun changePassOkCallback(){
+		runOnUiThread {
+			finish()
+		}
 	}
 
 }

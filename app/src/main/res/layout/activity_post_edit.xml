@@ -8,7 +8,7 @@
 	android:theme="@style/AppTheme"
 	tools:context=".view.post.PostEditActivity"
 	tools:viewBindingIgnore="true">
-	
+
 	<ScrollView
 		style="@style/MainScrollView"
 		android:layout_width="match_parent"
@@ -17,9 +17,11 @@
 		android:elevation="2dp"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent">
-		
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="1.0">
+
 		<LinearLayout
 			style="@style/MainScrollViewChildContainer"
 			android:layout_width="match_parent"
@@ -28,7 +30,7 @@
 			android:paddingBottom="500dp"
 			tools:layout_editor_absoluteX="15dp"
 			tools:layout_editor_absoluteY="15dp">
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -37,12 +39,12 @@
 				android:gravity="center"
 				android:orientation="horizontal"
 				tools:visibility="visible">
-				
+
 				<com.google.android.material.imageview.ShapeableImageView
 					android:id="@+id/postEditActivityAvatar"
 					style="@style/MediumSmallAvatar"
 					tools:srcCompat="@tools:sample/avatars" />
-				
+
 				<TextView
 					android:id="@+id/postEditActivityName"
 					style="@style/Title"
@@ -50,12 +52,13 @@
 					android:layout_height="wrap_content"
 					android:layout_weight="1"
 					android:text="name" />
-			
+
 			</LinearLayout>
+
 			<LinearLayout
+				style="@style/Container"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				style="@style/Container">
+				android:layout_height="wrap_content">
 
 				<CheckBox
 					android:id="@+id/postEditActivityIsActive"
@@ -63,16 +66,19 @@
 					android:layout_height="wrap_content"
 					android:text="Is Active" />
 			</LinearLayout>
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:orientation="vertical">
+
 				<TextView
 					style="@style/Title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:text="Danh sách từ khóa" />
+
 				<androidx.recyclerview.widget.RecyclerView
 					android:id="@+id/postEditActivityCategoryKeywordsViewRecyclerView"
 					android:layout_width="match_parent"
@@ -89,13 +95,13 @@
 					android:visibility="visible" />
 
 			</LinearLayout>
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:orientation="vertical">
-				
+
 				<TextView
 					style="@style/Label"
 					android:layout_width="match_parent"
@@ -113,6 +119,7 @@
 					android:textAlignment="viewStart" />
 
 			</LinearLayout>
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -132,6 +139,7 @@
 				</androidx.recyclerview.widget.RecyclerView>
 
 			</LinearLayout>
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -144,7 +152,7 @@
 					android:layout_height="wrap_content">
 
 				</androidx.recyclerview.widget.RecyclerView>
-				
+
 				<Button
 					style="@style/ActionBtn2"
 					android:layout_width="match_parent"
@@ -152,9 +160,9 @@
 					android:onClick="uploadImage"
 					android:text="Chọn ảnh mới"
 					android:visibility="visible" />
-			
+
 			</LinearLayout>
-			
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
@@ -168,10 +176,18 @@
 					android:layout_height="wrap_content"
 					android:onClick="updatePost"
 					android:text="Cập nhật bài viết" />
+
+				<Button
+					style="@style/WarningBtn"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="200dp"
+					android:onClick="deletePost"
+					android:text="Xóa bài viết" />
 			</LinearLayout>
-		
+
 		</LinearLayout>
-	
+
 	</ScrollView>
 
 	<LinearLayout

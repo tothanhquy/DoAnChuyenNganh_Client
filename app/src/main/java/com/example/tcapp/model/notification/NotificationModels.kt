@@ -1,6 +1,38 @@
 package com.example.tcapp.model.notification
 
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
+
+
 class NotificationModels {
+    companion object{
+        fun getContentWithStyle(content:String?,styles:ArrayList<StyleRange>?):SpannableStringBuilder{
+            val notNullContent = content ?: "";
+            val resContent = SpannableStringBuilder(notNullContent);
+            if(styles==null||styles.size==0)return resContent;
+
+            styles.forEach {
+                val style = when(it.style) {
+                    StyleOfRange.Bold->
+                        StyleSpan(Typeface.BOLD)
+                    StyleOfRange.Italic->
+                        StyleSpan(Typeface.ITALIC)
+                    else->
+                        StyleSpan(Typeface.BOLD_ITALIC)
+                }
+                resContent.setSpan(
+                    style,
+                    it.position,
+                    it.position+it.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+
+            return resContent;
+        }
+    }
     enum class StyleOfRange {
         Bold,Italic,Underline
     }

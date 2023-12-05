@@ -13,7 +13,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center|center_vertical"
+		android:gravity="center_horizontal|center_vertical"
 		android:orientation="horizontal">
 
 		<TextView
@@ -29,7 +29,17 @@
 			android:id="@+id/componentMyNotificationItemNotReadIcon"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:padding="10dp"
 			app:srcCompat="@drawable/blue_dot_icon" />
+
+		<TextView
+			android:id="@+id/componentMyNotificationItemDirectButton"
+			style="@style/ActionBtn2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Đi đến chi tiết"
+			android:textColor="@color/theme_color_2"
+			android:textStyle="bold" />
 
 	</LinearLayout>
 

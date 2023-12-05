@@ -165,12 +165,9 @@ class MyNotificationsActivity : CoreActivity() {
 			objectViewModel.updateNotification(notificationId)
 		}
 	}
-	private fun openDirectActivity(directLink:String?){
-		if(directLink!=null){
-			val intent = NotificationSystem().getIntentOpenActivity(applicationContext,directLink);
-			if(intent!=null){
-				startActivity(intent)
-			}
+	private fun openDirectActivity(intent:Intent?){
+		if(intent!=null){
+			startActivity(intent)
 		}
 	}
 
