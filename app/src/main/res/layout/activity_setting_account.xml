@@ -43,7 +43,81 @@
 					android:text="Đổi mật khẩu"
 					android:visibility="visible" />
 			</LinearLayout>
-			
+
+			<LinearLayout
+				style="@style/ContainerTitle"
+				android:layout_width="match_parent"
+				android:paddingEnd="10dp"
+				android:paddingLeft="10dp"
+				android:layout_height="match_parent">
+
+				<TextView
+					style="@style/Title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Đăng ký nhận mail" />
+
+				<Button
+					style="@style/ActionBtn"
+					android:layout_width="wrap_content"
+					android:onClick="openRegisterReceiveEmailContainer"
+					android:text="Chi tiết" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/settingAccountActivityRegisterReceiveEmailContainer"
+				style="@style/Container"
+				android:visibility="gone"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="30dp"
+				android:background="@color/transparent"
+				android:orientation="vertical">
+
+				<CheckBox
+					android:id="@+id/settingAccountActivityRegisterReceiveEmailContainerAddFriendRequestCheckbox"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nhận email khi có yêu cầu kết bạn."
+					android:textStyle="bold" />
+
+				<CheckBox
+					android:id="@+id/settingAccountActivityRegisterReceiveEmailContainerTeamRecruitRequestCheckbox"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nhận email khi nhận yêu cầu chiêu mộ của team."
+					android:textStyle="bold" />
+
+				<CheckBox
+					android:id="@+id/settingAccountActivityRegisterReceiveEmailContainerTeamJoinRequestCheckbox"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nhận email khi team có yêu cầu xin gia nhập của người dùng."
+					android:textStyle="bold" />
+
+				<CheckBox
+					android:id="@+id/settingAccountActivityRegisterReceiveEmailContainerProjectInviteRequestCheckbox"
+					style="@style/Label"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="Nhận email khi có dự án mời tham gia."
+					android:textStyle="bold" />
+
+				<Button
+					android:id="@+id/settingAccountActivityRegisterReceiveEmailContainerUpdateButton"
+					style="@style/ActionBtn2"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:onClick="updateRegisterReceiveEmail"
+					android:visibility="gone"
+					android:text="Cập nhật trạng thái" />
+			</LinearLayout>
+
 			<LinearLayout
 				style="@style/Container"
 				android:layout_width="match_parent"
