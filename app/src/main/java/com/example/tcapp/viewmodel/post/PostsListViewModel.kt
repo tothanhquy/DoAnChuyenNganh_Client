@@ -157,5 +157,40 @@ class PostsListViewModel (private val context : Context): ViewModel(){
 		}
 	}
 
+	public fun userFastVisit(postId:String, lastingTime:Long){
+		Thread {
+			userFastVisitAPI(postId,lastingTime)
+		}.start()
+	}
+	private fun userFastVisitAPI(postId:String, lastingTime:Long){
+		try{
+			val  response : API.ResponseAPI = API.getResponse(context,
+				khttp.post(
+					url = API.getBaseUrl() + "/Post/LogFastVisit",
+					cookies = mapOf("auth" to API.getAuth(context)),
+					data= mapOf(
+						"post_id" to postId,
+						"time" to lastingTime
+					)
+				)
+			)
+//
+//			if(response.code==1||response.code==404){
+//				//system error
+//				_error.postValue(AlertDialog.Error("Error!","System error"))
+//			}else if(response.code==403){
+//				//not authen
+//				_error.postValue(AlertDialog.Error("Error!","You are logout."))
+//			}else{
+//				if(response.status=="Success"){
+//				}else{
+//					_error.postValue(AlertDialog.Error("Error!",response.error?:""))
+//				}
+//			}
+		}catch(err:Exception){
+			println(err.toString())
+//			_error.postValue(AlertDialog.Error("Error!","System error"))
+		}
+	}
 
 }

@@ -66,6 +66,7 @@ class SearchObjectsRecyclerAdapter(
 		val item = itemList[position];
 		try{
 			holder.name.text = item.name;
+			holder.avatar.setImageResource(R.drawable.default_team_avatar)
 			when (item.type) {
 				SearchModels.ObjectType.Team -> {
 					Genaral.setTeamAvatarImage(context , item.avatar , holder.avatar)
