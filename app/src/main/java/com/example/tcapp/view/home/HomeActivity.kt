@@ -151,7 +151,7 @@ class HomeActivity : CoreActivity() {
 			WAS_SHOWED_WELCOME_SCREEN_LOCAL_DATA_NAME
 		);
 
-		wasShowedWelcomeScreen = null;
+//		wasShowedWelcomeScreen = null;
 		if(wasShowedWelcomeScreen===null||wasShowedWelcomeScreen==="false") {
 			wasShowedWelcomeScreen= "true"
 			localData.setString(WAS_SHOWED_WELCOME_SCREEN_LOCAL_DATA_NAME ,wasShowedWelcomeScreen);
