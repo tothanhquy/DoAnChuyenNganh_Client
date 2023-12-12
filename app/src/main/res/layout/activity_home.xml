@@ -59,7 +59,7 @@
 					android:textStyle="bold" />
 			</LinearLayout>
 		</LinearLayout>
-		
+
 		<LinearLayout
 			android:id="@+id/homeScreenNotAuthenticate"
 			style="@style/Container"
@@ -71,24 +71,24 @@
 			android:background="@drawable/main_options_container_bg"
 			android:gravity="center_horizontal"
 			android:orientation="vertical"
-			tools:visibility="gone">
-			
+			tools:visibility="visible">
+
 			<Button
 				style="@style/ActionBtn"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:onClick="loginNavigation"
 				android:text="Đăng nhập ngay" />
-			
+
 			<TextView
 				style="@style/Title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="30dp"
 				android:layout_marginBottom="30dp"
-				android:text="Nếu bạn chưa có tài khoản, thì hãy tạo ngay 1 tại khoản để có thể khám khá tất cả các tính năng của Startup Map"
+				android:text="Nếu bạn chưa có tài khoản, thì hãy tạo ngay 1 tại khoản để có thể khám khá tất cả các tính năng của TCaPP"
 				android:textAlignment="center" />
-			
+
 			<Button
 				style="@style/ActionBtn2"
 				android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
 				android:onClick="registerNavigation"
 				android:text="Tạo 1 tài khoản" />
 		</LinearLayout>
-		
+
 		<LinearLayout
 			android:id="@+id/homeScreenAuthenticate"
 			android:layout_width="match_parent"
@@ -107,8 +107,8 @@
 			android:orientation="vertical"
 			tools:layout_editor_absoluteX="15dp"
 			tools:layout_editor_absoluteY="15dp"
-			tools:visibility="visible">
-			
+			tools:visibility="gone">
+
 			<Button
 				android:id="@+id/homeScreAuthenVerifyEmail"
 				style="@style/ActionBtn2"
@@ -198,8 +198,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="myUserProfileNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -224,8 +224,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="myTeamsNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -250,8 +250,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="viewRequestsNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -282,8 +282,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="viewMyPostsNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -334,8 +334,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="viewMyChanelChatsNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -365,8 +365,8 @@
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="viewMyFriendAndRequestsListNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
@@ -385,13 +385,14 @@
 									android:textAlignment="center"
 									android:textSize="18sp" />
 							</LinearLayout>
+
 							<LinearLayout
 								android:layout_width="0dp"
 								android:layout_height="wrap_content"
 								android:layout_weight="1"
 								android:gravity="center"
-								android:orientation="vertical"
 								android:onClick="viewSettingAccountNavigation"
+								android:orientation="vertical"
 								android:padding="10dp">
 
 								<ImageView
