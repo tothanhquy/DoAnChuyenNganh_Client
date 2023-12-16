@@ -121,7 +121,9 @@ class PostsListRecyclerAdapter(
 		val image4Text:TextView = itemView.findViewById(R.id.componentListPostsItemImage4Text)
 
 		val likeNumber: TextView = itemView.findViewById(R.id.componentListPostsItemLikeNumber)
+
 		val commentNumber: TextView = itemView.findViewById(R.id.componentListPostsItemCommentNumber)
+		val interactLine: View = itemView.findViewById(R.id.componentListPostsItemInteractLine)
 
 		val saveContainer: LinearLayout = itemView.findViewById(R.id.componentListPostsItemSaveContainer)
 		val saveIcon: ImageView = itemView.findViewById(R.id.componentListPostsItemSaveIcon)
@@ -185,6 +187,13 @@ class PostsListRecyclerAdapter(
 						}
 					}
 				}
+				if(!isActionale){
+					holder.saveContainer.visibility = View.GONE;
+					holder.likeContainer.visibility = View.GONE;
+					holder.followContainer.visibility = View.GONE;
+					holder.commentContainer.visibility = View.GONE;
+					holder.interactLine.visibility = View.GONE;
+				}
 				if(!isActionale||!post.isOwner){
 					holder.option.visibility = View.GONE;
 					holder.inactive.visibility = View.GONE;
@@ -242,6 +251,9 @@ class PostsListRecyclerAdapter(
 					callbackOfUserInteractPost(holder,post.postId!!,PostModels.UserUpdateInteractStatus.FOLLOW);
 				}
 				holder.commentContainer.setOnClickListener {
+					callbackOfOpenComment(post.postId!!,post.isOwner);
+				}
+				holder.commentNumber.setOnClickListener {
 					callbackOfOpenComment(post.postId!!,post.isOwner);
 				}
 				itemList[position].wasLoaded = true;
